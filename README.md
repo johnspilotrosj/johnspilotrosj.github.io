@@ -1,4 +1,4 @@
-# Setup by Ethan Gardner
+# Setup 
 When you push changes to this repository, GitHub Pages automatically builds and deploys your site. Here's the full process:
 
 ```mermaid
