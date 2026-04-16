@@ -1,13 +1,4 @@
-# johnspilotrosj.github.io
-
-Welcome page for John — designed and developed by **Ethan Gardner**.
-
-## About
-
-A clean, animated welcome page built with vanilla HTML and CSS. It features soft gradient orbs, staggered entrance animations, and full light/dark mode support. No frameworks, no dependencies — just a single `index.html` file served via GitHub Pages.
-
-## How publishing works
-
+# Setup by Ethan Gardner
 When you push changes to this repository, GitHub Pages automatically builds and deploys your site. Here's the full process:
 
 ```mermaid
