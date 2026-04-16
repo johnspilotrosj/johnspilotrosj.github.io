@@ -1,1 +1,329 @@
-<p>here you go john</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Your New Site — John</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #FAFAF8;
+      --bg-card: #FFFFFF;
+      --text-primary: #1A1A18;
+      --text-secondary: #6B6B66;
+      --text-tertiary: #9E9E97;
+      --accent: #7F77DD;
+      --accent-light: #EEEDFE;
+      --teal: #1D9E75;
+      --coral: #D85A30;
+      --border: rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110;
+        --bg-card: #1A1A18;
+        --text-primary: #EDEDEB;
+        --text-secondary: #9E9E97;
+        --text-tertiary: #6B6B66;
+        --accent: #AFA9EC;
+        --accent-light: #26215C;
+        --border: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND ORBS ===== */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: #7F77DD;
+      top: -150px; left: -120px;
+      animation: drift1 14s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 450px; height: 450px;
+      background: #1D9E75;
+      bottom: -100px; right: -80px;
+      animation: drift2 16s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 350px; height: 350px;
+      background: #D85A30;
+      top: 40%; left: 55%;
+      animation: drift3 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(40px, -30px) scale(1.1); }
+    }
+    @keyframes drift2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-35px, 25px) scale(1.08); }
+    }
+    @keyframes drift3 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(25px, -40px) scale(1.05); }
+    }
+
+    /* ===== GRAIN OVERLAY ===== */
+    .grain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    /* ===== DECORATIVE DOTS ===== */
+    .dots {
+      position: fixed;
+      z-index: 1;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+    .dots-tl { top: 32px; left: 32px; }
+    .dots-br { bottom: 32px; right: 32px; }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 680px;
+    }
+
+    .greeting-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    }
+
+    .main-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(40px, 7vw, 64px);
+      font-weight: 400;
+      line-height: 1.12;
+      color: var(--text-primary);
+      margin-bottom: 0.3em;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+    }
+
+    .main-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .tagline {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    }
+
+    .divider {
+      width: 72px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 15px 36px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-primary {
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-card);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    .btn:hover .btn-arrow {
+      transform: translateX(3px);
+    }
+
+    .signature {
+      margin-top: 4rem;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      letter-spacing: 0.5px;
+      opacity: 0;
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 1.1s forwards;
+    }
+
+    .signature span {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero { padding: 3rem 1.25rem; }
+      .dots { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background effects -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grain"></div>
+
+  <!-- Decorative dots -->
+  <svg class="dots dots-tl" width="96" height="96" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+    <circle cx="8" cy="8" r="2" fill="currentColor"/><circle cx="32" cy="8" r="2" fill="currentColor"/>
+    <circle cx="56" cy="8" r="2" fill="currentColor"/><circle cx="80" cy="8" r="2" fill="currentColor"/>
+    <circle cx="8" cy="32" r="2" fill="currentColor"/><circle cx="32" cy="32" r="2" fill="currentColor"/>
+    <circle cx="56" cy="32" r="2" fill="currentColor"/><circle cx="80" cy="32" r="2" fill="currentColor"/>
+    <circle cx="8" cy="56" r="2" fill="currentColor"/><circle cx="32" cy="56" r="2" fill="currentColor"/>
+    <circle cx="56" cy="56" r="2" fill="currentColor"/><circle cx="80" cy="56" r="2" fill="currentColor"/>
+    <circle cx="8" cy="80" r="2" fill="currentColor"/><circle cx="32" cy="80" r="2" fill="currentColor"/>
+    <circle cx="56" cy="80" r="2" fill="currentColor"/><circle cx="80" cy="80" r="2" fill="currentColor"/>
+  </svg>
+  <svg class="dots dots-br" width="96" height="96" viewBox="0 0 96 96" fill="none" aria-hidden="true">
+    <circle cx="8" cy="8" r="2" fill="currentColor"/><circle cx="32" cy="8" r="2" fill="currentColor"/>
+    <circle cx="56" cy="8" r="2" fill="currentColor"/><circle cx="80" cy="8" r="2" fill="currentColor"/>
+    <circle cx="8" cy="32" r="2" fill="currentColor"/><circle cx="32" cy="32" r="2" fill="currentColor"/>
+    <circle cx="56" cy="32" r="2" fill="currentColor"/><circle cx="80" cy="32" r="2" fill="currentColor"/>
+    <circle cx="8" cy="56" r="2" fill="currentColor"/><circle cx="32" cy="56" r="2" fill="currentColor"/>
+    <circle cx="56" cy="56" r="2" fill="currentColor"/><circle cx="80" cy="56" r="2" fill="currentColor"/>
+    <circle cx="8" cy="80" r="2" fill="currentColor"/><circle cx="32" cy="80" r="2" fill="currentColor"/>
+    <circle cx="56" cy="80" r="2" fill="currentColor"/><circle cx="80" cy="80" r="2" fill="currentColor"/>
+  </svg>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="greeting-label">Welcome to your new site</p>
+      <h1 class="main-heading">Hello, <em>John</em>.</h1>
+      <p class="tagline">Let's build something beautiful.</p>
+      <div class="divider"></div>
+      <p class="subtitle">Your site is ready and waiting. Everything has been set up with care — now it's your turn to make it yours.</p>
+      <div class="cta-row">
+        <a href="https://github.com/johnspilotrosj/johnspilotrosj.github.io" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          Edit site <span class="btn-arrow">&rarr;</span>
+        </a>
+      </div>
+      <p class="signature">Designed &amp; developed by <span>Ethan Gardner</span></p>
+    </div>
+  </section>
+
+</body>
+</html>
