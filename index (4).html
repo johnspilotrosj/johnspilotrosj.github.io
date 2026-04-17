@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOHN SPILOTROS</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div id="glow" class="glow-orb"></div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-name">JOHN<br>SPILOTROS</h1>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="openModal('INQUIRE')">INQUIRE</button>
+        <button class="btn btn-ghost" onclick="openModal('PRICING')">PRICING</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- MODAL -->
+  <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&#10005;</button>
+      <p class="modal-label" id="modal-label">INQUIRE</p>
+      <h2 class="modal-heading">GET IN TOUCH</h2>
+
+      <div class="form-group">
+        <label class="form-label">YOUR NAME</label>
+        <input type="text" class="form-input" id="f-name" placeholder="FULL NAME" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">PHONE NUMBER</label>
+        <input type="tel" class="form-input" id="f-phone" placeholder="+1 (000) 000-0000" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">EMAIL</label>
+        <input type="email" class="form-input" id="f-email" placeholder="YOUR@EMAIL.COM" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">SERVICE PROVIDED</label>
+        <input type="text" class="form-input" id="f-service" placeholder="DESCRIBE THE SERVICE YOU NEED" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">MESSAGE</label>
+        <textarea class="form-input form-textarea" id="f-message" placeholder="ANY ADDITIONAL DETAILS..."></textarea>
+      </div>
+
+      <button class="btn btn-primary full-width" id="modal-submit">SEND</button>
+      <p class="form-success" id="modal-success">MESSAGE SENT. I'LL BE IN TOUCH SOON.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-name">JOHN SPILOTROS</span>
+    <span class="footer-copy">&copy; 2025. ALL RIGHTS RESERVED.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
