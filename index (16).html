@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<meta name="theme-color" content="#050507"/>
+<meta name="description" content="John Spilotros — Independent studio. Real estate, web development, and consulting based in Eagle, Idaho."/>
+<meta property="og:title" content="John Spilotros"/>
+<meta property="og:description" content="Real estate, web development, and consulting based in Eagle, Idaho."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<title>John Spilotros</title>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050507'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='15' fill='%23ffffff'>JS</text></svg>"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;
+  --white:#f0ede8;
+  --dim:rgba(240,237,232,.38);
+  --line:rgba(240,237,232,.1);
+  --gold:#c8900a;
+  --mono:'Courier Prime',monospace;
+  --serif:'Cormorant Garamond',Georgia,serif;
+}
+button,input,textarea,select{touch-action:manipulation;}
+html,body{width:100%;height:100%;background:var(--black);color:var(--white);font-family:var(--mono);overflow:hidden}
+
+/* ── MAIN PAGE ── */
+#main-page{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  transition:opacity .5s,transform .5s;
+  z-index:10;
+}
+#main-page.hidden{opacity:0;pointer-events:none;transform:translateY(-12px)}
+
+.site-name{
+  font-family:Impact,'Arial Narrow',sans-serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:400;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--white);
+  margin-bottom:2px;
+  text-align:center;
+  line-height:1;
+}
+.site-sub{
+  font-size:.58rem;
+  letter-spacing:.28em;
+  color:var(--dim);
+  text-transform:uppercase;
+  margin-bottom:48px;
+  text-align:center;
+}
+
+.btn-grid{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border:1px solid rgba(240,237,232,.15);
+  width:min(400px,92vw);
+}
+.pg-btn{
+  background:var(--black);
+  border:none;
+  border-bottom:1px solid rgba(240,237,232,.1);
+  color:rgba(240,237,232,.6);
+  font-family:var(--mono);
+  font-size:.68rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  padding:16px 24px;
+  text-align:left;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .2s,color .2s,padding-left .2s;
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  cursor:pointer;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.pg-btn:last-child{border-bottom:none}
+.pg-btn .btn-num{
+  font-size:.55rem;
+  color:rgba(240,237,232,.22);
+  letter-spacing:.1em;
+  min-width:28px;
+  flex-shrink:0;
+}
+.pg-btn:hover,.pg-btn:active{
+  background:rgba(240,237,232,.04);
+  color:var(--gold);
+  padding-left:36px;
+}
+.pg-btn:hover .btn-num,.pg-btn:active .btn-num{color:rgba(240,237,232,.35)}
+.pg-btn.gold-btn{color:rgba(240,237,232,.6)}
+.pg-btn.gold-btn:hover,.pg-btn.gold-btn:active{color:var(--gold)}
+
+.site-footer{
+  position:fixed;bottom:0;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 32px;
+  font-size:.58rem;
+  letter-spacing:.16em;
+  color:var(--dim);
+  border-top:1px solid var(--line);
+  z-index:100;
+}
+.site-footer a{color:var(--dim);text-decoration:none;transition:color .2s}
+.site-footer a:hover{color:var(--white)}
+.footer-links{display:flex;gap:28px;align-items:center}
+
+/* ── SUBPAGES ── */
+.subpage{
+  position:fixed;inset:0;
+  opacity:0;pointer-events:none;
+  transition:opacity .5s,transform .5s;
+  transform:translateY(16px);
+  z-index:20;
+  overflow-y:auto;
+  background:var(--black);
+}
+.subpage.open{opacity:1;pointer-events:all;transform:translateY(0)}
+
+.sub-inner{
+  max-width:680px;
+  margin:0 auto;
+  padding:80px 32px 100px;
+}
+.back-btn{
+  background:none;border:none;
+  color:var(--dim);font-family:var(--mono);
+  font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:0;margin-bottom:48px;
+  display:flex;align-items:center;gap:10px;
+  transition:color .2s;
+}
+.back-btn:hover{color:var(--white)}
+.back-btn::before{content:'←'}
+
+.sub-kicker{
+  font-size:.6rem;letter-spacing:.3em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:12px;
+}
+.sub-title{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(2rem,4vw,3.2rem);
+  color:var(--white);line-height:1.05;
+  margin-bottom:32px;
+}
+.sub-body{
+  font-size:.82rem;line-height:1.8;color:var(--dim);
+  margin-bottom:40px;
+}
+.sub-divider{
+  width:40px;height:1px;background:var(--line);margin:40px 0;
+}
+
+/* form */
+.form-group{margin-bottom:16px}
+.form-label{
+  display:block;font-size:.58rem;letter-spacing:.2em;
+  color:var(--dim);text-transform:uppercase;margin-bottom:6px;
+  transition:color .2s;
+}
+.form-group:focus-within .form-label{color:var(--white)}
+.form-input{
+  width:100%;background:transparent;
+  border:none;border-bottom:1px solid var(--line);
+  color:var(--white);font-family:var(--mono);
+  font-size:.82rem;letter-spacing:.04em;
+  padding:10px 0;outline:none;
+  transition:border-color .2s;
+  border-radius:0;
+}
+.form-input::placeholder{color:rgba(240,237,232,.2)}
+.form-input:focus{border-color:rgba(240,237,232,.4)}
+.form-input.err{border-color:rgba(200,144,10,.6);animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+textarea.form-input{resize:none;min-height:80px;padding-top:10px}
+
+.submit-btn{
+  margin-top:32px;
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--white);font-family:var(--mono);
+  font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+  padding:14px 32px;
+  transition:border-color .2s,background .2s;
+}
+.submit-btn:hover{border-color:rgba(240,237,232,.4);background:rgba(240,237,232,.04)}
+.form-success{
+  display:none;margin-top:14px;
+  font-size:.6rem;letter-spacing:.16em;
+  color:var(--gold);text-transform:uppercase;
+}
+
+/* real estate subpage has 3D canvas */
+#re-page{padding:0}
+#re-canvas-wrap{position:absolute;inset:0;z-index:0}
+#re-ui{
+  position:absolute;inset:0;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:flex-start;
+  justify-content:flex-end;
+  padding:0 0 80px 40px;
+  pointer-events:none;
+}
+#re-back{pointer-events:all}
+#re-title{
+  font-family:var(--serif);font-weight:300;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.6);
+  margin-bottom:8px;pointer-events:none;
+}
+#re-sub{
+  font-size:.58rem;letter-spacing:.22em;color:rgba(255,255,255,.45);
+  text-transform:uppercase;pointer-events:none;
+}
+.re-back-btn{
+  background:rgba(8,8,8,.6);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.6);font-family:var(--mono);
+  font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:10px 18px;margin-bottom:28px;
+  display:flex;align-items:center;gap:8px;
+  transition:border-color .2s,color .2s;
+}
+.re-back-btn::before{content:'←'}
+.re-back-btn:hover{border-color:rgba(255,255,255,.35);color:#fff}
+
+/* listings grid on RE page */
+#listings-wrap{
+  position:absolute;top:0;right:0;width:320px;height:100%;
+  background:rgba(8,8,8,.75);backdrop-filter:blur(12px);
+  border-left:1px solid rgba(255,255,255,.08);
+  overflow-y:auto;z-index:10;
+  padding:72px 0 80px;
+  transform:translateX(100%);
+  transition:transform .4s cubic-bezier(.2,.8,.2,1);
+}
+#listings-wrap.open{transform:translateX(0)}
+.lw-head{
+  padding:0 24px 20px;border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.lw-title{font-size:.62rem;letter-spacing:.22em;color:rgba(255,255,255,.55);text-transform:uppercase}
+.lw-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:.7rem;padding:4px}
+.lw-close:hover{color:#fff}
+.lw-card{
+  padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .2s;
+}
+.lw-card:hover{background:rgba(255,255,255,.03)}
+.lw-price{font-size:.58rem;letter-spacing:.2em;color:var(--gold);margin-bottom:4px;text-transform:uppercase}
+.lw-addr{font-size:.82rem;color:rgba(255,255,255,.8);margin-bottom:4px;font-family:var(--serif);font-weight:300}
+.lw-meta{font-size:.56rem;color:rgba(255,255,255,.35);letter-spacing:.1em}
+.lw-empty{padding:40px 24px;font-size:.6rem;letter-spacing:.16em;color:rgba(255,255,255,.25);text-transform:uppercase}
+
+#re-btns{
+  display:flex;gap:10px;margin-bottom:20px;pointer-events:all;
+}
+.re-pill{
+  background:rgba(8,8,8,.6);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.6);font-family:var(--mono);
+  font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 16px;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.re-pill:hover{border-color:rgba(255,255,255,.35);color:#fff}
+.re-pill.active{background:rgba(200,144,10,.15);border-color:rgba(200,144,10,.5);color:var(--gold)}
+
+/* ── PENTAGON ── */
+#main-page{overflow:hidden}
+.pent-btn{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  background:transparent;
+  border:1px solid rgba(240,237,232,.18);
+  color:rgba(240,237,232,.6);
+  font-family:var(--mono);
+  font-size:.62rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  padding:14px 22px;
+  white-space:nowrap;
+  transition:color .25s,border-color .25s,background .25s;
+  -webkit-appearance:none;
+  -webkit-tap-highlight-color:transparent;
+  cursor:pointer;
+  z-index:3;
+}
+.pent-btn:hover,.pent-btn:active{
+  color:var(--gold);
+  border-color:rgba(200,144,10,.5);
+  background:rgba(200,144,10,.05);
+}
+.pent-num{
+  font-size:.48rem;
+  color:rgba(240,237,232,.2);
+  margin-right:10px;
+  letter-spacing:.1em;
+}
+.pent-btn:hover .pent-num,.pent-btn:active .pent-num{color:rgba(200,144,10,.4)}
+@media(max-width:600px){
+  .btn-grid{grid-template-columns:1fr;width:90vw}
+  .site-footer .footer-links{gap:16px}
+  .site-name{font-size:2rem}
+  #listings-wrap{width:100%;height:50%;top:auto;bottom:0;border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+}
+</style>
+</head>
+<body>
+
+<!-- ── MAIN PAGE ── -->
+<div id="main-page">
+  <p class="site-name">John Spilotros</p>
+  <p class="site-sub">Idaho &nbsp;·&nbsp; <span id="main-clock">——</span></p>
+  <div class="btn-grid">
+    <button class="pg-btn gold-btn" onclick="openPage('inquire')"><span class="btn-num">01</span>Inquire</button>
+    <button class="pg-btn gold-btn" onclick="openPage('pricing')"><span class="btn-num">02</span>Pricing</button>
+    <button class="pg-btn" onclick="openPage('listings')"><span class="btn-num">03</span>Real Estate</button>
+    <button class="pg-btn" onclick="openPage('webdev')"><span class="btn-num">04</span>Website Dev</button>
+    <button class="pg-btn" onclick="openPage('availability')"><span class="btn-num">05</span>Availability</button>
+    <button class="pg-btn" onclick="openPage('contact')"><span class="btn-num">06</span>Contact</button>
+  </div>
+</div>
+
+<!-- ── LISTINGS ── -->
+<div class="subpage" id="listings-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('listings')">Back</button>
+    <p class="sub-kicker">Real Estate</p>
+    <h1 class="sub-title">Treasure Valley.</h1>
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid rgba(240,237,232,.1);margin-bottom:32px">
+      <button class="pg-btn" onclick="openPage('re-listings')"><span class="btn-num">01</span>Listings</button>
+      <button class="pg-btn" onclick="openPage('buy')"><span class="btn-num">02</span>Buy</button>
+      <button class="pg-btn" onclick="openPage('sell')"><span class="btn-num">03</span>Sell</button>
+      <button class="pg-btn" onclick="openPage('about')"><span class="btn-num">04</span>About</button>
+      <button class="pg-btn" onclick="openExplore()"><span class="btn-num">05</span>Explore in 3D</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── RE LISTINGS ── -->
+<div class="subpage" id="re-listings-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('re-listings');openPage('listings')">Back</button>
+    <p class="sub-kicker">Active Listings</p>
+    <h1 class="sub-title">Current properties.</h1>
+    <div id="public-listings-body"><p class="sub-body" style="color:var(--dim)">No active listings at this time. Check back soon or reach out directly.</p></div>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('re-listings')">Inquire About a Property</button>
+  </div>
+</div>
+
+<!-- ── WEB DEV ── -->
+<div class="subpage" id="webdev-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('webdev')">Back</button>
+    <p class="sub-kicker">Website Development</p>
+    <h1 class="sub-title">Built to perform.</h1>
+    <p class="sub-body">Custom websites built from scratch. No templates, no bloat. Fast, clean, and designed to convert. Every site is hand-coded and tailored to your business.</p>
+    <div class="sub-divider"></div>
+    <p class="sub-body"><span style="color:var(--white)">What's included</span><br><br>Custom design and development<br>Mobile responsive<br>Contact forms wired to your inbox<br>Deployed on your domain<br>Clean, editable code</p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('webdev')">Start a Project</button>
+  </div>
+</div>
+
+<!-- ── AVAILABILITY ── -->
+<div class="subpage" id="availability-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('availability')">Back</button>
+    <p class="sub-kicker">Availability</p>
+    <h1 class="sub-title">Currently accepting new clients.</h1>
+    <p class="sub-body">I take on a limited number of clients at a time to make sure everyone gets full attention. Reach out early.</p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('availability')">Get in Touch</button>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<div class="subpage" id="contact-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('contact')">Back</button>
+    <p class="sub-kicker">Contact</p>
+    <h1 class="sub-title">Let's talk.</h1>
+    <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="con-name" placeholder="Jane Doe" autocomplete="name"/></div>
+    <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="con-phone" placeholder="+1 (000) 000-0000" autocomplete="tel"/></div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="con-email" placeholder="you@email.com" autocomplete="email"/></div>
+    <div class="form-group"><label class="form-label">Service</label><input type="text" class="form-input" id="con-service" placeholder="Real estate, web dev, other..."/></div>
+    <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" id="con-msg" placeholder="Tell me about your project..." rows="4"></textarea></div>
+    <button class="submit-btn" onclick="submitForm('con')">Send</button>
+    <p class="form-success" id="con-success">Sent. I'll be in touch soon.</p>
+  </div>
+</div>
+
+<!-- ── BUY ── -->
+<div class="subpage" id="buy-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('buy')">Back</button>
+    <p class="sub-kicker">For Buyers</p>
+    <h1 class="sub-title">Find your next home.</h1>
+    <p class="sub-body">Whether you are a first-time buyer or adding to your portfolio, I will guide you through every step. From search to close, you will have someone in your corner who knows the Treasure Valley market inside and out.</p>
+    <div class="sub-divider"></div>
+    <p class="sub-body"><span style="color:var(--white)">What I do for buyers</span><br><br>
+    Market analysis and neighborhood guidance<br>
+    Property tours and offer strategy<br>
+    Negotiation and contract review<br>
+    Full support through inspection and close
+    </p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('buy')">Start Your Search</button>
+  </div>
+</div>
+
+<!-- ── SELL ── -->
+<div class="subpage" id="sell-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('sell')">Back</button>
+    <p class="sub-kicker">For Sellers</p>
+    <h1 class="sub-title">Get the most for your home.</h1>
+    <p class="sub-body">Selling is more than putting a sign in the yard. I handle the pricing strategy, marketing, showings, and negotiations so you can focus on your next move.</p>
+    <div class="sub-divider"></div>
+    <p class="sub-body"><span style="color:var(--white)">What I do for sellers</span><br><br>
+    Comparative market analysis and pricing<br>
+    Professional photography coordination<br>
+    MLS listing and marketing<br>
+    Offer review and negotiation<br>
+    Full support through close
+    </p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('sell')">Get a Home Valuation</button>
+  </div>
+</div>
+
+<!-- ── PRICING ── -->
+<div class="subpage" id="pricing-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('pricing')">Back</button>
+    <p class="sub-kicker">Pricing</p>
+    <h1 class="sub-title">Transparent rates.</h1>
+    <p class="sub-body">I work on a standard commission structure with no hidden fees. Every deal is different, so reach out and I will give you a straight answer on what to expect.</p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('pricing')">Request a Quote</button>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<div class="subpage" id="about-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('about')">Back</button>
+    <p class="sub-kicker">About</p>
+    <h1 class="sub-title">John Spilotros.</h1>
+    <p class="sub-body">Independent real estate agent based in Eagle, Idaho. I work with buyers and sellers across the Treasure Valley, including Eagle, Boise, Meridian, Nampa, and Caldwell. I keep things simple, communicate clearly, and focus on getting results.</p>
+    <div class="sub-divider"></div>
+    <p class="sub-body"><span style="color:var(--white)">Area of focus</span><br><br>
+    Eagle, Boise, Meridian, Nampa, Caldwell<br>
+    Residential buying and selling<br>
+    First-time buyers and investors
+    </p>
+    <div class="sub-divider"></div>
+    <button class="submit-btn" onclick="openPage('inquire');closePage('about')">Get in Touch</button>
+  </div>
+</div>
+
+<!-- ── INQUIRE ── -->
+<div class="subpage" id="inquire-page">
+  <div class="sub-inner">
+    <button class="back-btn" onclick="closePage('inquire')">Back</button>
+    <p class="sub-kicker">Inquire</p>
+    <h1 class="sub-title">Get in touch.</h1>
+    <p class="sub-body">A few details below and I'll get back within two business days.</p>
+    <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="inq-name" placeholder="Jane Doe" autocomplete="name"/></div>
+    <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="inq-phone" placeholder="+1 (000) 000-0000" autocomplete="tel"/></div>
+    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="inq-email" placeholder="you@email.com" autocomplete="email"/></div>
+    <div class="form-group"><label class="form-label">Buying or Selling?</label><input type="text" class="form-input" id="inq-service" placeholder="Buying / Selling / Both"/></div>
+    <div class="form-group"><label class="form-label">Message</label><textarea class="form-input" id="inq-msg" placeholder="Tell me about what you're looking for..." rows="4"></textarea></div>
+    <button class="submit-btn" onclick="submitForm('inq')">Send</button>
+    <p class="form-success" id="inq-success">Sent. I'll be in touch soon.</p>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <span style="letter-spacing:.1em;color:rgba(240,237,232,.25)">© 2025 John Spilotros</span>
+  <div class="footer-links">
+    <a href="tel:+12158593267">(215) 859-3267</a>
+    <a href="https://instagram.com/johnspilo" target="_blank" rel="noopener">@johnspilo</a>
+  </div>
+</footer>
+
+<!-- ── ADMIN (type "admin" anywhere) ── -->
+<div id="admin-lock" style="position:fixed;inset:0;z-index:200;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .3s">
+  <p style="font-family:var(--serif);font-size:1.6rem;color:#fff;font-weight:300">Admin</p>
+  <input type="password" id="lock-pw" placeholder="Password" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.2);color:#fff;font-family:var(--mono);font-size:1rem;padding:8px 0;width:200px;outline:none;text-align:center" onkeydown="if(event.key==='Enter')checkPw()"/>
+  <p id="lock-err" style="font-size:.6rem;letter-spacing:.2em;color:#c8900a;opacity:0;transition:opacity .2s;text-transform:uppercase">Incorrect</p>
+  <button onclick="checkPw()" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;padding:10px 24px">Enter</button>
+  <button onclick="closeAdminLock()" style="background:none;border:none;color:rgba(255,255,255,.3);font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;margin-top:4px">Cancel</button>
+</div>
+
+<div id="admin-page" style="position:fixed;inset:0;z-index:200;background:#000;opacity:0;pointer-events:none;transition:opacity .3s;overflow-y:auto;padding:60px 36px">
+  <div style="max-width:560px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:18px">
+      <p style="font-family:var(--serif);font-size:1.5rem;color:#fff;font-weight:300">Listings</p>
+      <div style="display:flex;gap:10px">
+        <button onclick="openListingForm()" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px">+ Add</button>
+        <button onclick="closeAdmin()" style="background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px">Exit</button>
+      </div>
+    </div>
+    <div id="admin-list"></div>
+  </div>
+</div>
+
+<div id="listing-modal" style="position:fixed;inset:0;z-index:210;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;padding:24px">
+  <div style="background:#0a0a0a;border:1px solid rgba(255,255,255,.1);padding:36px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto">
+    <p style="font-family:var(--serif);font-size:1.3rem;color:#fff;font-weight:300;margin-bottom:24px" id="lm-title">New Listing</p>
+    <div class="form-group"><label class="form-label">Price</label><input class="form-input" id="lm-price" placeholder="$850,000"/></div>
+    <div class="form-group"><label class="form-label">Status</label><input class="form-input" id="lm-status" placeholder="For Sale / Pending / Sold"/></div>
+    <div class="form-group"><label class="form-label">Address</label><input class="form-input" id="lm-addr" placeholder="123 Main St, Eagle ID 83616"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <div class="form-group"><label class="form-label">Beds</label><input class="form-input" id="lm-beds" placeholder="3" type="number"/></div>
+      <div class="form-group"><label class="form-label">Baths</label><input class="form-input" id="lm-baths" placeholder="2" type="number"/></div>
+      <div class="form-group"><label class="form-label">Sq Ft</label><input class="form-input" id="lm-sqft" placeholder="1800"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Image URL</label><input class="form-input" id="lm-img" placeholder="https://..."/></div>
+    <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="lm-desc" placeholder="Property details..."></textarea></div>
+    <div style="display:flex;gap:12px;margin-top:24px;justify-content:flex-end">
+      <button onclick="closeListingForm()" style="background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 20px">Cancel</button>
+      <button onclick="saveListing()" style="background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:10px 20px">Save</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ── PAGE ROUTING ─────────────────────────────────────────
+const mainPage = document.getElementById('main-page');
+let activePage = null;
+
+function openPage(id){
+  if(activePage) document.getElementById(activePage+'-page').classList.remove('open');
+  mainPage.classList.add('hidden');
+  document.getElementById(id+'-page').classList.add('open');
+  activePage = id;
+  if(id==='re-listings') renderPublicListings();
+}
+
+function closePage(id){
+  document.getElementById(id+'-page').classList.remove('open');
+  mainPage.classList.remove('hidden');
+  activePage = null;
+}
+
+// allow nested page opens (e.g. from pricing → inquire)
+window.openPage = openPage;
+window.closePage = closePage;
+
+// ── FORM SUBMIT ──────────────────────────────────────────
+async function submitForm(prefix){
+  const ids = prefix==='inq'
+    ? ['name','phone','email','service']
+    : ['name','phone','email','service'];
+  let ok = true;
+  ids.forEach(f=>{
+    const el = document.getElementById(prefix+'-'+f);
+    el.classList.remove('err');
+    if(!el.value.trim()){ void el.offsetWidth; el.classList.add('err'); ok=false; }
+  });
+  if(!ok) return;
+  const btn = event.target;
+  btn.textContent='Sending...'; btn.disabled=true;
+  const data = {
+    name:    document.getElementById(prefix+'-name').value,
+    phone:   document.getElementById(prefix+'-phone').value,
+    email:   document.getElementById(prefix+'-email').value,
+    service: document.getElementById(prefix+'-service').value,
+    message: document.getElementById(prefix+'-msg')?.value||'',
+    _subject:'New inquiry — John Spilotros'
+  };
+  try{
+    await fetch('https://formspree.io/f/xaqaoanv',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify(data)
+    });
+    btn.textContent='Sent ✓';
+    ids.forEach(f=>document.getElementById(prefix+'-'+f).value='');
+    if(document.getElementById(prefix+'-msg')) document.getElementById(prefix+'-msg').value='';
+    const s=document.getElementById(prefix+'-success'); s.style.display='block';
+    setTimeout(()=>{s.style.display='none';btn.textContent='Send';btn.disabled=false;},3000);
+  } catch(e){
+    btn.textContent='Try again'; btn.disabled=false;
+  }
+}
+window.submitForm = submitForm;
+
+// ── LISTINGS ─────────────────────────────────────────────
+const STORAGE_KEY='js_listings_v2';
+let listings = JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+function renderPublicListings(){
+  const body = document.getElementById('public-listings-body');
+  if(!listings.length){
+    body.innerHTML='<p class="sub-body" style="color:var(--dim)">No active listings at this time. Check back soon or reach out directly.</p>';
+    return;
+  }
+  body.innerHTML = listings.map(l=>`
+    <div style="padding:20px 0;border-bottom:1px solid var(--line)">
+      <p style="font-size:.6rem;letter-spacing:.22em;color:var(--gold);margin-bottom:4px;text-transform:uppercase">${l.price}${l.status?' · '+l.status:''}</p>
+      <p style="font-family:var(--serif);font-size:1.2rem;font-weight:300;color:var(--white);margin-bottom:4px">${l.addr}</p>
+      <p style="font-size:.6rem;letter-spacing:.1em;color:var(--dim)">${[l.beds&&l.beds+' bd',l.baths&&l.baths+' ba',l.sqft&&l.sqft+' sqft'].filter(Boolean).join(' · ')}</p>
+      ${l.desc?`<p style="font-size:.72rem;color:var(--dim);margin-top:8px;line-height:1.6">${l.desc}</p>`:''}
+    </div>`).join('');
+}
+
+// ── ADMIN ────────────────────────────────────────────────
+const ADMIN_PW = 'Sam10109!';
+let editingId = null;
+let adminBuf = '';
+document.addEventListener('keydown',e=>{
+  adminBuf=(adminBuf+e.key).slice(-5);
+  if(adminBuf==='admin'){ openAdminLock(); adminBuf=''; }
+});
+
+function openAdminLock(){
+  const el=document.getElementById('admin-lock');
+  el.style.opacity='1'; el.style.pointerEvents='all';
+  setTimeout(()=>document.getElementById('lock-pw').focus(),200);
+}
+function closeAdminLock(){
+  const el=document.getElementById('admin-lock');
+  el.style.opacity='0'; el.style.pointerEvents='none';
+  document.getElementById('lock-pw').value='';
+}
+function checkPw(){
+  if(document.getElementById('lock-pw').value===ADMIN_PW){
+    closeAdminLock();
+    const ap=document.getElementById('admin-page');
+    ap.style.opacity='1'; ap.style.pointerEvents='all';
+    renderAdmin();
+  } else {
+    const err=document.getElementById('lock-err');
+    err.style.opacity='1';
+    setTimeout(()=>err.style.opacity='0',2000);
+    document.getElementById('lock-pw').value='';
+  }
+}
+function closeAdmin(){
+  const ap=document.getElementById('admin-page');
+  ap.style.opacity='0'; ap.style.pointerEvents='none';
+}
+function renderAdmin(){
+  const list=document.getElementById('admin-list');
+  if(!listings.length){ list.innerHTML='<p style="font-size:.6rem;letter-spacing:.16em;color:rgba(255,255,255,.3);text-transform:uppercase">No listings yet.</p>'; return; }
+  list.innerHTML=listings.map((l,i)=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.06)">
+      <div>
+        <p style="font-family:var(--serif);font-size:1rem;color:#fff;font-weight:300">${l.addr}</p>
+        <p style="font-size:.58rem;letter-spacing:.16em;color:var(--gold);margin-top:3px">${l.price}</p>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="editListing(${i})" style="background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px">Edit</button>
+        <button onclick="deleteListing(${i})" style="background:transparent;border:1px solid rgba(200,100,80,.3);color:rgba(200,100,80,.7);font-family:var(--mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px">Del</button>
+      </div>
+    </div>`).join('');
+}
+function openListingForm(id){
+  editingId=id!=null?id:null;
+  const l=editingId!=null?listings[editingId]:{};
+  document.getElementById('lm-title').textContent=editingId!=null?'Edit Listing':'New Listing';
+  ['price','status','addr','beds','baths','sqft','img','desc'].forEach(k=>{
+    document.getElementById('lm-'+k).value=l[k]||'';
+  });
+  const m=document.getElementById('listing-modal');
+  m.style.opacity='1'; m.style.pointerEvents='all';
+}
+function closeListingForm(){
+  const m=document.getElementById('listing-modal');
+  m.style.opacity='0'; m.style.pointerEvents='none';
+}
+function saveListing(){
+  const l={};
+  ['price','status','addr','beds','baths','sqft','img','desc'].forEach(k=>l[k]=document.getElementById('lm-'+k).value.trim());
+  if(!l.addr){ alert('Address required'); return; }
+  if(editingId!=null) listings[editingId]=l; else listings.push(l);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(listings));
+  closeListingForm(); renderAdmin();
+}
+function editListing(i){ openListingForm(i); }
+function deleteListing(i){
+  if(!confirm('Delete?')) return;
+  listings.splice(i,1);
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(listings));
+  renderAdmin();
+}
+window.checkPw=checkPw; window.closeAdminLock=closeAdminLock; window.closeAdmin=closeAdmin;
+window.openListingForm=openListingForm; window.closeListingForm=closeListingForm;
+window.saveListing=saveListing; window.editListing=editListing; window.deleteListing=deleteListing;
+
+// ── 3D REAL ESTATE SCENE ─────────────────────────────────
+function initRE(){
+  const wrap = document.getElementById('re-canvas-wrap');
+  const iframe = document.createElement('iframe');
+  iframe.src = 'realestate.html';
+  iframe.style.cssText = 'width:100%;height:100%;border:none;display:block';
+  wrap.appendChild(iframe);
+}
+
+// Rocky Mountain clock
+(function tick(){
+  const el=document.getElementById('main-clock');
+  if(!el)return;
+  const t=new Date().toLocaleTimeString('en-US',{timeZone:'America/Boise',hour:'2-digit',minute:'2-digit',hour12:true});
+  el.textContent=t+' MT';
+  setTimeout(tick,10000);
+})();
+
+// ── PENTAGON BUTTONS ─────────────────────────────────────
+const BTNS=[
+  {num:'01',label:'Inquire',    page:'inquire'},
+  {num:'02',label:'Pricing',    page:'pricing'},
+  {num:'03',label:'Real Estate',page:'listings'},
+  {num:'04',label:'Website Dev',page:'webdev'},
+  {num:'05',label:'Availability',page:'availability'},
+  {num:'06',label:'Contact',    page:'contact'},
+];
+
+const wrap=document.getElementById('pentagon-wrap');
+const btnEls=[];
+
+BTNS.forEach((b,i)=>{
+  const el=document.createElement('button');
+  el.className='pent-btn';
+  el.innerHTML=`<span class="pent-num">${b.num}</span>${b.label}`;
+  el.addEventListener('click',()=>openPage(b.page));
+  el.addEventListener('touchend',e=>{e.preventDefault();openPage(b.page);});
+  wrap.appendChild(el);
+  btnEls.push(el);
+});
+
+// Pentagon layout: 6 buttons on a hexagon (evenly spaced)
+// We use 6 points evenly spaced, starting from top
+let cx=window.innerWidth/2;
+let cy=window.innerHeight/2;
+let mouseX=cx, mouseY=cy;
+let floatAngle=0;
+
+const BASE_R=()=>Math.min(window.innerWidth,window.innerHeight)*0.32;
+
+function positionBtns(){
+  const R=BASE_R();
+  const n=BTNS.length;
+  btnEls.forEach((el,i)=>{
+    const angle=(2*Math.PI/n)*i - Math.PI/2 + floatAngle;
+    const bx=cx+R*Math.cos(angle);
+    const by=cy+R*Math.sin(angle);
+    el.style.left=bx+'px';
+    el.style.top=by+'px';
+  });
+}
+
+// Slow float animation + subtle mouse pull
+let raf;
+(function animate(){
+  raf=requestAnimationFrame(animate);
+  floatAngle+=0.003;
+  // subtle pull toward mouse
+  cx+=(mouseX-cx)*0.015;
+  cy+=(mouseY-cy)*0.015;
+  positionBtns();
+})();
+
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+document.addEventListener('touchmove',e=>{
+  mouseX=e.touches[0].clientX;mouseY=e.touches[0].clientY;
+},{passive:true});
+
+window.addEventListener('resize',()=>{
+  cx=window.innerWidth/2; cy=window.innerHeight/2;
+  mouseX=cx; mouseY=cy;
+  positionBtns();
+});
+
+// ── CANVAS PARTICLE BG ───────────────────────────────────
+const bgCanvas=document.getElementById('bg-canvas');
+const bgCtx=bgCanvas.getContext('2d');
+let W,H,particles=[];
+
+function resizeBg(){
+  W=bgCanvas.width=window.innerWidth;
+  H=bgCanvas.height=window.innerHeight;
+}
+resizeBg();
+window.addEventListener('resize',resizeBg);
+
+for(let i=0;i<55;i++){
+  particles.push({
+    x:Math.random()*window.innerWidth,
+    y:Math.random()*window.innerHeight,
+    r:Math.random()*1.2+0.3,
+    vx:(Math.random()-.5)*0.18,
+    vy:(Math.random()-.5)*0.18,
+    o:Math.random()*0.35+0.05
+  });
+}
+
+(function drawBg(){
+  requestAnimationFrame(drawBg);
+  bgCtx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    bgCtx.beginPath();
+    bgCtx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    bgCtx.fillStyle=`rgba(240,237,232,${p.o})`;
+    bgCtx.fill();
+  });
+  // draw faint lines between nearby particles
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const dx=particles[i].x-particles[j].x;
+      const dy=particles[i].y-particles[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        bgCtx.beginPath();
+        bgCtx.moveTo(particles[i].x,particles[i].y);
+        bgCtx.lineTo(particles[j].x,particles[j].y);
+        bgCtx.strokeStyle=`rgba(240,237,232,${0.06*(1-dist/120)})`;
+        bgCtx.lineWidth=0.5;
+        bgCtx.stroke();
+      }
+    }
+  }
+})();
+
+// hide pentagon when subpage open, show when back
+const _origOpen=openPage;
+window.openPage=function(id){
+  _origOpen(id);
+  wrap.style.opacity='0';wrap.style.pointerEvents='none';
+  document.getElementById('name-wrap').style.opacity='0';
+  bgCanvas.style.opacity='0';
+};
+const _origClose=closePage;
+window.closePage=function(id){
+  _origClose(id);
+  wrap.style.opacity='1';wrap.style.pointerEvents='all';
+  document.getElementById('name-wrap').style.opacity='1';
+  bgCanvas.style.opacity='1';
+};
+wrap.style.transition='opacity .5s';
+document.getElementById('name-wrap').style.transition='opacity .5s';
+bgCanvas.style.transition='opacity .5s';
+</script>
+</body>
+</html>
