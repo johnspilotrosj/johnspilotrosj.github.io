@@ -1,0 +1,27 @@
+# Netlify config for John Spilotros Real Estate.
+# This site has NO build step — it's plain HTML/CSS/JS served as-is.
+# `publish = "."` assumes the repo's root contains index.html (see SETUP-GUIDE.md).
+
+[build]
+  publish = "."
+
+# Security + caching headers (also mirrored in _headers for other hosts).
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Keep the admin out of search results.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
+# Listings data should always be fetched fresh so new listings show immediately.
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
