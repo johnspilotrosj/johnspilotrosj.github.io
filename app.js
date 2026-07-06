@@ -584,6 +584,18 @@
   }
 
   /* ---------------------------------------------------------
+     Netlify Identity (admin CMS login, index.html only)
+  --------------------------------------------------------- */
+  function initNetlifyIdentity() {
+    if (!window.netlifyIdentity) return;
+    window.netlifyIdentity.on('init', function (user) {
+      if (!user) {
+        window.netlifyIdentity.on('login', function () { document.location.href = '/admin/'; });
+      }
+    });
+  }
+
+  /* ---------------------------------------------------------
      Boot
   --------------------------------------------------------- */
   function boot() {
@@ -591,6 +603,7 @@
     initMobileNav();
     initRouter();
     initPage(document);
+    initNetlifyIdentity();
     syncActiveNav(fileOf(location.href));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

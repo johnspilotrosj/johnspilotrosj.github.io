@@ -3,6 +3,8 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://identity.netlify.com 'sha256-s8l80WriM00pLBd7WLIny1578G/2rWP8EyuS2LYsb9g='; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self' https://formspree.io; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
 /admin/*
   X-Robots-Tag: noindex
 /data/*
