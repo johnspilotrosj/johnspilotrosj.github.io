@@ -227,6 +227,18 @@
 
   /* ---------- Session ---------- */
 
+  /* fetch only rejects outright on network failures, and the usual cause
+     here is a paused Supabase project: the free tier tears the instance
+     down after a few idle weeks and the hostname stops resolving, so the
+     browser reports a bare "Failed to fetch". Say what that actually means. */
+  function netError(err) {
+    var msg = String(err && err.message ? err.message : err);
+    if (err instanceof TypeError || /failed to fetch|networkerror|load failed/i.test(msg)) {
+      return new Error('Cannot reach the database. The Supabase project is most likely paused. Open supabase.com/dashboard, hit Restore on the project, wait a minute, then try again.');
+    }
+    return err;
+  }
+
   function saveSession(s) {
     if (!s.expires_at) s.expires_at = Math.floor(Date.now() / 1000) + (s.expires_in || 3600);
     try { localStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {}
@@ -249,7 +261,7 @@
         saveSession(j);
         return j;
       });
-    });
+    }).catch(function (e) { throw netError(e); });
   }
 
   function refresh() {
@@ -289,7 +301,7 @@
       if (!r.ok) return r.text().then(function (t) { throw new Error(t || ('HTTP ' + r.status)); });
       if (r.status === 204) return null;
       return r.text().then(function (t) { return t ? JSON.parse(t) : null; });
-    });
+    }).catch(function (e) { throw netError(e); });
   }
 
   /* ---------- Helpers ---------- */
