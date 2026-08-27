@@ -120,6 +120,24 @@
   }
   .saved.on { opacity: 1; transform: translate(-50%, 0); }
 
+  /* ---------- Add someone by hand ---------- */
+  .add {
+    background: var(--card); border: 1px solid var(--gold-line); border-radius: var(--r-md);
+    padding: 1.3rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);
+  }
+  .add h2 { font-size: 1.5rem; margin-bottom: 1.1rem; }
+  .add-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+  .add-grid .span2 { grid-column: span 2; }
+  .add-grid .span3 { grid-column: 1 / -1; }
+  .add-grid .input, .add-grid .select, .add-grid .textarea { margin-top: 0.35rem; }
+  .add-grid .textarea { min-height: 70px; }
+  .add-actions { display: flex; gap: 0.7rem; margin-top: 1.2rem; align-items: center; }
+  .add-err { font-size: 0.86rem; color: oklch(0.45 0.17 25); }
+  @media (max-width: 720px) {
+    .add-grid { grid-template-columns: 1fr; }
+    .add-grid .span2, .add-grid .span3 { grid-column: auto; }
+  }
+
   .empty { text-align: center; padding: 4rem 1rem; color: var(--muted); }
   .err {
     font-size: 0.9rem; line-height: 1.55; color: oklch(0.42 0.16 25);
@@ -164,6 +182,8 @@
     <div class="bar-inner">
       <h1>Leads</h1>
       <div class="bar-actions">
+        <button class="btn btn-gold" type="button" id="add-toggle">Add Someone</button>
+        <a class="btn btn-line" href="/qr">QR Sign</a>
         <button class="btn btn-line" type="button" id="export">Export CSV</button>
         <button class="btn btn-line" type="button" id="signout">Sign Out</button>
       </div>
@@ -172,6 +192,59 @@
 
   <main class="page">
     <div class="err" id="app-err" hidden></div>
+
+    <form class="add" id="add" hidden>
+      <h2>Add someone</h2>
+      <div class="add-grid">
+        <div class="span2">
+          <label class="flabel" for="a-name">Name <span class="req">*</span></label>
+          <input class="input" id="a-name" autocomplete="off">
+        </div>
+        <div>
+          <label class="flabel" for="a-phone">Phone</label>
+          <input class="input" id="a-phone" type="tel" inputmode="tel" autocomplete="off">
+        </div>
+        <div class="span2">
+          <label class="flabel" for="a-email">Email</label>
+          <input class="input" id="a-email" type="email" autocomplete="off">
+        </div>
+        <div>
+          <label class="flabel" for="a-property">Property</label>
+          <input class="input" id="a-property" autocomplete="off" placeholder="Where you met">
+        </div>
+        <div>
+          <label class="flabel" for="a-timeline">Timeline</label>
+          <select class="select" id="a-timeline"></select>
+        </div>
+        <div>
+          <label class="flabel" for="a-agent">Has an agent</label>
+          <select class="select" id="a-agent">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+            <option value="">Not sure</option>
+          </select>
+        </div>
+        <div>
+          <label class="flabel" for="a-financing">Financing</label>
+          <select class="select" id="a-financing">
+            <option value="">Unknown</option>
+            <option>Pre-approved</option>
+            <option>Talking to a lender</option>
+            <option>Paying cash</option>
+            <option>Not started yet</option>
+          </select>
+        </div>
+        <div class="span3">
+          <label class="flabel" for="a-notes">Notes</label>
+          <textarea class="textarea" id="a-notes" placeholder="Where you met them, what they want, anything."></textarea>
+        </div>
+      </div>
+      <div class="add-actions">
+        <button class="btn btn-dark" type="submit" id="a-save">Save Lead</button>
+        <button class="btn btn-line" type="button" id="a-cancel">Cancel</button>
+        <span class="add-err" id="a-err" hidden></span>
+      </div>
+    </form>
 
     <div class="stats">
       <div class="stat"><b id="s-total">0</b><span>Total leads</span></div>
@@ -204,12 +277,18 @@
   var SB_KEY = 'sb_publishable_FBnSV2WoIc_7MXSAXM0Xww_uEElzvkk';
   var STORE = 'spilo_leads_session';
 
-  /* Same labels the sign in sheet writes. Fallback only: rows carry
-     timeline_months, this map covers anything written before that column. */
-  var MONTHS = {
-    'Ready now': 0, '1 to 3 months': 3, '3 to 6 months': 6,
-    '6 to 12 months': 12, 'Just looking': 99
-  };
+  /* Same labels and months the sign in sheet writes. Keep the two in sync. */
+  var TIMELINES = [
+    { label: 'Ready now',      months: 0 },
+    { label: '1 to 3 months',  months: 3 },
+    { label: '3 to 6 months',  months: 6 },
+    { label: '6 to 12 months', months: 12 },
+    { label: 'Just looking',   months: 99 }
+  ];
+  /* Fallback only: rows carry timeline_months, this covers anything
+     written before that column existed. Derived so it cannot drift. */
+  var MONTHS = {};
+  TIMELINES.forEach(function (t) { MONTHS[t.label] = t.months; });
   var STATUSES = ['new', 'contacted', 'following up', 'client', 'dead'];
   var OPEN_STATUSES = ['new', 'contacted', 'following up'];
 
@@ -554,6 +633,80 @@
     a.click();
     document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  /* ---------- Add someone by hand ---------- */
+
+  TIMELINES.forEach(function (t, i) {
+    var o = el('option', null, t.label);
+    o.value = String(i);
+    if (i === 1) o.selected = true;
+    $('a-timeline').appendChild(o);
+  });
+
+  function resetAdd() {
+    ['a-name', 'a-phone', 'a-email', 'a-property', 'a-notes'].forEach(function (id) { $(id).value = ''; });
+    $('a-timeline').value = '1';
+    $('a-agent').value = 'false';
+    $('a-financing').value = '';
+    $('a-err').hidden = true;
+  }
+
+  $('add-toggle').addEventListener('click', function () {
+    var open = $('add').hidden;
+    $('add').hidden = !open;
+    $('add-toggle').textContent = open ? 'Close' : 'Add Someone';
+    if (open) { resetAdd(); $('a-name').focus(); }
+  });
+
+  $('a-cancel').addEventListener('click', function () {
+    $('add').hidden = true;
+    $('add-toggle').textContent = 'Add Someone';
+  });
+
+  $('add').addEventListener('submit', function (e) {
+    e.preventDefault();
+    $('a-err').hidden = true;
+
+    var name = $('a-name').value.trim();
+    if (!name) { $('a-err').textContent = 'Name is required.'; $('a-err').hidden = false; $('a-name').focus(); return; }
+
+    var t = TIMELINES[Number($('a-timeline').value)] || TIMELINES[1];
+    var agent = $('a-agent').value;
+    var row = {
+      name: name,
+      phone: $('a-phone').value.trim() || null,
+      email: $('a-email').value.trim() || null,
+      property: $('a-property').value.trim() || null,
+      timeline: t.label,
+      timeline_months: t.months,
+      has_agent: agent === '' ? null : agent === 'true',
+      financing: $('a-financing').value || null,
+      notes: $('a-notes').value.trim() || null,
+      source: 'added by hand'
+    };
+
+    var btn = $('a-save');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    api('/leads', {
+      method: 'POST',
+      headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify(row)
+    }).then(function () {
+      resetAdd();
+      $('add').hidden = true;
+      $('add-toggle').textContent = 'Add Someone';
+      flash();
+      return load();
+    }).catch(function (err) {
+      $('a-err').textContent = String(err && err.message ? err.message : err);
+      $('a-err').hidden = false;
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = 'Save Lead';
+    });
   });
 
   /* ---------- Wiring ---------- */

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open House QR Sign · John Spilotros</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Printable open house sign in QR code.">
+<meta name="theme-color" content="#faf9f6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/index-D6-FHxj0.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231b3a2c'/%3E%3Cpath d='M11 27 20 13 29 27' fill='none' stroke='%23eef7f0' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M20 14v13' stroke='%23e08a52' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  body { background: var(--bg-alt); }
+  [hidden] { display: none !important; }
+
+  .page { width: min(100% - 2rem, 820px); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem) 0 5rem; }
+
+  .setup { margin-bottom: 2rem; }
+  .setup h1 { font-size: clamp(2rem, 1.6rem + 2vw, 2.8rem); margin-top: 0.4rem; }
+  .setup-row { display: grid; grid-template-columns: 1fr auto; gap: 0.7rem; margin-top: 1.4rem; align-items: end; }
+  .setup .btn { white-space: nowrap; }
+  .setup-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; align-items: center; }
+  .setup-url {
+    font-size: 0.82rem; color: var(--muted); word-break: break-all;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-sm);
+    padding: 0.5rem 0.7rem; flex: 1 1 320px;
+  }
+  .setup-links .btn { padding: 0.55rem 1rem; font-size: 0.76rem; }
+
+  /* The sign itself. This is the only thing that prints. */
+  .sign {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--r-md);
+    box-shadow: var(--shadow-md); padding: clamp(2rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+  }
+  .sign-kicker {
+    font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold-deep); font-weight: 650;
+  }
+  .sign h2 { font-size: clamp(2.4rem, 1.8rem + 3.2vw, 4rem); margin-top: 0.7rem; line-height: 1.02; }
+  .sign-addr {
+    margin-top: 1rem; font-size: clamp(1rem, 0.95rem + 0.4vw, 1.2rem);
+    font-weight: 650; color: var(--ink);
+  }
+  .qr-holder { margin: clamp(1.6rem, 4vw, 2.4rem) auto 0; width: fit-content; }
+  .qr-holder svg { display: block; width: clamp(200px, 46vw, 300px); height: auto; }
+  .sign-help { margin-top: 1.3rem; font-size: 1rem; color: var(--muted); }
+  .sign-foot {
+    margin-top: clamp(1.6rem, 4vw, 2.2rem); padding-top: 1.2rem; border-top: 1px solid var(--line);
+    font-size: 0.84rem; color: var(--muted); line-height: 1.6;
+  }
+  .sign-foot strong { color: var(--ink); }
+  .sign-err { color: oklch(0.45 0.17 25); font-size: 0.95rem; margin-top: 1.5rem; }
+
+  @media print {
+    @page { margin: 12mm; }
+    body { background: #fff; }
+    .page { width: 100%; padding: 0; }
+    .setup, .no-print { display: none !important; }
+    .sign { border: none; box-shadow: none; padding: 0; }
+    .qr-holder svg { width: 78mm; }
+    .sign h2 { font-size: 42pt; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <div class="setup no-print">
+    <p class="kicker">Open House</p>
+    <h1>Sign in QR code</h1>
+    <p style="color:var(--muted);margin-top:0.7rem">Type the address, print the sign, prop it by the door. Guests scan it and the sign in sheet opens on their own phone.</p>
+
+    <div class="setup-row">
+      <div>
+        <label class="flabel" for="addr">Property address</label>
+        <input class="input" id="addr" placeholder="328 N Blossom River, Eagle" autocomplete="off">
+      </div>
+      <button class="btn btn-dark" type="button" id="print">Print Sign</button>
+    </div>
+
+    <div class="setup-links">
+      <span class="setup-url" id="url"></span>
+      <button class="btn btn-line" type="button" id="copy">Copy Link</button>
+      <a class="btn btn-line" id="open" href="/signin" target="_blank" rel="noopener">Open Sheet</a>
+      <a class="btn btn-line" href="/leads">Back to Leads</a>
+    </div>
+  </div>
+
+  <section class="sign" id="sign">
+    <p class="sign-kicker">Open House</p>
+    <h2>Sign in here.</h2>
+    <p class="sign-addr" id="sign-addr" hidden></p>
+    <div class="qr-holder" id="qr"></div>
+    <p class="sign-help">Point your phone camera at the code.</p>
+    <p class="sign-foot">
+      <strong>John Spilotros</strong><br>
+      Keller Williams Realty Boise · (215) 859-3267<br>
+      Licensed Idaho Salesperson #1681619
+    </p>
+  </section>
+
+</main>
+
+<script>
+/* ---------------------------------------------------------------
+   QR encoder: byte mode, error correction level M, versions 1 to 10.
+   Written out here so the sign works with no network and no library.
+   Verified module for module against a reference encoder, and the
+   output was decoded back to the original URL by an independent reader.
+   --------------------------------------------------------------- */
+var qrMatrix = (function () {
+  'use strict';
+
+  /* Per version at ECC level M: [ec codewords per block, g1 blocks, g1 data cw, g2 blocks, g2 data cw] */
+  var SPEC = {
+    1: [10, 1, 16, 0, 0],   2: [16, 1, 28, 0, 0],  3: [26, 1, 44, 0, 0],
+    4: [18, 2, 32, 0, 0],   5: [24, 2, 43, 0, 0],  6: [16, 4, 27, 0, 0],
+    7: [18, 4, 31, 0, 0],   8: [22, 2, 38, 2, 39], 9: [22, 3, 36, 2, 37],
+    10: [26, 4, 43, 1, 44]
+  };
+  var ALIGN = {
+    1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30],
+    6: [6, 34], 7: [6, 22, 38], 8: [6, 24, 42], 9: [6, 26, 46], 10: [6, 28, 50]
+  };
+
+  function dataCapacity(v) { var s = SPEC[v]; return s[1] * s[2] + s[3] * s[4]; }
+
+  /* GF(256), primitive polynomial 0x11d */
+  var EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+  (function () {
+    var x = 1;
+    for (var i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+    for (var j = 255; j < 512; j++) EXP[j] = EXP[j - 255];
+  })();
+  function gfMul(a, b) { return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+
+  function genPoly(degree) {
+    var poly = [1];
+    for (var d = 0; d < degree; d++) {
+      var next = new Array(poly.length + 1).fill(0);
+      for (var i = 0; i < poly.length; i++) {
+        next[i] ^= gfMul(poly[i], 1);
+        next[i + 1] ^= gfMul(poly[i], EXP[d]);
+      }
+      poly = next;
+    }
+    return poly;
+  }
+
+  function ecBytes(data, ecLen) {
+    var gen = genPoly(ecLen);
+    var rem = data.slice().concat(new Array(ecLen).fill(0));
+    for (var i = 0; i < data.length; i++) {
+      var factor = rem[i];
+      if (factor === 0) continue;
+      for (var j = 0; j < gen.length; j++) rem[i + j] ^= gfMul(gen[j], factor);
+    }
+    return rem.slice(data.length);
+  }
+
+  function Bits() { this.bits = []; }
+  Bits.prototype.put = function (value, length) {
+    for (var i = length - 1; i >= 0; i--) this.bits.push((value >>> i) & 1);
+  };
+
+  function utf8Bytes(str) {
+    var out = [], encoded = unescape(encodeURIComponent(str));
+    for (var i = 0; i < encoded.length; i++) out.push(encoded.charCodeAt(i) & 0xff);
+    return out;
+  }
+
+  function buildCodewords(text) {
+    var bytes = utf8Bytes(text), version = 0;
+    for (var v = 1; v <= 10; v++) {
+      var countBits = v < 10 ? 8 : 16;
+      if (4 + countBits + bytes.length * 8 <= dataCapacity(v) * 8) { version = v; break; }
+    }
+    if (!version) throw new Error('That address is too long to fit in the code.');
+
+    var countLen = version < 10 ? 8 : 16;
+    var bs = new Bits();
+    bs.put(0x4, 4);
+    bs.put(bytes.length, countLen);
+    for (var i = 0; i < bytes.length; i++) bs.put(bytes[i], 8);
+
+    var capacityBits = dataCapacity(version) * 8;
+    bs.put(0, Math.min(4, capacityBits - bs.bits.length));
+    while (bs.bits.length % 8 !== 0) bs.bits.push(0);
+
+    var data = [];
+    for (var b = 0; b < bs.bits.length; b += 8) {
+      var byte = 0;
+      for (var k = 0; k < 8; k++) byte = (byte << 1) | bs.bits[b + k];
+      data.push(byte);
+    }
+    var pad = [0xec, 0x11];
+    for (var p = 0; data.length < dataCapacity(version); p++) data.push(pad[p % 2]);
+
+    var spec = SPEC[version], ecLen = spec[0], blocks = [], pos = 0, g;
+    for (g = 0; g < spec[1]; g++) { blocks.push(data.slice(pos, pos + spec[2])); pos += spec[2]; }
+    for (g = 0; g < spec[3]; g++) { blocks.push(data.slice(pos, pos + spec[4])); pos += spec[4]; }
+    var ecBlocks = blocks.map(function (blk) { return ecBytes(blk, ecLen); });
+
+    var out = [];
+    var maxData = Math.max.apply(null, blocks.map(function (b2) { return b2.length; }));
+    for (var c = 0; c < maxData; c++) {
+      for (var bi = 0; bi < blocks.length; bi++) if (c < blocks[bi].length) out.push(blocks[bi][c]);
+    }
+    for (var e = 0; e < ecLen; e++) {
+      for (var bj = 0; bj < ecBlocks.length; bj++) out.push(ecBlocks[bj][e]);
+    }
+    return { version: version, codewords: out };
+  }
+
+  function makeMatrix(version) {
+    var size = version * 4 + 17, m = [], reserved = [];
+    for (var r = 0; r < size; r++) { m.push(new Array(size).fill(null)); reserved.push(new Array(size).fill(false)); }
+    function setF(r2, c2, val) { m[r2][c2] = val; reserved[r2][c2] = true; }
+
+    function finder(top, left) {
+      for (var r3 = -1; r3 <= 7; r3++) {
+        for (var c3 = -1; c3 <= 7; c3++) {
+          var rr = top + r3, cc = left + c3;
+          if (rr < 0 || rr >= size || cc < 0 || cc >= size) continue;
+          var inRing = (r3 >= 0 && r3 <= 6 && (c3 === 0 || c3 === 6)) || (c3 >= 0 && c3 <= 6 && (r3 === 0 || r3 === 6));
+          var inCore = r3 >= 2 && r3 <= 4 && c3 >= 2 && c3 <= 4;
+          setF(rr, cc, inRing || inCore ? 1 : 0);
+        }
+      }
+    }
+    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+    for (var i = 8; i < size - 8; i++) { setF(6, i, i % 2 === 0 ? 1 : 0); setF(i, 6, i % 2 === 0 ? 1 : 0); }
+
+    var centres = ALIGN[version];
+    for (var a = 0; a < centres.length; a++) {
+      for (var b = 0; b < centres.length; b++) {
+        var cr = centres[a], cc2 = centres[b];
+        if ((cr === 6 && cc2 === 6) || (cr === 6 && cc2 === size - 7) || (cr === size - 7 && cc2 === 6)) continue;
+        for (var dr = -2; dr <= 2; dr++) {
+          for (var dc = -2; dc <= 2; dc++) {
+            setF(cr + dr, cc2 + dc, Math.max(Math.abs(dr), Math.abs(dc)) === 1 ? 0 : 1);
+          }
+        }
+      }
+    }
+
+    setF(size - 8, 8, 1);
+
+    for (var f = 0; f < 9; f++) {
+      if (m[8][f] === null) { m[8][f] = 0; reserved[8][f] = true; }
+      if (m[f][8] === null) { m[f][8] = 0; reserved[f][8] = true; }
+    }
+    for (var f2 = 0; f2 < 8; f2++) {
+      if (m[8][size - 1 - f2] === null) { m[8][size - 1 - f2] = 0; reserved[8][size - 1 - f2] = true; }
+      if (m[size - 1 - f2][8] === null) { m[size - 1 - f2][8] = 0; reserved[size - 1 - f2][8] = true; }
+    }
+    if (version >= 7) {
+      for (var vi = 0; vi < 18; vi++) {
+        var row = Math.floor(vi / 3), col = size - 11 + (vi % 3);
+        m[row][col] = 0; reserved[row][col] = true;
+        m[col][row] = 0; reserved[col][row] = true;
+      }
+    }
+    return { size: size, m: m, reserved: reserved };
+  }
+
+  function placeData(grid, codewords) {
+    var size = grid.size, m = grid.m, reserved = grid.reserved;
+    var bitIndex = 0, total = codewords.length * 8, up = true;
+    for (var right = size - 1; right > 0; right -= 2) {
+      if (right === 6) right = 5;
+      for (var step = 0; step < size; step++) {
+        var row = up ? size - 1 - step : step;
+        for (var k = 0; k < 2; k++) {
+          var col = right - k;
+          if (reserved[row][col]) continue;
+          var bit = 0;
+          if (bitIndex < total) { bit = (codewords[bitIndex >> 3] >>> (7 - (bitIndex & 7))) & 1; bitIndex++; }
+          m[row][col] = bit;
+        }
+      }
+      up = !up;
+    }
+  }
+
+  function maskFn(id, r, c) {
+    switch (id) {
+      case 0: return (r + c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r + c) % 3 === 0;
+      case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+      case 5: return ((r * c) % 2) + ((r * c) % 3) === 0;
+      case 6: return (((r * c) % 2) + ((r * c) % 3)) % 2 === 0;
+      default: return (((r + c) % 2) + ((r * c) % 3)) % 2 === 0;
+    }
+  }
+
+  function formatBits(mask) {
+    var value = mask;            /* ECC level M is 0b00 in the high two bits */
+    var rem = value << 10;
+    for (var i = 14; i >= 10; i--) if ((rem >>> i) & 1) rem ^= 0x537 << (i - 10);
+    return ((value << 10) | rem) ^ 0x5412;
+  }
+
+  function versionBits(version) {
+    var rem = version << 12;
+    for (var i = 17; i >= 12; i--) if ((rem >>> i) & 1) rem ^= 0x1f25 << (i - 12);
+    return (version << 12) | rem;
+  }
+
+  function applyFormat(grid, mask, version) {
+    var size = grid.size, m = grid.m, bits = formatBits(mask);
+    for (var i = 0; i < 15; i++) {
+      var bit = (bits >>> i) & 1;
+      /* Copy one: down column 8, then leftwards along row 8. */
+      if (i < 6) m[i][8] = bit;
+      else if (i === 6) m[7][8] = bit;
+      else if (i === 7) m[8][8] = bit;
+      else if (i === 8) m[8][7] = bit;
+      else m[8][14 - i] = bit;
+      /* Copy two: right along row 8, then up column 8 from the bottom. */
+      if (i < 8) m[8][size - 1 - i] = bit;
+      else m[size - 15 + i][8] = bit;
+    }
+    if (version >= 7) {
+      var vbits = versionBits(version);
+      for (var v = 0; v < 18; v++) {
+        var vb = (vbits >>> v) & 1;
+        var row = Math.floor(v / 3), col = size - 11 + (v % 3);
+        m[row][col] = vb; m[col][row] = vb;
+      }
+    }
+  }
+
+  function penalty(m, size) {
+    var score = 0, r, c, i;
+    function runs(get) {
+      for (r = 0; r < size; r++) {
+        var run = 1;
+        for (c = 1; c < size; c++) {
+          if (get(r, c) === get(r, c - 1)) run++;
+          else { if (run >= 5) score += run - 2; run = 1; }
+        }
+        if (run >= 5) score += run - 2;
+      }
+    }
+    runs(function (a, b) { return m[a][b]; });
+    runs(function (a, b) { return m[b][a]; });
+
+    for (r = 0; r < size - 1; r++) {
+      for (c = 0; c < size - 1; c++) {
+        var v = m[r][c];
+        if (v === m[r][c + 1] && v === m[r + 1][c] && v === m[r + 1][c + 1]) score += 3;
+      }
+    }
+
+    var p1 = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0], p2 = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+    function match(get, a, b, pat) {
+      for (i = 0; i < 11; i++) if (get(a, b + i) !== pat[i]) return false;
+      return true;
+    }
+    var rowGet = function (x, y) { return m[x][y]; };
+    var colGet = function (x, y) { return m[y][x]; };
+    for (r = 0; r < size; r++) {
+      for (c = 0; c + 11 <= size; c++) {
+        if (match(rowGet, r, c, p1)) score += 40;
+        if (match(rowGet, r, c, p2)) score += 40;
+        if (match(colGet, r, c, p1)) score += 40;
+        if (match(colGet, r, c, p2)) score += 40;
+      }
+    }
+
+    var dark = 0;
+    for (r = 0; r < size; r++) for (c = 0; c < size; c++) if (m[r][c]) dark++;
+    score += Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5) * 10;
+    return score;
+  }
+
+  return function (text) {
+    var built = buildCodewords(text), version = built.version, best = null;
+    for (var mask = 0; mask < 8; mask++) {
+      var grid = makeMatrix(version);
+      placeData(grid, built.codewords);
+      var masked = grid.m.map(function (row) { return row.slice(); });
+      for (var r = 0; r < grid.size; r++) {
+        for (var c = 0; c < grid.size; c++) {
+          if (!grid.reserved[r][c] && maskFn(mask, r, c)) masked[r][c] ^= 1;
+        }
+      }
+      var candidate = { size: grid.size, m: masked, reserved: grid.reserved };
+      applyFormat(candidate, mask, version);
+      var score = penalty(candidate.m, candidate.size);
+      if (!best || score < best.score) best = { score: score, grid: candidate, mask: mask };
+    }
+    return { size: best.grid.size, modules: best.grid.m, version: version };
+  };
+})();
+
+/* --------------------------------------------------------------- */
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var BASE = location.origin + '/signin';
+
+  function signinUrl(addr) {
+    return addr ? BASE + '?p=' + encodeURIComponent(addr) : BASE;
+  }
+
+  /* Draw as SVG so it stays crisp at any print size. */
+  function renderQr(text) {
+    var holder = $('qr');
+    holder.textContent = '';
+    var q;
+    try {
+      q = qrMatrix(text);
+    } catch (e) {
+      var err = document.createElement('p');
+      err.className = 'sign-err';
+      err.textContent = e.message;
+      holder.appendChild(err);
+      return;
+    }
+    var quiet = 4, dim = q.size + quiet * 2;
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 ' + dim + ' ' + dim);
+    svg.setAttribute('shape-rendering', 'crispEdges');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'QR code linking to the open house sign in sheet');
+
+    var bg = document.createElementNS(NS, 'rect');
+    bg.setAttribute('width', dim); bg.setAttribute('height', dim); bg.setAttribute('fill', '#fff');
+    svg.appendChild(bg);
+
+    /* One path for every dark module keeps the SVG small. */
+    var d = '';
+    for (var r = 0; r < q.size; r++) {
+      for (var c = 0; c < q.size; c++) {
+        if (q.modules[r][c]) d += 'M' + (c + quiet) + ' ' + (r + quiet) + 'h1v1h-1z';
+      }
+    }
+    var path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', '#111');
+    svg.appendChild(path);
+    holder.appendChild(svg);
+  }
+
+  function update(addr) {
+    var url = signinUrl(addr);
+    $('url').textContent = url;
+    $('open').href = addr ? '/signin?p=' + encodeURIComponent(addr) : '/signin';
+    $('sign-addr').textContent = addr;
+    $('sign-addr').hidden = !addr;
+    renderQr(url);
+    /* Keep the address in the URL so the page can be bookmarked or reloaded. */
+    var want = addr ? '?p=' + encodeURIComponent(addr) : location.pathname;
+    try { history.replaceState(null, '', addr ? want : location.pathname); } catch (e) {}
+  }
+
+  var params = new URLSearchParams(location.search);
+  var initial = (params.get('p') || params.get('property') || '').trim();
+  $('addr').value = initial;
+  update(initial);
+
+  var debounce = null;
+  $('addr').addEventListener('input', function () {
+    clearTimeout(debounce);
+    debounce = setTimeout(function () { update($('addr').value.trim()); }, 250);
+  });
+
+  $('print').addEventListener('click', function () { window.print(); });
+
+  $('copy').addEventListener('click', function () {
+    var btn = $('copy');
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy Link'; }, 1600); };
+    var text = $('url').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () {});
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  });
+})();
+</script>
+</body>
+</html>
