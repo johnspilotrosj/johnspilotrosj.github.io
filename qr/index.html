@@ -55,14 +55,26 @@
   .sign-foot strong { color: var(--ink); }
   .sign-err { color: oklch(0.45 0.17 25); font-size: 0.95rem; margin-top: 1.5rem; }
 
+  /* US Letter, portrait, half inch margins: a 7.5 x 10in printable area. */
+  @page { size: Letter portrait; margin: 0.5in; }
+
   @media print {
-    @page { margin: 12mm; }
-    body { background: #fff; }
-    .page { width: 100%; padding: 0; }
+    html, body { margin: 0; padding: 0; background: #fff; }
+    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .setup, .no-print { display: none !important; }
-    .sign { border: none; box-shadow: none; padding: 0; }
-    .qr-holder svg { width: 78mm; }
-    .sign h2 { font-size: 42pt; }
+    .page { width: 7.5in; max-width: 7.5in; margin: 0 auto; padding: 0; }
+    .sign {
+      border: none; box-shadow: none; padding: 0; background: none;
+      /* Just under the 10in printable height so no blank second page. */
+      height: 9.8in;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .sign-kicker { font-size: 11pt; }
+    .sign h2 { font-size: 52pt; margin-top: 0.12in; }
+    .qr-holder { margin: 0.5in auto 0; }
+    .qr-holder svg { width: 3.4in; height: 3.4in; }
+    .sign-help { font-size: 14pt; margin-top: 0.3in; }
+    .sign-foot { margin-top: 0.5in; padding-top: 0.2in; font-size: 10.5pt; }
   }
 </style>
 </head>
