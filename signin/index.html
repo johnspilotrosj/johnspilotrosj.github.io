@@ -19,11 +19,6 @@
   .sheet-head { text-align: center; margin-bottom: clamp(1.5rem, 4vw, 2.25rem); }
   .sheet-head .kicker { justify-content: center; }
   .sheet-head h1 { font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3rem); margin-top: 0.5rem; }
-  .sheet-addr {
-    margin-top: 0.9rem; font-weight: 650; font-size: 1.02rem; color: var(--ink);
-    background: var(--gold-soft); border: 1px solid var(--gold-line);
-    border-radius: var(--r-sm); padding: 0.7rem 1rem; display: inline-block; line-height: 1.4;
-  }
   .sheet-sub { margin-top: 0.9rem; color: var(--muted); font-size: 0.95rem; }
 
   .card {
@@ -59,6 +54,10 @@
   }
   .sheet-err a { color: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; }
 
+  .sheet-pending {
+    margin-top: 0.9rem; font-size: 0.8rem; color: var(--gold-deep); font-weight: 600; text-align: center;
+  }
+
   .sheet-foot { margin-top: 1.6rem; text-align: center; font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
 
   .done { text-align: center; padding: clamp(2rem, 8vw, 3.5rem) 1rem; }
@@ -81,17 +80,11 @@
     <div class="sheet-head">
       <p class="kicker">Open House</p>
       <h1>Welcome in.</h1>
-      <div class="sheet-addr" id="addr" hidden></div>
       <p class="sheet-sub">Sign in so I know you stopped by. Takes about twenty seconds.</p>
     </div>
 
     <form class="card" id="form" novalidate>
       <div class="fields">
-
-        <div class="field" id="addr-field" hidden>
-          <label class="flabel" for="property">Which home is this?</label>
-          <input class="input" id="property" name="property" autocomplete="off" placeholder="Street address">
-        </div>
 
         <div class="field">
           <label class="flabel" for="name">Your name <span class="req">*</span></label>
@@ -141,6 +134,7 @@
 
       <button class="btn btn-dark sheet-submit" type="submit" id="submit">Sign In</button>
       <div class="sheet-err" id="err" hidden></div>
+      <p class="sheet-pending" id="pending" hidden></p>
     </form>
 
     <p class="sheet-foot">
@@ -179,15 +173,11 @@
 
   var $ = function (id) { return document.getElementById(id); };
 
+  /* The property rides along in the URL and is saved with the lead, but it
+     is never shown to the guest. Each open house gets its own sheet, so
+     nothing on screen says whose house this is. */
   var params = new URLSearchParams(location.search);
   var property = (params.get('p') || params.get('property') || '').trim();
-
-  if (property) {
-    $('addr').textContent = property;
-    $('addr').hidden = false;
-  } else {
-    $('addr-field').hidden = false;
-  }
 
   /* Timeline pills, built here so the labels live in one place. */
   var pills = $('timeline-pills');
@@ -217,6 +207,70 @@
     box.hidden = false;
   }
 
+  /* ---------- Never lose a lead ----------
+     Open houses have bad wifi, and the database can be down or not set up
+     yet. A sign in that cannot reach the server is kept on this device and
+     sent the next time this page loads with a working connection. The guest
+     is thanked either way, because their details ARE captured. */
+  var QUEUE_KEY = 'spilo_pending_leads';
+
+  function readQueue() {
+    try { return JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]'); } catch (e) { return []; }
+  }
+  function writeQueue(q) {
+    try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch (e) {}
+  }
+
+  function showPending() {
+    var n = readQueue().length;
+    var box = $('pending');
+    box.hidden = n === 0;
+    box.textContent = n === 0 ? '' :
+      n + (n === 1 ? ' sign in is' : ' sign ins are') + ' saved on this phone, waiting to sync.';
+  }
+
+  function postLead(row) {
+    return fetch(SB_URL + '/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        apikey: SB_KEY,
+        Authorization: 'Bearer ' + SB_KEY,
+        'Content-Type': 'application/json',
+        /* Guests can insert but never read, so do not ask for the row back. */
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify(row)
+    }).then(function (r) {
+      if (r.ok) return { ok: true };
+      return r.text().then(function (t) { return { ok: false, status: r.status, body: t }; });
+    }, function () {
+      return { ok: false, status: 0, body: 'network unreachable' };
+    });
+  }
+
+  function queueLead(row) {
+    var q = readQueue();
+    q.push(row);
+    if (q.length > 300) q = q.slice(-300);   /* a runaway queue helps nobody */
+    writeQueue(q);
+    showPending();
+  }
+
+  function flushQueue() {
+    var q = readQueue();
+    if (!q.length) { showPending(); return; }
+    (function next(i) {
+      if (i >= q.length) { writeQueue([]); showPending(); return; }
+      postLead(q[i]).then(function (res) {
+        /* 400 means that particular row is malformed. Drop it rather than
+           let it block everything behind it forever. */
+        if (res.ok || res.status === 400) return next(i + 1);
+        writeQueue(q.slice(i));
+        showPending();
+      });
+    })(0);
+  }
+
   $('form').addEventListener('submit', function (e) {
     e.preventDefault();
     $('err').hidden = true;
@@ -227,13 +281,12 @@
     if (phone.replace(/\D/g, '').length < 10) { showError('Please add a phone number I can reach you at.'); $('phone').focus(); return; }
 
     var t = TIMELINES[Number(checked('timeline'))] || TIMELINES[1];
-    var addr = property || $('property').value.trim();
 
     var row = {
       name: name,
       phone: phone,
       email: $('email').value.trim() || null,
-      property: addr || null,
+      property: property || null,
       timeline: t.label,
       timeline_months: t.months,
       has_agent: checked('agent') === 'yes',
@@ -246,27 +299,27 @@
     btn.disabled = true;
     btn.textContent = 'Signing you in...';
 
-    fetch(SB_URL + '/rest/v1/leads', {
-      method: 'POST',
-      headers: {
-        apikey: SB_KEY,
-        Authorization: 'Bearer ' + SB_KEY,
-        'Content-Type': 'application/json',
-        /* Guests can insert but never read, so do not ask for the row back. */
-        Prefer: 'return=minimal'
-      },
-      body: JSON.stringify(row)
-    }).then(function (r) {
-      if (!r.ok) return r.text().then(function (txt) { throw new Error(txt || ('HTTP ' + r.status)); });
+    postLead(row).then(function (res) {
+      if (res.ok) { done(name); return; }
+
+      /* A 400 means this row itself is bad, so retrying will never help.
+         That is the only case worth bothering the guest about. */
+      if (res.status === 400) {
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+        showError(
+          'That did not go through. Please grab John and he will take it down, or ' +
+          '<a href="tel:' + PHONE_TEL + '">call ' + PHONE_DISPLAY + '</a>.'
+        );
+        if (window.console) console.error('lead rejected:', res.body);
+        return;
+      }
+
+      /* Anything else is the server being unreachable or misconfigured.
+         Hold it on the device and thank them, their details are safe. */
+      queueLead(row);
+      if (window.console) console.warn('lead queued on device:', res.status, res.body);
       done(name);
-    }).catch(function (err) {
-      btn.disabled = false;
-      btn.textContent = 'Sign In';
-      showError(
-        'That did not go through. Please grab John and he will take it down, or ' +
-        '<a href="tel:' + PHONE_TEL + '">call ' + PHONE_DISPLAY + '</a>.'
-      );
-      if (window.console) console.error(err);
     });
   });
 
@@ -296,6 +349,11 @@
   }
 
   $('again').addEventListener('click', reset);
+
+  /* Send anything stranded from a previous open house, then whenever the
+     device gets its connection back. */
+  flushQueue();
+  window.addEventListener('online', flushQueue);
 })();
 </script>
 </body>
