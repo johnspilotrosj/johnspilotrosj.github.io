@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Builder · John Spilotros</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Personal AI app builder. Describe an app, get a working page.">
+<meta name="theme-color" content="#faf9f6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/index-BMl0_tLN.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231b3a2c'/%3E%3Cpath d='M11 27 20 13 29 27' fill='none' stroke='%23eef7f0' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M20 14v13' stroke='%23e08a52' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  body { background: var(--bg-alt); }
+  .wrap { width: min(100% - 2rem, 980px); margin: 0 auto; padding: clamp(1.5rem, 5vw, 2.75rem) 0 4rem; }
+
+  .head { text-align: center; margin-bottom: clamp(1.5rem, 4vw, 2.25rem); }
+  .head .kicker { justify-content: center; }
+  .head h1 { font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3rem); margin-top: 0.5rem; }
+  .head p { margin-top: 0.9rem; color: var(--muted); font-size: 0.95rem; max-width: 46ch; margin-inline: auto; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm); padding: clamp(1.25rem, 4vw, 2rem);
+  }
+  .card + .card { margin-top: 1.5rem; }
+
+  .fields { display: grid; gap: 1.1rem; }
+  .field .flabel { font-size: 0.88rem; }
+  .fhint { margin-top: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+  .fhint a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+  .row { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; }
+  .row .btn { flex: 0 0 auto; }
+  .spacer { flex: 1 1 auto; }
+
+  textarea#prompt { min-height: 110px; resize: vertical; }
+
+  .status { margin-top: 1rem; font-size: 0.88rem; }
+  .status.err { color: oklch(0.42 0.16 25); background: oklch(0.97 0.02 25); border: 1px solid oklch(0.82 0.09 25); border-radius: var(--r-sm); padding: 0.85rem 1rem; }
+  .status.info { color: var(--muted); }
+  [hidden] { display: none !important; }
+
+  .spin {
+    width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--line-strong);
+    border-top-color: var(--charcoal); display: inline-block; vertical-align: -2px; margin-right: 0.5em;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .result-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+  .tabs { display: flex; gap: 0.4rem; }
+  .tab {
+    padding: 0.5rem 0.95rem; border-radius: var(--r-sm); border: 1px solid var(--line-strong);
+    background: var(--bg); font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--ink);
+  }
+  .tab[aria-selected="true"] { background: var(--charcoal); border-color: var(--charcoal); color: var(--ivory); }
+
+  .preview-frame {
+    width: 100%; height: min(70vh, 640px); border: 1px solid var(--line); border-radius: var(--r-sm);
+    background: #fff;
+  }
+  .code-view {
+    width: 100%; height: min(70vh, 640px); overflow: auto; border: 1px solid var(--line); border-radius: var(--r-sm);
+    background: var(--charcoal-deep); color: var(--ivory-dim); padding: 1rem; font-size: 0.8rem; line-height: 1.55;
+    white-space: pre-wrap; word-break: break-word; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .history { display: grid; gap: 0.6rem; margin-top: 0.75rem; }
+  .hist-item {
+    display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0.9rem; border: 1px solid var(--line);
+    border-radius: var(--r-sm); background: var(--bg); cursor: pointer; text-align: left; width: 100%;
+  }
+  .hist-item:hover { border-color: var(--line-strong); }
+  .hist-item .t { flex: 1 1 auto; font-size: 0.85rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .hist-item .ts { font-size: 0.75rem; color: var(--muted); flex: 0 0 auto; }
+
+  .foot { margin-top: 1.6rem; text-align: center; font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+</style>
+</head>
+<body>
+<main class="wrap" id="main">
+
+  <div class="head">
+    <p class="kicker">Personal Tool</p>
+    <h1>App Builder</h1>
+    <p>Describe an app in plain English. Claude writes it as a single page and previews it right here. Nothing is hosted anywhere but your own browser.</p>
+  </div>
+
+  <div class="card">
+    <div class="fields">
+      <div class="field">
+        <label class="flabel" for="apiKey">Anthropic API key</label>
+        <input class="input" id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-...">
+        <p class="fhint">
+          Stored only in this browser (never sent anywhere but api.anthropic.com).
+          Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="flabel" for="prompt">What do you want built?</label>
+        <textarea class="textarea" id="prompt" placeholder="A tip calculator with a slider for tip percent and a split-between-people field."></textarea>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:1.35rem">
+      <button class="btn btn-dark" type="button" id="go">Build It</button>
+      <button class="btn btn-line" type="button" id="reset" hidden>Start Over</button>
+      <div class="spacer"></div>
+    </div>
+
+    <div class="status" id="status" hidden></div>
+  </div>
+
+  <div class="card" id="resultCard" hidden>
+    <div class="result-head">
+      <div class="tabs" role="tablist">
+        <button class="tab" id="tabPreview" role="tab" aria-selected="true">Preview</button>
+        <button class="tab" id="tabCode" role="tab" aria-selected="false">Code</button>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn btn-line" type="button" id="download">Download .html</button>
+    </div>
+    <iframe class="preview-frame" id="preview" sandbox="allow-scripts allow-forms allow-modals allow-popups" title="App preview"></iframe>
+    <pre class="code-view" id="codeView" hidden></pre>
+
+    <div class="fields" style="margin-top:1.25rem">
+      <div class="field">
+        <label class="flabel" for="refine">Want changes? Describe them and build again.</label>
+        <textarea class="textarea" id="refine" placeholder="Make the buttons bigger and add a dark mode toggle."></textarea>
+      </div>
+    </div>
+    <div class="row" style="margin-top:0.9rem">
+      <button class="btn btn-dark" type="button" id="goRefine">Update It</button>
+    </div>
+  </div>
+
+  <div class="card" id="historyCard" hidden>
+    <div class="row">
+      <span class="flabel">This session's apps</span>
+      <div class="spacer"></div>
+      <button class="btn btn-line" type="button" id="clearHistory">Clear</button>
+    </div>
+    <div class="history" id="history"></div>
+  </div>
+
+  <p class="foot">
+    Not linked anywhere on the site, not indexed by search engines.
+    Generation cost is billed by Anthropic to whatever key you paste above.
+  </p>
+</main>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var KEY_STORAGE = 'spilo_builder_api_key';
+  var HIST_STORAGE = 'spilo_builder_history';
+  var MODEL = 'claude-sonnet-5';
+  var API_URL = 'https://api.anthropic.com/v1/messages';
+
+  var SYSTEM_PROMPT = [
+    'You are an expert front-end developer generating a single-page web app.',
+    'Output ONLY one complete, self-contained HTML document: start with <!DOCTYPE html> and end with </html>.',
+    'No explanation before or after, no markdown code fences.',
+    'Put all CSS in one <style> tag and all JavaScript in one <script> tag inside the document.',
+    'Do not reference local files or a build step. External font/icon CDNs are fine; the app must otherwise work fully offline once loaded.',
+    'Make it clean, responsive, and usable on a phone. Use vanilla HTML/CSS/JS unless the user names a specific library.',
+    'When asked to revise a previous app, output the full updated HTML document again in the same format, not a diff.'
+  ].join(' ');
+
+  var messages = [];   // conversation sent to the API, so refinements keep context
+  var lastHtml = '';
+
+  function loadKey() {
+    try { $('apiKey').value = localStorage.getItem(KEY_STORAGE) || ''; } catch (e) {}
+  }
+  function saveKey(v) {
+    try { localStorage.setItem(KEY_STORAGE, v); } catch (e) {}
+  }
+
+  function loadHistory() {
+    try { return JSON.parse(localStorage.getItem(HIST_STORAGE) || '[]'); } catch (e) { return []; }
+  }
+  function saveHistory(list) {
+    try { localStorage.setItem(HIST_STORAGE, JSON.stringify(list.slice(-20))); } catch (e) {}
+  }
+
+  function renderHistory() {
+    var list = loadHistory();
+    var box = $('history');
+    box.innerHTML = '';
+    $('historyCard').hidden = list.length === 0;
+    list.slice().reverse().forEach(function (item) {
+      var btn = document.createElement('button');
+      btn.className = 'hist-item';
+      btn.type = 'button';
+      var t = document.createElement('span');
+      t.className = 't';
+      t.textContent = item.prompt;
+      var ts = document.createElement('span');
+      ts.className = 'ts';
+      ts.textContent = new Date(item.ts).toLocaleTimeString();
+      btn.appendChild(t);
+      btn.appendChild(ts);
+      btn.addEventListener('click', function () {
+        lastHtml = item.html;
+        messages = [
+          { role: 'user', content: item.prompt },
+          { role: 'assistant', content: item.html }
+        ];
+        showResult(item.html);
+      });
+      box.appendChild(btn);
+    });
+  }
+
+  function addHistory(prompt, html) {
+    var list = loadHistory();
+    list.push({ prompt: prompt, html: html, ts: Date.now() });
+    saveHistory(list);
+    renderHistory();
+  }
+
+  function setStatus(kind, html) {
+    var box = $('status');
+    if (!html) { box.hidden = true; box.className = 'status'; return; }
+    box.hidden = false;
+    box.className = 'status ' + kind;
+    box.innerHTML = html;
+  }
+
+  function setBusy(busy, label) {
+    $('go').disabled = busy;
+    $('goRefine').disabled = busy;
+    if (busy) setStatus('info', '<span class="spin"></span>' + label);
+  }
+
+  /* Claude sometimes wraps output in a fenced code block despite instructions.
+     Strip that, and drop anything before the doctype/html tag, so the iframe
+     always gets a clean document. */
+  function extractHtml(text) {
+    var t = text.trim();
+    var fence = t.match(/```(?:html)?\s*([\s\S]*?)```/i);
+    if (fence) t = fence[1].trim();
+    var start = t.search(/<!doctype html/i);
+    if (start === -1) start = t.search(/<html[\s>]/i);
+    if (start > 0) t = t.slice(start);
+    return t;
+  }
+
+  function showResult(html) {
+    $('resultCard').hidden = false;
+    $('reset').hidden = false;
+    $('preview').srcdoc = html;
+    $('codeView').textContent = html;
+    $('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function callClaude(promptText) {
+    var apiKey = $('apiKey').value.trim();
+    if (!apiKey) {
+      setStatus('err', 'Paste your Anthropic API key above first.');
+      return;
+    }
+    saveKey(apiKey);
+
+    messages.push({ role: 'user', content: promptText });
+    setBusy(true, 'Building your app… this can take a minute for anything complex.');
+
+    fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 8000,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    })
+      .then(function (r) {
+        return r.json().then(function (data) { return { ok: r.ok, status: r.status, data: data }; });
+      })
+      .then(function (res) {
+        setBusy(false, '');
+        if (!res.ok) {
+          messages.pop();
+          var msg = (res.data && res.data.error && res.data.error.message) || ('HTTP ' + res.status);
+          if (res.status === 401) msg = 'That API key was rejected. Double check it at console.anthropic.com.';
+          if (res.status === 429) msg = 'Rate limited by Anthropic. Wait a moment and try again.';
+          setStatus('err', 'Could not build the app: ' + escapeHtml(msg));
+          return;
+        }
+        var block = res.data.content && res.data.content[0];
+        var text = block && block.text ? block.text : '';
+        var html = extractHtml(text);
+        if (!html) {
+          messages.pop();
+          setStatus('err', 'Claude responded but no HTML came back. Try rephrasing the request.');
+          return;
+        }
+        messages.push({ role: 'assistant', content: text });
+        lastHtml = html;
+        if (res.data.stop_reason === 'max_tokens') {
+          setStatus('info', 'Note: the response hit the length limit and may be cut off. Try asking for something simpler, or ask to "finish it".');
+        } else {
+          setStatus('info', '');
+        }
+        showResult(html);
+        addHistory(promptText, html);
+        $('refine').value = '';
+      })
+      .catch(function (err) {
+        setBusy(false, '');
+        messages.pop();
+        setStatus('err',
+          'Request failed: ' + escapeHtml(err && err.message ? err.message : 'network error') +
+          '. If this keeps happening, your browser or network may be blocking direct calls to api.anthropic.com.'
+        );
+      });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  $('go').addEventListener('click', function () {
+    var p = $('prompt').value.trim();
+    if (!p) { setStatus('err', 'Describe what you want built first.'); return; }
+    messages = [];
+    callClaude(p);
+  });
+
+  $('goRefine').addEventListener('click', function () {
+    var p = $('refine').value.trim();
+    if (!p) { setStatus('err', 'Describe the change you want first.'); return; }
+    callClaude(p);
+  });
+
+  $('reset').addEventListener('click', function () {
+    messages = [];
+    lastHtml = '';
+    $('prompt').value = '';
+    $('refine').value = '';
+    $('resultCard').hidden = true;
+    $('reset').hidden = true;
+    setStatus('info', '');
+  });
+
+  $('tabPreview').addEventListener('click', function () {
+    $('tabPreview').setAttribute('aria-selected', 'true');
+    $('tabCode').setAttribute('aria-selected', 'false');
+    $('preview').hidden = false;
+    $('codeView').hidden = true;
+  });
+  $('tabCode').addEventListener('click', function () {
+    $('tabPreview').setAttribute('aria-selected', 'false');
+    $('tabCode').setAttribute('aria-selected', 'true');
+    $('preview').hidden = true;
+    $('codeView').hidden = false;
+  });
+
+  $('download').addEventListener('click', function () {
+    if (!lastHtml) return;
+    var blob = new Blob([lastHtml], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'app.html';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  $('clearHistory').addEventListener('click', function () {
+    saveHistory([]);
+    renderHistory();
+  });
+
+  loadKey();
+  renderHistory();
+})();
+</script>
+</body>
+</html>
