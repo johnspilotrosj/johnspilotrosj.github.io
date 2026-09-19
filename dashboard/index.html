@@ -229,16 +229,6 @@
     .bar h1 { font-size: 1.25rem; }
   }
 
-  /* ---------- Backup nag ---------- */
-  .nag {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem;
-    background: var(--gold-soft); border: 1px solid var(--gold-line);
-    border-radius: var(--r-md); padding: 0.9rem 1.1rem; margin-bottom: 1.2rem;
-    font-size: 0.88rem; line-height: 1.55; color: var(--ink);
-  }
-  .nag b { font-weight: 700; }
-  .nag .btn { padding: 0.5rem 0.95rem; font-size: 0.75rem; margin-left: auto; }
-
   /* ---------- Today ---------- */
   .week {
     background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md);
@@ -544,7 +534,6 @@
 
   <main class="page">
     <div class="err" id="app-err" hidden></div>
-    <div class="nag" id="nag" hidden></div>
 
     <!-- ===== Today ===== -->
     <section id="panel-today">
@@ -3252,54 +3241,21 @@
      ================================================================= */
 
   var BK_WHEN = 'spilo_last_backup';
-  var BK_NAG  = 'spilo_nag_dismissed';
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
   function markBackedUp() {
     lsSet(BK_WHEN, String(Date.now()));
-    lsSet(BK_NAG, '0');
     checkBackupAge();
   }
 
   function checkBackupAge() {
     var when = Number(lsGet(BK_WHEN) || 0);
-    var nags = Number(lsGet(BK_NAG) || 0);
-    var stale = !when || (Date.now() - when) > 24 * 3600 * 1000;
 
     $('b-when').textContent = when
       ? 'Last backup ' + ago(new Date(when).toISOString()) + '.'
       : 'You have never taken a backup.';
-
-    var box = $('nag');
-    box.textContent = '';
-    if (!stale || !leads.length) { box.hidden = true; return; }
-
-    var msg = when
-      ? 'Your last backup was ' + ago(new Date(when).toISOString()) + '.'
-      : 'You have never backed this up.';
-    box.appendChild(el('b', null, 'Back it up. '));
-    box.appendChild(document.createTextNode(msg + ' You have lost a database before.'));
-
-    var go = el('button', 'btn btn-dark', 'Download Backup');
-    go.type = 'button';
-    go.addEventListener('click', exportJson);
-    box.appendChild(go);
-
-    /* Two dismissals in a row and the button stops being offered. */
-    if (nags < 2) {
-      var no = el('button', 'btn btn-line', 'Not now');
-      no.type = 'button';
-      no.addEventListener('click', function () {
-        lsSet(BK_NAG, String(nags + 1));
-        box.hidden = true;
-      });
-      box.appendChild(no);
-    } else {
-      box.appendChild(el('span', 'tpl-hint', 'You have put this off twice. No dismiss button this time.'));
-    }
-    box.hidden = false;
   }
 
   function exportJson() {
