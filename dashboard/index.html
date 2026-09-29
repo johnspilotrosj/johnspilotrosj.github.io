@@ -6,12 +6,14 @@
 <title>Dashboard · John Spilotros</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Private dashboard.">
-<meta name="theme-color" content="#faf9f6">
+<meta name="theme-color" content="#1c1f23">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/index-BMl0_tLN.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%231b3a2c'/%3E%3Cpath d='M11 27 20 13 29 27' fill='none' stroke='%23eef7f0' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M20 14v13' stroke='%23e08a52' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
   body { background: var(--bg-alt); }
   [hidden] { display: none !important; }
@@ -490,6 +492,7 @@
     .sign-foot { margin-top: 0.5in; padding-top: 0.2in; font-size: 10.5pt; }
   }
 </style>
+<link rel="stylesheet" href="/assets/backend-dark.css">
 </head>
 <body>
 
@@ -526,7 +529,7 @@
     <div class="tabs" role="tablist">
       <button class="tab" type="button" role="tab" data-panel="today"    aria-selected="false" hidden>Today<span class="count" id="due-count" hidden></span></button>
       <button class="tab" type="button" role="tab" data-panel="leads"    aria-selected="true">Leads</button>
-      <button class="tab" type="button" role="tab" data-panel="farm"     aria-selected="false">Farm</button>
+      <button class="tab" type="button" role="tab" data-panel="farm"     aria-selected="false" hidden>Farm</button>
       <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false" hidden>Templates</button>
       <button class="tab" type="button" role="tab" data-panel="qr"       aria-selected="false">Sign In Sheets</button>
     </div>
@@ -3652,10 +3655,10 @@
     /* Listings and Security moved to their own pages. */
     if (want === 'listings') { location.replace('/listings/'); return; }
     if (want === 'status') { location.replace('/security/'); return; }
-    /* Today and Templates are switched off for now: their tabs are hidden
-       and old #today / #tools links land on Leads. Take a panel out of
-       OFF (and the hidden attribute off its tab) to bring it back. */
-    var OFF = ['today', 'tools'];
+    /* Today, Farm and Templates are switched off: their tabs are hidden
+       and old #today / #farm / #tools links land on Leads. Take a panel
+       out of OFF (and the hidden attribute off its tab) to bring it back. */
+    var OFF = ['today', 'farm', 'tools'];
     showPanel(PANELS.indexOf(want) !== -1 && OFF.indexOf(want) === -1 ? want : 'leads');
     load();
   }

@@ -1,0 +1,72 @@
+/* spilo.xyz backend: dark theme and a plainer, heavier type setting.
+   Loaded last on every backend page so it wins over the page's own styles. */
+
+:root {
+  color-scheme: dark;
+  --bg: oklch(0.19 0.006 250);
+  --bg-alt: oklch(0.215 0.007 250);
+  --card: oklch(0.235 0.008 250);
+  --ink: oklch(0.95 0.004 90);
+  --muted: oklch(0.8 0.008 250);
+  --faint: oklch(0.7 0.008 250);
+  --line: oklch(0.32 0.008 250);
+  --line-strong: oklch(0.42 0.01 250);
+  --gold: oklch(0.74 0.08 85);
+  --gold-deep: oklch(0.8 0.08 85);
+  --gold-soft: oklch(0.3 0.03 85);
+  --gold-line: oklch(0.5 0.06 85);
+  /* "charcoal" is the site's highlight fill (selected tab, Call button,
+     toasts). On a dark page it becomes gold with dark text. */
+  --charcoal: oklch(0.76 0.085 85);
+  --charcoal-deep: oklch(0.7 0.085 85);
+  --ivory: oklch(0.17 0.01 85);
+  --ivory-dim: oklch(0.8 0.008 90);
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.35), 0 3px 12px oklch(0 0 0 / 0.3);
+  --shadow-md: 0 10px 32px oklch(0 0 0 / 0.45), 0 2px 8px oklch(0 0 0 / 0.3);
+  --font-display: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html, body { background: var(--bg); color: var(--ink); }
+body { font-weight: 500; }
+h1, h2, h3, .kicker { font-family: var(--font-display); font-weight: 750; letter-spacing: -0.01em; }
+label, .flabel, .tab, .chip, .btn, .opt { font-weight: 650; }
+b, strong { font-weight: 750; }
+
+/* Pieces with a light color written in directly */
+.bar { background: oklch(0.19 0.006 250 / 0.94); }
+.err, .sheet-err,
+.badge-hot, .badge-bad, .tag.warn, .due-when.is-over, .seg-A,
+.lead-del:hover, .tpl-foot .mini.danger:hover {
+  color: oklch(0.86 0.08 25); background: oklch(0.3 0.07 25); border-color: oklch(0.48 0.12 25);
+}
+.seg-C, .tag-abs { color: oklch(0.86 0.06 250); background: oklch(0.3 0.05 250); border-color: oklch(0.48 0.08 250); }
+.seg-E { color: oklch(0.86 0.07 150); background: oklch(0.3 0.05 150); border-color: oklch(0.48 0.08 150); }
+.badge-dnc { background: oklch(0.55 0.02 260); border-color: oklch(0.55 0.02 260); }
+
+/* The open house sign is made for paper: keep it white with dark type. */
+.sign, .sign * {
+  --ink: oklch(0.25 0.01 250);
+  --muted: oklch(0.47 0.012 250);
+  --faint: oklch(0.55 0.01 250);
+  --line: oklch(0.885 0.006 90);
+}
+.sign { color: var(--ink); background: #fff; }
+
+@media print {
+  :root {
+    color-scheme: light;
+    --bg: #fff; --card: #fff; --ink: oklch(0.25 0.01 250); --muted: oklch(0.47 0.012 250);
+    --faint: oklch(0.55 0.01 250); --line: oklch(0.885 0.006 90);
+  }
+  html, body { background: #fff; color: #000; }
+}
+
+/* The listings manager (/admin) runs inside the old public site's layout.
+   That site now lives at spilotrosrealty.com, so its header, footer and
+   mobile call bar have no place here. */
+.site-header, .site-footer, .sticky-cta, .skip-link { display: none !important; }
+
+/* The listings manager's "saved" toast parks a few pixels above the bottom
+   edge when it is not showing. Keep it invisible until it is called. */
+.toast { opacity: 0; transition: transform .5s var(--ease-out-quint), opacity .3s ease; }
+.toast.show { opacity: 1; }
