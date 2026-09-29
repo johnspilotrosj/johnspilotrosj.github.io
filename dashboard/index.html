@@ -522,10 +522,10 @@
       </div>
     </div>
     <div class="tabs" role="tablist">
-      <button class="tab" type="button" role="tab" data-panel="today"    aria-selected="true">Today<span class="count" id="due-count" hidden></span></button>
-      <button class="tab" type="button" role="tab" data-panel="leads"    aria-selected="false">Leads</button>
+      <button class="tab" type="button" role="tab" data-panel="today"    aria-selected="false" hidden>Today<span class="count" id="due-count" hidden></span></button>
+      <button class="tab" type="button" role="tab" data-panel="leads"    aria-selected="true">Leads</button>
       <button class="tab" type="button" role="tab" data-panel="farm"     aria-selected="false">Farm</button>
-      <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false">Templates</button>
+      <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false" hidden>Templates</button>
       <button class="tab" type="button" role="tab" data-panel="qr"       aria-selected="false">Sign In Sheets</button>
       <button class="tab" type="button" role="tab" data-panel="listings" aria-selected="false">Listings</button>
       <button class="tab" type="button" role="tab" data-panel="status"   aria-selected="false">Security<span class="count" id="status-count" hidden></span></button>
@@ -536,7 +536,7 @@
     <div class="err" id="app-err" hidden></div>
 
     <!-- ===== Today ===== -->
-    <section id="panel-today">
+    <section id="panel-today" hidden>
       <div class="week">
         <div class="week-top">
           <span class="week-num" id="w-num">0</span>
@@ -561,7 +561,6 @@
     <section id="panel-leads" hidden>
       <div class="stats">
         <div class="stat"><b id="s-total">0</b><span>Total leads</span></div>
-        <div class="stat is-hot"><b id="s-hot">0</b><span>Hot right now</span></div>
         <div class="stat"><b id="s-week">0</b><span>Past 7 days</span></div>
       </div>
 
@@ -631,15 +630,8 @@
 
       <div class="chips" id="chips">
         <button class="chip" type="button" data-filter="active" aria-pressed="true">Active</button>
-        <button class="chip" type="button" data-filter="hot" aria-pressed="false">Hot</button>
         <button class="chip" type="button" data-filter="new" aria-pressed="false">New</button>
         <button class="chip" type="button" data-filter="open" aria-pressed="false">Still open</button>
-        <button class="chip" type="button" data-filter="overdue" aria-pressed="false">Overdue</button>
-        <button class="chip" type="button" data-filter="A" aria-pressed="false">A &middot; Buying now</button>
-        <button class="chip" type="button" data-filter="B" aria-pressed="false">B &middot; 6 to 12 mo</button>
-        <button class="chip" type="button" data-filter="C" aria-pressed="false">C &middot; Sellers</button>
-        <button class="chip" type="button" data-filter="D" aria-pressed="false">D &middot; Represented</button>
-        <button class="chip" type="button" data-filter="E" aria-pressed="false">E &middot; Farm</button>
         <button class="chip" type="button" data-filter="dead" aria-pressed="false">Dead</button>
         <button class="chip" type="button" data-filter="archived" aria-pressed="false">Archived</button>
         <button class="chip" type="button" data-filter="all" aria-pressed="false">All</button>
@@ -1443,47 +1435,17 @@
   /* A contact card. Pass a due object to get the Today-tab treatment on top:
      a days-overdue badge and the next action spelled out. */
   function card(lead, due) {
-    var hot = isHot(lead);
-    var seg = segmentOf(lead);
     var block = outboundBlock(lead);
-    var badPhone = lead.phone && !phoneOk(lead.phone);
 
     var cls = 'lead';
-    if (hot) cls += ' is-hot';
     if (lead.status === 'dead' || lead.archived) cls += ' is-dead';
     if (due) cls += ' due' + (due.over > 0 ? ' is-over' : ' is-today');
     var wrap = el('article', cls);
 
-    /* ---- Name row. My read sits first because it outranks the sheet. ---- */
+    /* ---- Name row ---- */
     var top = el('div', 'lead-top');
     top.appendChild(el('span', 'lead-name', lead.name || 'No name'));
 
-    if (lead.my_read) {
-      var rb = el('button', 'read read-' + lead.my_read, lead.my_read);
-      rb.type = 'button';
-      rb.title = 'Your read on them. Tap to change.';
-      rb.addEventListener('click', function () { openRead(lead); });
-      top.appendChild(rb);
-    } else {
-      var rs = el('button', 'read-set', 'Your read?');
-      rs.type = 'button';
-      rs.addEventListener('click', function () { openRead(lead); });
-      top.appendChild(rs);
-    }
-
-    var sb = el('button', 'seg seg-' + seg, seg);
-    sb.type = 'button';
-    sb.title = SEGMENTS[seg] + '. Tap to change.';
-    sb.addEventListener('click', function () { openRead(lead); });
-    top.appendChild(sb);
-
-    if (hot) top.appendChild(el('span', 'badge badge-hot', 'Hot'));
-    if (lead.status === 'new' && !due) top.appendChild(el('span', 'badge badge-new', 'New'));
-    if (badPhone) {
-      var bp = el('span', 'badge badge-bad', 'Check phone');
-      bp.title = 'That area code is not a real one. Worth confirming before you waste a call on it.';
-      top.appendChild(bp);
-    }
     if (lead.do_not_contact) top.appendChild(el('span', 'badge badge-dnc', 'Do not contact'));
     if (lead.dnc_registry) top.appendChild(el('span', 'badge badge-dnc', 'DNC list'));
     if (lead.archived) top.appendChild(el('span', 'badge', 'Archived'));
@@ -1495,39 +1457,6 @@
 
     if (lead.property) wrap.appendChild(el('p', 'lead-prop', lead.property));
 
-    /* ---- What you said you would do, and how late you are ---- */
-    if (lead.next_action_date) {
-      var over = dayDiff(lead.next_action_date, todayYmd());
-      var stamp = over > 0 ? over + (over === 1 ? ' day late' : ' days late')
-                : over === 0 ? 'Due today'
-                : 'Due ' + fmtDay(lead.next_action_date);
-      var line = el('div', 'lead-meta');
-      line.appendChild(el('span', 'due-when' + (over > 0 ? ' is-over' : over === 0 ? ' is-today' : ''), stamp));
-      if (lead.next_action) line.appendChild(el('span', 'due-action-inline', lead.next_action));
-      wrap.appendChild(line);
-    }
-
-    /* ---- Captured facts, quieter than your read ---- */
-    var meta = el('div', 'lead-meta');
-    if (lead.timeline) meta.appendChild(el('span', 'tag', lead.timeline));
-    /* "No agent" is what segments A, B and C mean, so printing it again is
-       noise. Only the exceptions are worth a tag. */
-    if (lead.has_agent === true) meta.appendChild(el('span', 'tag', 'Has an agent'));
-    else if (lead.has_agent !== false) meta.appendChild(el('span', 'tag', 'Agent unknown'));
-    /* Cash is the one financing answer that changes how you work them. */
-    if (/cash/i.test(lead.financing || '')) meta.appendChild(el('span', 'tag warn', 'Cash'));
-    else if (lead.financing) meta.appendChild(el('span', 'tag', lead.financing));
-    if (lead.source && lead.source !== 'open house') meta.appendChild(el('span', 'tag', lead.source));
-    if (lead.last_touch) {
-      var lt = el('span', 'tag', 'Last touch ' + ago(lead.last_touch));
-      lt.title = new Date(lead.last_touch).toLocaleString('en-US');
-      meta.appendChild(lt);
-    } else {
-      meta.appendChild(el('span', 'tag', 'Never touched'));
-    }
-    wrap.appendChild(meta);
-
-    if (lead.my_read_note) wrap.appendChild(el('p', 'read-note', lead.my_read_note));
     if (lead.notes) wrap.appendChild(el('p', 'lead-notes', lead.notes));
 
     /* ---- Outbound ---- */
@@ -1658,6 +1587,43 @@
     });
     track.appendChild(sel);
 
+    /* Has an agent. The only way to change it now that the read/segment
+       picker is gone from the card. Saves the same way that picker did:
+       represented pins the segment to D (which switches outbound off), and
+       clearing it re-derives the segment so the contact is released. */
+    var agentSel = el('select', 'select');
+    agentSel.setAttribute('aria-label', 'Has an agent');
+    [['false', 'No agent'], ['true', 'Has an agent'], ['', 'Agent: not sure']].forEach(function (a) {
+      var o = el('option', null, a[1]);
+      o.value = a[0];
+      if (String(lead.has_agent === true ? true : lead.has_agent === false ? false : '') === a[0]) o.selected = true;
+      agentSel.appendChild(o);
+    });
+    track.appendChild(agentSel);
+    agentSel.addEventListener('change', function () {
+      var v = agentSel.value === '' ? null : agentSel.value === 'true';
+      if (lead.has_agent === true && v !== true && !window.confirm(
+          'Only do this if ' + (lead.name || 'they') + ' told you their agreement with the other agent has ended.\n\n' +
+          'This switches calling, texting and email back on for them.')) {
+        agentSel.value = 'true';
+        return;
+      }
+      var body = { has_agent: v };
+      if (v === true) {
+        body.segment = 'D';
+        body.segment_manual = false;
+      } else if (segmentOf(lead) === 'D') {
+        var shadow = {};
+        Object.keys(lead).forEach(function (k) { shadow[k] = lead[k]; });
+        shadow.has_agent = v;
+        shadow.segment = null;
+        body.segment = deriveSegment(shadow);
+        body.segment_manual = false;
+      }
+      agentSel.disabled = true;
+      patchLead(lead, body).then(render);
+    });
+
     var note2 = el('textarea', 'textarea');
     note2.placeholder = 'Private notes';
     note2.value = lead.agent_notes || '';
@@ -1707,7 +1673,6 @@
     var live = leads.filter(function (l) { return !l.archived; });
     var week = Date.now() - 7 * 24 * 3600 * 1000;
     $('s-total').textContent = live.length;
-    $('s-hot').textContent = live.filter(isHot).length;
     $('s-week').textContent = live.filter(function (l) { return new Date(l.created_at).getTime() >= week; }).length;
 
     renderToday();
@@ -2255,7 +2220,7 @@
       why: 'They asked not to be contacted, and you flagged it. There is no override on this one.'
     };
     if (segmentOf(l) === 'D') return {
-      why: 'They are under agreement with another agent. Going after a client who is already under agreement is a license problem, so calling, texting and emailing are switched off here. If they tell you the agreement has ended, open this card, set Has an agent to no, and everything opens back up.'
+      why: 'They are under agreement with another agent. Going after a client who is already under agreement is a license problem, so calling, texting and emailing are switched off here. If they tell you the agreement has ended, change the agent dropdown on this card to No agent, and everything opens back up.'
     };
     if (segmentOf(l) === 'E') return {
       mailOnly: true,
@@ -3794,7 +3759,11 @@
     $('gate').hidden = true;
     $('app').hidden = false;
     var want = (location.hash || '').replace('#', '');
-    showPanel(PANELS.indexOf(want) !== -1 ? want : 'today');
+    /* Today and Templates are switched off for now: their tabs are hidden
+       and old #today / #tools links land on Leads. Take a panel out of
+       OFF (and the hidden attribute off its tab) to bring it back. */
+    var OFF = ['today', 'tools'];
+    showPanel(PANELS.indexOf(want) !== -1 && OFF.indexOf(want) === -1 ? want : 'leads');
     load();
     runChecks();   /* so the Security tab badge is right before you look */
   }
