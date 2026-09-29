@@ -491,6 +491,15 @@
     .sign-help { font-size: 14pt; margin-top: 0.3in; }
     .sign-foot { margin-top: 0.5in; padding-top: 0.2in; font-size: 10.5pt; }
   }
+
+  /* Listings tab */
+  .lst { margin-top: 1.4rem; }
+  .lst-row { display: grid; grid-template-columns: 104px 1fr; gap: 1rem; align-items: center; padding: 0.9rem 0; border-top: 1px solid var(--line); }
+  .lst-thumb { width: 104px; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--r-sm); background: var(--bg-alt); display: block; }
+  .lst-price { font-weight: 750; font-size: 1.05rem; }
+  .lst-addr { margin-top: 0.15rem; }
+  .lst-meta { margin-top: 0.4rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .lst-empty { margin-top: 1.4rem; color: var(--muted); }
 </style>
 <link rel="stylesheet" href="/assets/backend-dark.css">
 </head>
@@ -520,7 +529,6 @@
     <div class="bar-inner">
       <h1>Dashboard</h1>
       <div class="bar-actions">
-        <a class="btn btn-line" href="/listings/">Listings</a>
         <a class="btn btn-line" href="/security/">Security</a>
         <a class="btn btn-line" href="https://spilotrosrealty.com/" target="_blank" rel="noopener">View Site</a>
         <button class="btn btn-line" type="button" id="signout">Sign Out</button>
@@ -532,6 +540,7 @@
       <button class="tab" type="button" role="tab" data-panel="farm"     aria-selected="false" hidden>Farm</button>
       <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false" hidden>Templates</button>
       <button class="tab" type="button" role="tab" data-panel="qr"       aria-selected="false">Sign In Sheets</button>
+      <button class="tab" type="button" role="tab" data-panel="listings" aria-selected="false">Listings</button>
     </div>
   </header>
 
@@ -746,6 +755,28 @@
           Licensed Idaho Salesperson #1681619
         </p>
       </section>
+    </section>
+
+    <!-- ===== Listings ===== -->
+    <section id="panel-listings" hidden>
+      <div class="panel-card">
+        <h2>Listings</h2>
+        <p id="lst-sum">What is on your public listings page right now.</p>
+        <div class="links-row">
+          <a class="btn btn-dark" href="/admin">Open Listings Manager</a>
+          <a class="btn btn-line" href="https://spilotrosrealty.com/listings/" target="_blank" rel="noopener">Public Listings Page</a>
+        </div>
+        <div class="lst" id="lst"></div>
+      </div>
+      <div class="panel-card">
+        <h2>Quick links</h2>
+        <p>The places you end up needing when something looks wrong.</p>
+        <div class="links-row">
+          <a class="btn btn-line" href="/signin" target="_blank" rel="noopener">Blank Sign In Sheet</a>
+          <a class="btn btn-line" href="https://supabase.com/dashboard/project/zwsjdcrjwqkzsxollwnc" target="_blank" rel="noopener">Supabase Project</a>
+          <a class="btn btn-line" href="https://supabase.com/dashboard/project/zwsjdcrjwqkzsxollwnc/sql/new" target="_blank" rel="noopener">SQL Editor</a>
+        </div>
+      </div>
     </section>
 
 
@@ -3588,7 +3619,7 @@
 
   /* ---------- Tabs ---------- */
 
-  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr'];
+  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr', 'listings'];
 
   function showPanel(name) {
     PANELS.forEach(function (p) { $('panel-' + p).hidden = p !== name; });
@@ -3599,6 +3630,7 @@
     if (name === 'qr') updateQr($('addr').value.trim());
     if (name === 'today') renderToday();
     if (name === 'farm') renderFarm();
+    if (name === 'listings') loadListings();
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) {
@@ -3648,12 +3680,55 @@
   }
   $('signout').addEventListener('click', signOut);
 
+  /* ---------- Listings ---------- */
+
+  function loadListings() {
+    var box = $('lst');
+    box.textContent = '';
+    $('lst-sum').textContent = 'Loading your listings...';
+    api('/listings?select=*&order=featured.desc,created_at.desc').then(function (rows) {
+      rows = (rows || []).filter(function (l) { return l && (l.address || l.price || (l.photos && l.photos.length)); });
+      $('lst-sum').textContent = rows.length
+        ? rows.length + (rows.length === 1 ? ' listing is' : ' listings are') + ' on your public listings page.'
+        : 'Nothing is posted yet.';
+      if (!rows.length) {
+        box.appendChild(el('p', 'lst-empty', 'Add a home in the Listings Manager and it shows up here and on spilotrosrealty.com/listings.'));
+        return;
+      }
+      rows.forEach(function (l) {
+        var row = el('div', 'lst-row');
+        var photo = (l.photos || []).filter(Boolean)[0];
+        if (photo) {
+          var img = el('img', 'lst-thumb');
+          img.src = photo;
+          img.alt = l.address || 'Listing photo';
+          img.loading = 'lazy';
+          row.appendChild(img);
+        } else {
+          row.appendChild(el('div', 'lst-thumb'));
+        }
+        var body = el('div');
+        body.appendChild(el('div', 'lst-price', l.price || 'Call for price'));
+        body.appendChild(el('div', 'lst-addr', [l.address, l.city].filter(Boolean).join(', ')));
+        var meta = el('div', 'lst-meta');
+        meta.appendChild(el('span', 'tag', l.status || 'For Sale'));
+        if (l.featured) meta.appendChild(el('span', 'tag', 'Featured'));
+        var specs = [l.beds && l.beds + ' bd', l.baths && l.baths + ' ba', l.sqft && Number(l.sqft).toLocaleString('en-US') + ' sqft', l.mls && 'MLS ' + l.mls].filter(Boolean);
+        specs.forEach(function (t) { meta.appendChild(el('span', 'tag', t)); });
+        body.appendChild(meta);
+        row.appendChild(body);
+        box.appendChild(row);
+      });
+    }).catch(function (e) {
+      $('lst-sum').textContent = 'Could not load listings: ' + String(e && e.message ? e.message : e);
+    });
+  }
+
   function showApp() {
     $('gate').hidden = true;
     $('app').hidden = false;
     var want = (location.hash || '').replace('#', '');
-    /* Listings and Security moved to their own pages. */
-    if (want === 'listings') { location.replace('/listings/'); return; }
+    /* Security moved to its own page. */
     if (want === 'status') { location.replace('/security/'); return; }
     /* Today, Farm and Templates are switched off: their tabs are hidden
        and old #today / #farm / #tools links land on Leads. Take a panel
