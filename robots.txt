@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+
+# Every page on spilo.xyz carries <meta name="robots" content="noindex">.
+# Crawling stays allowed so search engines can read that tag and keep
+# the pages out of results.
