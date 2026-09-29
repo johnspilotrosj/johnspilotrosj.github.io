@@ -517,6 +517,8 @@
     <div class="bar-inner">
       <h1>Dashboard</h1>
       <div class="bar-actions">
+        <a class="btn btn-line" href="/listings/">Listings</a>
+        <a class="btn btn-line" href="/security/">Security</a>
         <a class="btn btn-line" href="https://spilotrosrealty.com/" target="_blank" rel="noopener">View Site</a>
         <button class="btn btn-line" type="button" id="signout">Sign Out</button>
       </div>
@@ -527,8 +529,6 @@
       <button class="tab" type="button" role="tab" data-panel="farm"     aria-selected="false">Farm</button>
       <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false" hidden>Templates</button>
       <button class="tab" type="button" role="tab" data-panel="qr"       aria-selected="false">Sign In Sheets</button>
-      <button class="tab" type="button" role="tab" data-panel="listings" aria-selected="false">Listings</button>
-      <button class="tab" type="button" role="tab" data-panel="status"   aria-selected="false">Security<span class="count" id="status-count" hidden></span></button>
     </div>
   </header>
 
@@ -745,34 +745,6 @@
       </section>
     </section>
 
-    <!-- ===== Listings ===== -->
-    <section id="panel-listings" hidden>
-      <div class="panel-card">
-        <h2>Listings</h2>
-        <p>Add and edit the homes shown on your public listings page. Paste the details straight out of a Paragon report and it fills the fields in for you, then drag in photos.</p>
-        <a class="btn btn-dark" href="/admin">Open Listings Manager</a>
-      </div>
-      <div class="panel-card">
-        <h2>Quick links</h2>
-        <p>The places you end up needing when something looks wrong.</p>
-        <div class="links-row">
-          <a class="btn btn-line" href="https://spilotrosrealty.com/listings/" target="_blank" rel="noopener">Public Listings Page</a>
-          <a class="btn btn-line" href="/signin" target="_blank" rel="noopener">Blank Sign In Sheet</a>
-          <a class="btn btn-line" href="https://supabase.com/dashboard/project/zwsjdcrjwqkzsxollwnc" target="_blank" rel="noopener">Supabase Project</a>
-          <a class="btn btn-line" href="https://supabase.com/dashboard/project/zwsjdcrjwqkzsxollwnc/sql/new" target="_blank" rel="noopener">SQL Editor</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Security ===== -->
-    <section id="panel-status" hidden>
-      <div class="panel-card">
-        <h2>Security</h2>
-        <p>Checked live against your database every time you open this tab.</p>
-        <div id="checks" style="margin-top:1.2rem"></div>
-        <button class="btn btn-line" type="button" id="recheck" style="margin-top:1.4rem">Check Again</button>
-      </div>
-    </section>
 
   </main>
 
@@ -2029,87 +2001,6 @@
   });
 
   /* ---------- Security checks ---------- */
-
-  function checkRow(state, title, detail) {
-    var row = el('div', 'check');
-    row.appendChild(el('span', 'check-dot ' + state));
-    var body = el('div', 'check-body');
-    body.appendChild(el('b', null, title));
-    var p = el('p');
-    p.innerHTML = detail;   /* fixed strings written here, no user data */
-    body.appendChild(p);
-    row.appendChild(body);
-    return row;
-  }
-
-  function runChecks() {
-    var box = $('checks');
-    box.textContent = '';
-    box.appendChild(checkRow('', 'Checking...', 'Asking the database how things stand.'));
-
-    var results = [];
-    var problems = 0;
-
-    /* Can a stranger register an account? That is the one that matters,
-       because every policy below trusts who you are. */
-    var signupCheck = fetch(SB_URL + '/auth/v1/settings', { headers: { apikey: SB_KEY } })
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (j.disable_signup === true) {
-          results.push(['ok', 'Public signup is off', 'Nobody can create an account on your project. This is the setting that keeps everything else honest.']);
-        } else {
-          problems++;
-          results.push(['bad', 'Public signup is ON', 'Anyone can register an account on your project. Turn it off: Supabase dashboard, Authentication, Sign In / Providers, Email, uncheck <b>Allow new users to sign up</b>.']);
-        }
-      })
-      .catch(function () {
-        results.push(['warn', 'Could not check signup', 'The auth service did not answer. If the project is paused, restore it first.']);
-      });
-
-    /* Does the leads table exist, and can we read it as ourselves? */
-    var leadsCheck = api('/leads?select=id&limit=1')
-      .then(function () {
-        results.push(['ok', 'Leads table is live', 'It exists and you can read it.']);
-      })
-      .catch(function (e) {
-        problems++;
-        var msg = String(e && e.message ? e.message : e);
-        if (msg.indexOf('PGRST205') !== -1 || msg.indexOf('schema cache') !== -1) {
-          results.push(['bad', 'Leads table does not exist', 'Run <code>leads-table.sql</code> in the SQL editor. Until then every sign in is stranded on the phone that captured it.']);
-        } else {
-          results.push(['bad', 'Cannot read the leads table', msg]);
-        }
-      });
-
-    /* Anonymous read attempt. This is the actual test that matters:
-       it uses the public key with no login, exactly like a stranger would. */
-    var anonCheck = fetch(SB_URL + '/rest/v1/leads?select=id&limit=1', {
-      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY }
-    }).then(function (r) {
-      if (r.status === 200) {
-        problems++;
-        results.push(['bad', 'Your leads are readable by the public', 'A signed out request just read the table. Run <code>leads-table.sql</code>, it is the file that turns row level security on.']);
-      } else if (r.status === 404) {
-        results.push(['warn', 'Public read blocked, table missing', 'Nothing is exposed, but only because the table is not there yet.']);
-      } else {
-        results.push(['ok', 'Leads are private', 'A signed out request was refused. Only you can read them.']);
-      }
-    }).catch(function () {
-      results.push(['warn', 'Could not test public access', 'The database did not answer.']);
-    });
-
-    Promise.all([signupCheck, leadsCheck, anonCheck]).then(function () {
-      box.textContent = '';
-      var order = { bad: 0, warn: 1, ok: 2 };
-      results.sort(function (a, b) { return order[a[0]] - order[b[0]]; });
-      results.forEach(function (r) { box.appendChild(checkRow(r[0], r[1], r[2])); });
-      var badge = $('status-count');
-      badge.hidden = problems === 0;
-      badge.textContent = problems;
-    });
-  }
-
-  $('recheck').addEventListener('click', runChecks);
 
   /* =================================================================
      Dates. Everything user facing is local. next_action_date is a plain
@@ -3694,7 +3585,7 @@
 
   /* ---------- Tabs ---------- */
 
-  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr', 'listings', 'status'];
+  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr'];
 
   function showPanel(name) {
     PANELS.forEach(function (p) { $('panel-' + p).hidden = p !== name; });
@@ -3702,7 +3593,6 @@
       t.setAttribute('aria-selected', String(t.dataset.panel === name));
     });
     try { history.replaceState(null, '', '#' + name); } catch (e) {}
-    if (name === 'status') runChecks();
     if (name === 'qr') updateQr($('addr').value.trim());
     if (name === 'today') renderToday();
     if (name === 'farm') renderFarm();
@@ -3759,13 +3649,15 @@
     $('gate').hidden = true;
     $('app').hidden = false;
     var want = (location.hash || '').replace('#', '');
+    /* Listings and Security moved to their own pages. */
+    if (want === 'listings') { location.replace('/listings/'); return; }
+    if (want === 'status') { location.replace('/security/'); return; }
     /* Today and Templates are switched off for now: their tabs are hidden
        and old #today / #tools links land on Leads. Take a panel out of
        OFF (and the hidden attribute off its tab) to bring it back. */
     var OFF = ['today', 'tools'];
     showPanel(PANELS.indexOf(want) !== -1 && OFF.indexOf(want) === -1 ? want : 'leads');
     load();
-    runChecks();   /* so the Security tab badge is right before you look */
   }
 
   /* ---------- Start ---------- */
