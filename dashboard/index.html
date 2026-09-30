@@ -512,7 +512,7 @@
   .cma-table td { padding: 0.25rem 0.18rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
   .cma-table .cma-cell { width: 4.2rem; padding: 0.3rem 0.4rem; font-size: 0.85rem; min-height: 0; }
   .cma-table .cma-w-status { width: 6.4rem; }
-  .cma-table .cma-w-address { width: 10rem; }
+  .cma-table .cma-w-address { width: 15rem; }
   .cma-table .cma-w-price { width: 6.2rem; }
   .cma-table .cma-w-date { width: 8.6rem; }
   .cma-table .cma-w-beds, .cma-table .cma-w-baths, .cma-table .cma-w-garage { width: 3.1rem; }
@@ -529,6 +529,12 @@
   .cma-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; margin-top: 0.7rem; }
   .cma-meta span { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
   .cma-warn { margin-top: 0.8rem; color: oklch(0.86 0.08 25); }
+  .cma-find form { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.7rem; }
+  .cma-find .cma-addr { flex: 1 1 22rem; }
+  .cma-find .select { width: auto; }
+  .cma-find .btn { padding: 0.6rem 1.1rem; font-size: 0.78rem; align-self: stretch; }
+  .cma-find .cma-note { margin: 0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
+  .cma-find .cma-note b { color: var(--ink); }
   @media (max-width: 700px) { .cma-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 <link rel="stylesheet" href="/assets/backend-dark.css">
@@ -3903,6 +3909,70 @@
     btn('Print report', 'btn-line', function () { cmaPrint(data); });
     root.appendChild(bar);
 
+    /* Find comps: paste an address, the subject and comps fill themselves in */
+    var find = el('div', 'panel-card cma-find');
+    find.appendChild(el('h2', null, 'Find comps'));
+    var ff = el('form');
+    ff.noValidate = true;
+    var addr = el('input', 'input cma-addr');
+    addr.type = 'text';
+    addr.placeholder = 'Paste an address: 123 Main St, Boise, ID 83702';
+    addr.setAttribute('aria-label', 'Subject property address');
+    addr.autocomplete = 'off';
+    addr.value = data.subject.address || '';
+    ff.appendChild(addr);
+    function opt(label, choices, pickVal) {
+      var sel = el('select', 'select');
+      sel.setAttribute('aria-label', label);
+      choices.forEach(function (c) { var o = el('option', null, c[1]); o.value = String(c[0]); if (c[0] === pickVal) o.selected = true; sel.appendChild(o); });
+      ff.appendChild(sel);
+      return sel;
+    }
+    var prefs = data.findPrefs || { radius: 1, days: 270 };
+    var rad = opt('Search radius', [[0.5, 'Within ½ mi'], [1, 'Within 1 mi'], [2, 'Within 2 mi'], [3, 'Within 3 mi']], prefs.radius);
+    var age = opt('How recent', [[90, 'Last 3 months'], [180, 'Last 6 months'], [270, 'Last 9 months'], [365, 'Last 12 months']], prefs.days);
+    var fgo = el('button', 'btn btn-dark', 'Find comps');
+    fgo.type = 'submit';
+    ff.appendChild(fgo);
+    find.appendChild(ff);
+    var fnote = el('p', 'cma-note');
+    find.appendChild(fnote);
+    if (data.found) {
+      fnote.appendChild(el('b', null, data.found.count + (data.found.count === 1 ? ' comp' : ' comps') + ' found'));
+      fnote.appendChild(document.createTextNode(' within ' + data.found.radius + ' mi, ' + data.found.on + '. ' + CMA_LIST_NOTE));
+    } else {
+      fnote.textContent = 'Fills in the subject and up to 20 nearby comps. Check garage and condition, then correct any prices from Paragon.';
+    }
+    ff.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = addr.value.trim();
+      if (q.length < 6) { fnote.textContent = 'Enter the full street address, city and state.'; addr.focus(); return; }
+      if (data.comps.length && !window.confirm('Replace the comps in this CMA with the ones found for ' + q + '?')) return;
+      var radius = +rad.value, days = +age.value;
+      fgo.disabled = true;
+      fgo.textContent = 'Searching...';
+      fnote.textContent = 'Looking up ' + q + ' and the homes around it...';
+      cmaFindComps({ address: q, maxRadius: radius, daysOld: days, compCount: 20 }).then(function (j) {
+        var got = cmaFromRentcast(j, q);
+        if (!got.comps.length) throw new Error('No comparable homes found within ' + radius + ' mi in that window. Widen the radius or go back further.');
+        var fresh = cmaBlank();
+        fresh.rates = data.rates;
+        fresh.subject = got.subject;
+        fresh.comps = got.comps;
+        fresh.avm = got.avm;
+        fresh.findPrefs = { radius: radius, days: days };
+        fresh.found = { count: got.comps.length, radius: radius, on: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) };
+        cmaStore.current = fresh;
+        cmaPersist();
+        renderCma();
+      }).catch(function (err) {
+        fgo.disabled = false;
+        fgo.textContent = 'Find comps';
+        fnote.textContent = err.setup ? CMA_SETUP_NOTE : String(err.message || err);
+      });
+    });
+    root.appendChild(find);
+
     /* Result first: that is what you came for */
     var out = el('div', 'panel-card cma-out');
     root.appendChild(out);
@@ -4012,7 +4082,8 @@
       var meta = el('div', 'cma-meta');
       [['Range', money(res.low) + ' to ' + money(res.high)], ['Median adjusted', money(res.median)],
        ['Avg $/sq ft', isFinite(res.avgPpsf) ? money(res.avgPpsf) : '—'], ['$/sq ft check', money(res.ppsfValue)],
-       ['Comps used', String(res.used)]].forEach(function (m) {
+       ['Comps used', String(res.used)]].concat(data.avm && isFinite(data.avm.price) ? [['RentCast estimate', money(data.avm.price) +
+         (isFinite(data.avm.low) && isFinite(data.avm.high) ? ' (' + money(data.avm.low) + ' to ' + money(data.avm.high) + ')' : '')]] : []).forEach(function (m) {
         var d = el('div'); d.appendChild(el('span', null, m[0])); d.appendChild(el('b', null, m[1])); meta.appendChild(d);
       });
       out.appendChild(meta);
@@ -4023,6 +4094,61 @@
       }
     }
     update();
+  }
+
+  /* ---------- Find comps (RentCast, through the cma-comps edge function) ---------- */
+
+  var CMA_LIST_NOTE = 'Idaho keeps sale prices private, so off-market comps show their last list price. Confirm sold prices in Paragon and fix them here.';
+  var CMA_SETUP_NOTE = 'The comps lookup is not switched on yet. In Supabase: add a RENTCAST_API_KEY secret, then deploy the cma-comps function (the steps are in _src/supabase/README.md). If it is already deployed, the Supabase project may be paused.';
+
+  function cmaFindComps(body, retry) {
+    var s = loadSession();
+    if (!s) return Promise.reject(new Error('Sign in again, then retry.'));
+    return fetch(SB_URL + '/functions/v1/cma-comps', {
+      method: 'POST',
+      headers: { apikey: SB_KEY, Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      if (r.status === 401 && retry !== false) {
+        return refresh().then(function (ok) {
+          if (!ok) throw new Error('Sign in again, then retry.');
+          return cmaFindComps(body, false);
+        });
+      }
+      return r.json().catch(function () { return null; }).then(function (j) {
+        if (r.ok && j) return j;
+        var e = new Error((j && (j.error || j.message)) || 'The comps lookup failed (HTTP ' + r.status + ').');
+        if (r.status === 422) e.message = 'Could not find that address. Check the spelling and include the city and state.';
+        if (r.status === 404) e.setup = true;
+        throw e;
+      });
+    }, function () {
+      var e = new Error('network');
+      e.setup = true;
+      throw e;
+    });
+  }
+
+  function cmaFromRentcast(j, typed) {
+    function v(x) { return x === null || x === undefined || x === '' ? '' : String(x); }
+    function acres(sqft) { var n = num(sqft); return isFinite(n) && n > 0 ? String(Math.round(n / 43560 * 100) / 100) : ''; }
+    function day(iso) { return iso ? String(iso).slice(0, 10) : ''; }
+    var sp = j.subjectProperty || {};
+    var subject = {
+      address: sp.formattedAddress || typed, sqft: v(sp.squareFootage), beds: v(sp.bedrooms), baths: v(sp.bathrooms),
+      garage: '', lot: acres(sp.lotSize), year: v(sp.yearBuilt), cond: '3'
+    };
+    var comps = (j.comparables || []).filter(function (c) { return c && isFinite(num(c.price)); }).map(function (c) {
+      var active = /^active$/i.test(c.status || '');
+      var d = num(c.distance);
+      return {
+        status: active ? 'active' : 'sold', use: true, cond: '3',
+        address: (c.formattedAddress || c.addressLine1 || '') + (isFinite(d) ? ' · ' + d.toFixed(2) + ' mi' : ''),
+        price: v(c.price), date: day(active ? c.listedDate : (c.removedDate || c.lastSeenDate || c.listedDate)),
+        sqft: v(c.squareFootage), beds: v(c.bedrooms), baths: v(c.bathrooms), garage: '', lot: acres(c.lotSize), year: v(c.yearBuilt)
+      };
+    });
+    return { subject: subject, comps: comps, avm: { price: num(j.price), low: num(j.priceRangeLow), high: num(j.priceRangeHigh) } };
   }
 
   /* Paste: tab or comma separated, header row first. */
