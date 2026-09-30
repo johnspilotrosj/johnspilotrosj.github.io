@@ -37,7 +37,12 @@
 
   /* Center: title, then the sign in form or, once signed in, the tools */
   main { position: fixed; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; }
-  .center { width: min(100% - 3rem, 17rem); pointer-events: auto; }
+  .center { width: min(100% - 3rem, 26rem); pointer-events: auto; }
+  .access { position: fixed; right: 1.1rem; bottom: 0.9rem; z-index: 3; width: 15rem; }
+  .access label { font-size: 11px; }
+  .access input { margin-bottom: 0.6rem; font-size: 16px; }
+  .access button { text-align: left; margin-top: 0.1rem; }
+  .access .err { text-align: left; }
   h1 { margin: 0 0 1.4rem; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; text-align: center; }
   label { display: block; font-size: 12px; color: var(--dim); letter-spacing: 0.06em; }
   input {
@@ -60,19 +65,23 @@
   .out { display: inline-block; margin-top: 1.4rem; width: auto; padding: 0; font-size: 12px; font-weight: 400; }
   .out:hover { color: var(--gold); }
 
-  /* Businesses on a slowly revolving ring */
-  .ring { position: fixed; left: 50%; top: 50%; width: 0; height: 0; margin: 0; padding: 0; list-style: none; z-index: 1; }
-  .ring li { position: absolute; left: 0; top: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(-1 * var(--a))); }
-  .ring .biz { display: block; transform: translate(-50%, -50%); white-space: nowrap; text-align: center; font-size: 13px; line-height: 1.35; color: var(--dim); text-decoration: none; }
-  .ring .biz small { display: block; font-size: 11px; color: #5d636b; }
-  .ring a.biz:hover, .ring a.biz:focus-visible { color: var(--ink); outline: none; }
+  /* Businesses: rows under the title, typewriter dot leaders */
+  .biz-list { list-style: none; margin: 0 auto; padding: 0; width: min(100%, 24rem); }
+  .biz-list li + li { margin-top: 0.35rem; }
+  .biz-list a { display: flex; align-items: baseline; gap: 0.5rem; color: var(--ink); text-decoration: none; }
+  .biz-list .lead { flex: 1; border-bottom: 1px dotted var(--faint); transform: translateY(-0.3em); min-width: 1.5rem; }
+  .biz-list .kind { color: var(--dim); font-size: 14px; }
+  .biz-list a:hover .nm, .biz-list a:focus-visible .nm { color: var(--gold); }
+  .biz-list a:hover .lead, .biz-list a:focus-visible .lead { border-bottom-color: var(--gold); }
+  .biz-list a:focus-visible { outline: none; }
 
   @media (max-width: 640px), (max-height: 560px) {
+    /* One column you can scroll: title, businesses, then sign in. */
+    body { overflow: auto; }
+    main { position: relative; inset: auto; z-index: 2; min-height: 62vh; padding-top: 4.5rem; }
+    .access { position: relative; right: auto; bottom: auto; z-index: 3; width: min(100% - 3rem, 17rem); margin: 1.5rem auto 3.5rem; }
+    .coords { display: none; }
     .now, .coords { font-size: 13px; }
-    /* No room for a ring around the form: a still row along the bottom. */
-    .ring { left: 0; right: 0; top: auto; bottom: 2.6rem; width: auto; height: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; padding: 0 1rem; }
-    .ring li { position: static; transform: none; }
-    .ring .biz { transform: none; }
   }
 
   /* Only hidden once the script takes over, so nothing ever goes blank. */
@@ -95,8 +104,17 @@
 <main>
   <div class="center">
     <h1><span>spilo.xyz</span></h1>
+    <ul class="biz-list fade" aria-label="Businesses">
+      <li><a href="https://spilotrosrealty.com/" target="_blank" rel="noopener"><span class="nm">spilotros realty</span><span class="lead" aria-hidden="true"></span><span class="kind">real estate</span></a></li>
+      <li><a href="/bennys-treats/"><span class="nm">benny&rsquo;s treats</span><span class="lead" aria-hidden="true"></span><span class="kind">ice cream</span></a></li>
+      <li><a href="https://drycreekservices.xyz/" target="_blank" rel="noopener"><span class="nm">dry creek services</span><span class="lead" aria-hidden="true"></span><span class="kind">home services</span></a></li>
+      <li><a href="/web-dev/"><span class="nm">web dev</span><span class="lead" aria-hidden="true"></span><span class="kind">websites</span></a></li>
+    </ul>
+  </div>
+</main>
 
-    <form id="login" class="fade" autocomplete="on">
+<aside class="access fade" aria-label="Sign in">
+    <form id="login" autocomplete="on">
       <label for="email">email</label>
       <input id="email" type="email" autocomplete="username" required>
       <label for="password">password</label>
@@ -106,15 +124,7 @@
     </form>
 
     <nav class="tools" id="tools" aria-label="Tools" hidden></nav>
-  </div>
-</main>
-
-<ul class="ring fade" aria-label="Businesses">
-  <li style="--a: -90deg"><a class="biz" href="https://spilotrosrealty.com/" target="_blank" rel="noopener">spilotros realty<small>real estate</small></a></li>
-  <li style="--a: 0deg"><a class="biz" href="/bennys-treats/">benny&rsquo;s treats<small>ice cream</small></a></li>
-  <li style="--a: 90deg"><a class="biz" href="https://drycreekservices.xyz/" target="_blank" rel="noopener">dry creek services<small>home services</small></a></li>
-  <li style="--a: 180deg"><a class="biz" href="/web-dev/">web dev<small>websites</small></a></li>
-</ul>
+</aside>
 
 <script src="/assets/anime.umd.min.js"></script>
 <script>
@@ -124,15 +134,12 @@
   /* Same session store as the dashboard, so one sign in covers both. */
   var STORE = 'spilo_leads_session';
   var TOOLS = [
-    ['dashboard', '/dashboard/'],
-    ['listings', '/dashboard/#listings'],
-    ['sign-in sheets', '/dashboard/#qr'],
+    ['re dashboard', '/dashboard/'],
     ['security', '/security/']
   ];
   var $ = function (id) { return document.getElementById(id); };
   var A = window.anime;
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches || !A;
-  var small = window.matchMedia('(max-width: 640px), (max-height: 560px)');
 
   /* ---------- Session (same shape the dashboard writes) ---------- */
   function saveSession(s) {
@@ -311,26 +318,6 @@
 
   /* Boise: a slow ping */
   A.animate('.map .ping', { r: [1.6, 9], opacity: [0.8, 0], duration: 2400, loop: true, ease: 'outQuad' });
-
-  /* The ring turns once every 90s; each name counter-turns to stay upright.
-     Hovering a name pauses it. */
-  var spin = null;
-  function startRing() {
-    if (spin || small.matches) return;
-    spin = [
-      A.animate('.ring', { rotate: 360, duration: 90000, loop: true, ease: 'linear' }),
-      A.animate('.ring .biz', { rotate: -360, duration: 90000, loop: true, ease: 'linear' })
-    ];
-  }
-  function stopRing() {
-    if (!spin) return;
-    spin.forEach(function (a) { a.revert(); });
-    spin = null;
-  }
-  startRing();
-  small.addEventListener('change', function () { small.matches ? stopRing() : startRing(); });
-  document.querySelector('.ring').addEventListener('mouseover', function () { if (spin) spin.forEach(function (a) { a.pause(); }); });
-  document.querySelector('.ring').addEventListener('mouseout', function () { if (spin) spin.forEach(function (a) { a.play(); }); });
 
   /* Crosshair and coordinates follow the pointer on the map. */
   var svg = document.querySelector('.map'), v = svg.querySelector('.xh-v'), h = svg.querySelector('.xh-h');

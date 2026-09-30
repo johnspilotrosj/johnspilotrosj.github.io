@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dashboard · John Spilotros</title>
+<title>RE Dashboard · John Spilotros</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="Private dashboard.">
 <meta name="theme-color" content="#1c1f23">
@@ -500,6 +500,36 @@
   .lst-addr { margin-top: 0.15rem; }
   .lst-meta { margin-top: 0.4rem; display: flex; flex-wrap: wrap; gap: 0.35rem; }
   .lst-empty { margin-top: 1.4rem; color: var(--muted); }
+  /* CMA tab */
+  .cma-bar { margin: 0 0 0.9rem; align-items: center; }
+  .cma-bar .select { width: auto; min-width: 12rem; }
+  .cma-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.7rem 0.9rem; margin-top: 0.8rem; }
+  .cma-field { display: flex; flex-direction: column; gap: 0.25rem; }
+  .cma-field.span2 { grid-column: span 2; }
+  .cma-scroll { overflow-x: auto; margin-top: 0.8rem; }
+  .cma-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .cma-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 0.35rem 0.18rem; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .cma-table td { padding: 0.25rem 0.18rem; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .cma-table .cma-cell { width: 4.2rem; padding: 0.3rem 0.4rem; font-size: 0.85rem; min-height: 0; }
+  .cma-table .cma-w-status { width: 6.4rem; }
+  .cma-table .cma-w-address { width: 10rem; }
+  .cma-table .cma-w-price { width: 6.2rem; }
+  .cma-table .cma-w-date { width: 8.6rem; }
+  .cma-table .cma-w-beds, .cma-table .cma-w-baths, .cma-table .cma-w-garage { width: 3.1rem; }
+  .cma-table .cma-w-sqft, .cma-table .cma-w-lot, .cma-table .cma-w-year { width: 4rem; }
+  .cma-table .cma-w-cond { width: 8.2rem; }
+  .cma-field .input, .cma-field .select { padding: 0.45rem 0.6rem; min-height: 0; }
+  .cma-table .cma-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .cma-table tr.is-off td { opacity: 0.45; }
+  .cma-table tr.is-flag td { background: oklch(0.3 0.07 25 / 0.35); }
+  .cma-table .mini { border: 1px solid var(--line-strong); background: none; color: var(--muted); border-radius: var(--r-sm); cursor: pointer; padding: 0.1rem 0.45rem; }
+  .cma-paste { margin-top: 0.9rem; }
+  .cma-paste .textarea { width: 100%; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; }
+  .cma-value { font-size: 2.4rem; font-weight: 750; line-height: 1.1; margin-top: 0.3rem; color: var(--gold); }
+  .cma-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.6rem; margin-top: 0.7rem; }
+  .cma-meta span { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .cma-warn { margin-top: 0.8rem; color: oklch(0.86 0.08 25); }
+  @media (max-width: 700px) { .cma-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 <link rel="stylesheet" href="/assets/backend-dark.css">
 <link rel="stylesheet" href="/assets/backend-compact.css">
@@ -509,7 +539,7 @@
 <!-- ---------- Sign in ---------- -->
 <main class="gate" id="gate" hidden>
   <p class="kicker">Private</p>
-  <h1>Dashboard</h1>
+  <h1>RE Dashboard</h1>
   <form id="login">
     <div>
       <label class="flabel" for="email">Email</label>
@@ -528,7 +558,7 @@
 <div id="app" hidden>
   <header class="bar">
     <div class="bar-inner">
-      <h1>Dashboard</h1>
+      <h1>RE Dashboard</h1>
       <div class="bar-actions">
         <a class="btn btn-line" href="/security/">Security</a>
         <a class="btn btn-line" href="https://spilotrosrealty.com/" target="_blank" rel="noopener">View Site</a>
@@ -542,6 +572,7 @@
       <button class="tab" type="button" role="tab" data-panel="tools"    aria-selected="false" hidden>Templates</button>
       <button class="tab" type="button" role="tab" data-panel="qr"       aria-selected="false">Sign In Sheets</button>
       <button class="tab" type="button" role="tab" data-panel="listings" aria-selected="false">Listings</button>
+      <button class="tab" type="button" role="tab" data-panel="cma"      aria-selected="false">CMA</button>
     </div>
   </header>
 
@@ -756,6 +787,11 @@
           Licensed Idaho Salesperson #1681619
         </p>
       </section>
+    </section>
+
+    <!-- ===== CMA ===== -->
+    <section id="panel-cma" hidden>
+      <div id="cma"></div>
     </section>
 
     <!-- ===== Listings ===== -->
@@ -3620,7 +3656,7 @@
 
   /* ---------- Tabs ---------- */
 
-  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr', 'listings'];
+  var PANELS = ['today', 'leads', 'farm', 'tools', 'qr', 'listings', 'cma'];
 
   function showPanel(name) {
     PANELS.forEach(function (p) { $('panel-' + p).hidden = p !== name; });
@@ -3632,6 +3668,7 @@
     if (name === 'today') renderToday();
     if (name === 'farm') renderFarm();
     if (name === 'listings') loadListings();
+    if (name === 'cma') renderCma();
   }
 
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function (t) {
@@ -3680,6 +3717,403 @@
     $('gate').hidden = false;
   }
   $('signout').addEventListener('click', signOut);
+
+  /* =================================================================
+     Pinpoint CMA. Sales comparison: every comp is adjusted to the subject
+     with per-unit rates, then weighted by how little it had to be
+     adjusted (and by status). Kept in this browser, never in the DB.
+     ================================================================= */
+
+  var CMA_KEY = 'spilo_cma_v1';
+  var CMA_FIELDS = [
+    ['address', 'Address', 'text'], ['price', 'Price', 'money'], ['date', 'Sold / listed', 'date'],
+    ['sqft', 'Sq ft', 'num'], ['beds', 'Beds', 'num'], ['baths', 'Baths', 'num'],
+    ['garage', 'Garage', 'num'], ['lot', 'Lot (ac)', 'num'], ['year', 'Year', 'num'], ['cond', 'Cond.', 'cond']
+  ];
+  var CMA_COND = ['', 'Needs work', 'Fair', 'Average', 'Good', 'Excellent'];
+  var CMA_STATUS = { sold: 1, pending: 0.6, active: 0.3 };
+  /* Starting points only. Set these to what the market is paying for each difference. */
+  var CMA_RATES = [
+    ['sqft', 'Per sq ft of living area', 150],
+    ['beds', 'Per bedroom', 10000],
+    ['baths', 'Per bathroom', 7500],
+    ['garage', 'Per garage stall', 8000],
+    ['lot', 'Per acre of lot', 60000],
+    ['year', 'Per year newer', 750],
+    ['cond', 'Per condition step', 15000],
+    ['time', 'Market change, % per month', 0]
+  ];
+
+  function cmaBlank() {
+    var rates = {};
+    CMA_RATES.forEach(function (r) { rates[r[0]] = r[2]; });
+    return { subject: { address: '', sqft: '', beds: '', baths: '', garage: '', lot: '', year: '', cond: '3' }, comps: [], rates: rates };
+  }
+  function cmaLoadAll() {
+    try { return JSON.parse(localStorage.getItem(CMA_KEY) || 'null') || { current: cmaBlank(), saved: {} }; }
+    catch (e) { return { current: cmaBlank(), saved: {} }; }
+  }
+  var cmaStore = cmaLoadAll();
+  function cmaPersist() { try { localStorage.setItem(CMA_KEY, JSON.stringify(cmaStore)); } catch (e) {} }
+
+  function num(v) {
+    if (v === null || v === undefined) return NaN;
+    var s = String(v).replace(/[$,\s]/g, '');
+    if (/k$/i.test(s)) return parseFloat(s) * 1000;
+    return s === '' ? NaN : parseFloat(s);
+  }
+  function money(n) { return isFinite(n) ? '$' + Math.round(n).toLocaleString('en-US') : '—'; }
+  function pct(n) { return isFinite(n) ? (n * 100).toFixed(1) + '%' : '—'; }
+  function parseDate(v) {
+    var s = String(v || '').trim(), m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/))) return new Date(+m[1], m[2] - 1, +m[3]);
+    if ((m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/))) return new Date(m[3].length === 2 ? 2000 + +m[3] : +m[3], m[1] - 1, +m[2]);
+    return null;
+  }
+
+  /* One comp against the subject: each line is (subject - comp) x rate. */
+  function cmaAdjust(comp, subject, rates) {
+    var price = num(comp.price);
+    var lines = [];
+    function diff(key, rate, label) {
+      var s = num(subject[key]), c = num(comp[key]);
+      if (!isFinite(s) || !isFinite(c) || !rate) return;
+      var amt = (s - c) * rate;
+      if (amt) lines.push([label, amt]);
+    }
+    diff('sqft', rates.sqft, 'Living area');
+    diff('beds', rates.beds, 'Bedrooms');
+    diff('baths', rates.baths, 'Bathrooms');
+    diff('garage', rates.garage, 'Garage');
+    diff('lot', rates.lot, 'Lot');
+    diff('year', rates.year, 'Age');
+    diff('cond', rates.cond, 'Condition');
+    var d = parseDate(comp.date);
+    if (d && num(rates.time) && isFinite(price) && (comp.status || 'sold') === 'sold') {
+      var months = (Date.now() - d.getTime()) / (30.44 * 864e5);
+      if (months > 0) lines.push(['Time', price * months * num(rates.time) / 100]);
+    }
+    var net = 0, gross = 0;
+    lines.forEach(function (l) { net += l[1]; gross += Math.abs(l[1]); });
+    return { price: price, lines: lines, adjusted: price + net, net: net / price, gross: gross / price };
+  }
+
+  /* The pinpoint: weights fall off with the square of the total adjustment,
+     so a near-twin comp outweighs one that needed a lot of work. */
+  function cmaResult(data) {
+    var rows = data.comps.map(function (c) {
+      var a = cmaAdjust(c, data.subject, data.rates);
+      a.comp = c;
+      a.usable = c.use !== false && isFinite(a.price) && a.price > 0;
+      a.flags = [];
+      if (a.gross > 0.25) a.flags.push('gross adjustments over 25%');
+      if (Math.abs(a.net) > 0.15) a.flags.push('net adjustment over 15%');
+      a.weight = a.usable ? (CMA_STATUS[c.status || 'sold'] || 1) / Math.pow(0.05 + a.gross, 2) : 0;
+      return a;
+    });
+    var used = rows.filter(function (r) { return r.usable; });
+    var wsum = used.reduce(function (s, r) { return s + r.weight; }, 0);
+    used.forEach(function (r) { r.share = wsum ? r.weight / wsum : 0; });
+    var value = wsum ? used.reduce(function (s, r) { return s + r.adjusted * r.share; }, 0) : NaN;
+    var adj = used.map(function (r) { return r.adjusted; }).sort(function (a, b) { return a - b; });
+    var mid = adj.length ? (adj.length % 2 ? adj[(adj.length - 1) / 2] : (adj[adj.length / 2 - 1] + adj[adj.length / 2]) / 2) : NaN;
+    var ppsf = used.map(function (r) { return r.price / num(r.comp.sqft); }).filter(isFinite);
+    var avgPpsf = ppsf.length ? ppsf.reduce(function (s, x) { return s + x; }, 0) / ppsf.length : NaN;
+    var subjSqft = num(data.subject.sqft);
+    return {
+      rows: rows, used: used.length,
+      value: isFinite(value) ? Math.round(value / 1000) * 1000 : NaN,
+      low: adj.length ? adj[0] : NaN, high: adj.length ? adj[adj.length - 1] : NaN, median: mid,
+      avgPpsf: avgPpsf, ppsfValue: isFinite(avgPpsf) && isFinite(subjSqft) ? avgPpsf * subjSqft : NaN
+    };
+  }
+
+  /* ---------- CMA screen ---------- */
+
+  function cmaInput(obj, key, kind, onChange, cls) {
+    var n;
+    if (kind === 'cond') {
+      n = el('select', 'select' + (cls ? ' ' + cls : ''));
+      CMA_COND.forEach(function (label, i) {
+        var o = el('option', null, i ? i + ' ' + label : '—');
+        o.value = i ? String(i) : '';
+        if (String(obj[key] || '') === o.value) o.selected = true;
+        n.appendChild(o);
+      });
+      n.addEventListener('change', function () { obj[key] = n.value; onChange(); });
+      return n;
+    }
+    n = el('input', 'input' + (cls ? ' ' + cls : ''));
+    n.type = kind === 'date' ? 'date' : 'text';
+    if (kind === 'num' || kind === 'money') n.inputMode = 'decimal';
+    n.value = obj[key] === undefined || obj[key] === null ? '' : obj[key];
+    n.addEventListener('input', function () { obj[key] = n.value; onChange(); });
+    return n;
+  }
+
+  function renderCma() {
+    var data = cmaStore.current;
+    var root = $('cma');
+    root.textContent = '';
+
+    /* Toolbar: saved CMAs */
+    var bar = el('div', 'links-row cma-bar');
+    var pick = el('select', 'select');
+    var none = el('option', null, 'Saved CMAs');
+    none.value = '';
+    pick.appendChild(none);
+    Object.keys(cmaStore.saved).sort().forEach(function (k) {
+      var o = el('option', null, k);
+      o.value = k;
+      pick.appendChild(o);
+    });
+    pick.addEventListener('change', function () {
+      if (!pick.value) return;
+      cmaStore.current = JSON.parse(JSON.stringify(cmaStore.saved[pick.value]));
+      cmaPersist();
+      renderCma();
+    });
+    bar.appendChild(pick);
+    function btn(label, cls, fn) { var b = el('button', 'btn ' + cls, label); b.type = 'button'; b.addEventListener('click', fn); bar.appendChild(b); return b; }
+    btn('Save', 'btn-dark', function () {
+      var name = (data.subject.address || '').trim() || window.prompt('Name this CMA', 'Untitled CMA');
+      if (!name) return;
+      cmaStore.saved[name] = JSON.parse(JSON.stringify(data));
+      cmaPersist();
+      flash();
+      renderCma();
+    });
+    btn('New', 'btn-line', function () {
+      if (data.comps.length && !window.confirm('Start a new CMA? Anything unsaved here is cleared.')) return;
+      var rates = data.rates;
+      cmaStore.current = cmaBlank();
+      cmaStore.current.rates = rates;   /* your rates carry over */
+      cmaPersist();
+      renderCma();
+    });
+    if (cmaStore.saved[(data.subject.address || '').trim()]) {
+      btn('Delete saved', 'btn-line', function () {
+        var k = data.subject.address.trim();
+        if (!window.confirm('Delete the saved CMA for ' + k + '?')) return;
+        delete cmaStore.saved[k];
+        cmaPersist();
+        renderCma();
+      });
+    }
+    btn('Print report', 'btn-line', function () { cmaPrint(data); });
+    root.appendChild(bar);
+
+    /* Result first: that is what you came for */
+    var out = el('div', 'panel-card cma-out');
+    root.appendChild(out);
+
+    /* Subject */
+    var subj = el('div', 'panel-card');
+    subj.appendChild(el('h2', null, 'Subject property'));
+    var sg = el('div', 'cma-grid');
+    [['address', 'Address', 'text', 'span2'], ['sqft', 'Sq ft', 'num'], ['beds', 'Beds', 'num'], ['baths', 'Baths', 'num'],
+     ['garage', 'Garage stalls', 'num'], ['lot', 'Lot (acres)', 'num'], ['year', 'Year built', 'num'], ['cond', 'Condition', 'cond']].forEach(function (f) {
+      var w = el('label', 'cma-field' + (f[3] ? ' ' + f[3] : ''));
+      w.appendChild(el('span', 'flabel', f[1]));
+      w.appendChild(cmaInput(data.subject, f[0], f[2], update));
+      sg.appendChild(w);
+    });
+    subj.appendChild(sg);
+    root.appendChild(subj);
+
+    /* Comps */
+    var cc = el('div', 'panel-card');
+    cc.appendChild(el('h2', null, 'Comparables'));
+    cc.appendChild(el('p', null, 'Sold comps carry full weight, pending 60%, active 30%. Untick a comp to leave it out without deleting it.'));
+    var wrap = el('div', 'cma-scroll');
+    var table = el('table', 'cma-table');
+    var head = el('tr');
+    ['', 'Status'].concat(CMA_FIELDS.map(function (f) { return f[1]; })).concat(['Adjusted', 'Net', 'Gross', 'Weight', '']).forEach(function (h) { head.appendChild(el('th', null, h)); });
+    var thead = el('thead'); thead.appendChild(head); table.appendChild(thead);
+    var tbody = el('tbody');
+    data.comps.forEach(function (c, i) {
+      var tr = el('tr');
+      var tdU = el('td'); var use = el('input'); use.type = 'checkbox'; use.checked = c.use !== false; use.title = 'Use this comp';
+      use.addEventListener('change', function () { c.use = use.checked; update(); }); tdU.appendChild(use); tr.appendChild(tdU);
+      var tdS = el('td'); var st = el('select', 'select cma-cell cma-w-status');
+      ['sold', 'pending', 'active'].forEach(function (k) { var o = el('option', null, k); o.value = k; if ((c.status || 'sold') === k) o.selected = true; st.appendChild(o); });
+      st.addEventListener('change', function () { c.status = st.value; update(); }); tdS.appendChild(st); tr.appendChild(tdS);
+      CMA_FIELDS.forEach(function (f) {
+        var td = el('td');
+        td.appendChild(cmaInput(c, f[0], f[2], update, 'cma-cell cma-w-' + f[0]));
+        tr.appendChild(td);
+      });
+      ['adj', 'net', 'gross', 'wt'].forEach(function (k) { var td = el('td', 'cma-num'); td.dataset.k = k; tr.appendChild(td); });
+      var tdX = el('td'); var x = el('button', 'mini', '×'); x.type = 'button'; x.title = 'Remove this comp';
+      x.addEventListener('click', function () { data.comps.splice(i, 1); cmaPersist(); renderCma(); });
+      tdX.appendChild(x); tr.appendChild(tdX);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    wrap.appendChild(table);
+    cc.appendChild(wrap);
+    if (!data.comps.length) cc.appendChild(el('p', 'lst-empty', 'No comps yet. Add one, or paste them straight from a spreadsheet or an MLS export.'));
+    var cr = el('div', 'links-row');
+    var add = el('button', 'btn btn-dark', 'Add comp'); add.type = 'button';
+    add.addEventListener('click', function () { data.comps.push({ status: 'sold', use: true, cond: '3' }); cmaPersist(); renderCma(); });
+    cr.appendChild(add);
+    var pasteBtn = el('button', 'btn btn-line', 'Paste comps'); pasteBtn.type = 'button';
+    cr.appendChild(pasteBtn);
+    cc.appendChild(cr);
+    var pasteBox = el('div', 'cma-paste'); pasteBox.hidden = true;
+    pasteBox.appendChild(el('p', null, 'Copy rows from a spreadsheet or MLS export, header row included. Columns it understands: address, price (sold/close/list), date, sqft, beds, baths, garage, lot or acres, year built, status.'));
+    var ta = el('textarea', 'textarea'); ta.rows = 5; pasteBox.appendChild(ta);
+    var go = el('button', 'btn btn-dark', 'Add these comps'); go.type = 'button';
+    var perr = el('p', 'add-err'); perr.hidden = true;
+    go.addEventListener('click', function () {
+      var got = cmaParse(ta.value);
+      if (!got.length) { perr.textContent = 'Could not read any comps. Include the header row.'; perr.hidden = false; return; }
+      data.comps = data.comps.concat(got); cmaPersist(); renderCma();
+    });
+    pasteBox.appendChild(go); pasteBox.appendChild(perr);
+    pasteBtn.addEventListener('click', function () { pasteBox.hidden = !pasteBox.hidden; if (!pasteBox.hidden) ta.focus(); });
+    cc.appendChild(pasteBox);
+    root.appendChild(cc);
+
+    /* Rates */
+    var rc = el('div', 'panel-card');
+    rc.appendChild(el('h2', null, 'Adjustment rates'));
+    rc.appendChild(el('p', null, 'Starting points. Set them to what buyers here actually pay for each difference; they carry over to your next CMA.'));
+    var rg = el('div', 'cma-grid');
+    CMA_RATES.forEach(function (r) {
+      var w = el('label', 'cma-field');
+      w.appendChild(el('span', 'flabel', r[1]));
+      w.appendChild(cmaInput(data.rates, r[0], 'num', update));
+      rg.appendChild(w);
+    });
+    rc.appendChild(rg);
+    root.appendChild(rc);
+
+    function update() {
+      cmaPersist();
+      var res = cmaResult(data);
+      Array.prototype.forEach.call(tbody.children, function (tr, i) {
+        var r = res.rows[i];
+        tr.classList.toggle('is-off', !r.usable);
+        tr.classList.toggle('is-flag', r.usable && r.flags.length > 0);
+        tr.title = r.flags.length ? 'Heads up: ' + r.flags.join(', ') : '';
+        tr.querySelector('[data-k=adj]').textContent = r.usable ? money(r.adjusted) : '—';
+        tr.querySelector('[data-k=net]').textContent = r.usable ? pct(r.net) : '—';
+        tr.querySelector('[data-k=gross]').textContent = r.usable ? pct(r.gross) : '—';
+        tr.querySelector('[data-k=wt]').textContent = r.usable ? Math.round(r.share * 100) + '%' : '—';
+      });
+      out.textContent = '';
+      out.appendChild(el('h2', null, 'Pinpoint value'));
+      if (!res.used) {
+        out.appendChild(el('p', null, 'Fill in the subject, then add comps with a price to see the value.'));
+        return;
+      }
+      out.appendChild(el('div', 'cma-value', money(res.value)));
+      var meta = el('div', 'cma-meta');
+      [['Range', money(res.low) + ' to ' + money(res.high)], ['Median adjusted', money(res.median)],
+       ['Avg $/sq ft', isFinite(res.avgPpsf) ? money(res.avgPpsf) : '—'], ['$/sq ft check', money(res.ppsfValue)],
+       ['Comps used', String(res.used)]].forEach(function (m) {
+        var d = el('div'); d.appendChild(el('span', null, m[0])); d.appendChild(el('b', null, m[1])); meta.appendChild(d);
+      });
+      out.appendChild(meta);
+      var flagged = res.rows.filter(function (r) { return r.usable && r.flags.length; });
+      if (flagged.length) {
+        out.appendChild(el('p', 'cma-warn', flagged.length + (flagged.length === 1 ? ' comp needs' : ' comps need') +
+          ' heavy adjusting (highlighted below). Their weight is already reduced; swap in closer comps if you can.'));
+      }
+    }
+    update();
+  }
+
+  /* Paste: tab or comma separated, header row first. */
+  function cmaParse(text) {
+    var lines = String(text || '').split(/\r?\n/).filter(function (l) { return l.trim(); });
+    if (lines.length < 2) return [];
+    var delim = lines[0].indexOf('\t') !== -1 ? '\t' : ',';
+    function cells(line) {
+      if (delim === '\t') return line.split('\t');
+      var out = [], cur = '', q = false;
+      for (var i = 0; i < line.length; i++) {
+        var ch = line[i];
+        if (ch === '"') { if (q && line[i + 1] === '"') { cur += '"'; i++; } else q = !q; }
+        else if (ch === ',' && !q) { out.push(cur); cur = ''; }
+        else cur += ch;
+      }
+      out.push(cur);
+      return out;
+    }
+    var ALIAS = [
+      ['address', /^(full )?(street )?address|^addr|^location/],
+      ['price', /(sold|sale|close|closing|list|listing).*price|^price$|^sp$|^lp$/],
+      ['date', /(close|closing|sold|sale|contract|list).*date|^date$|^coe$/],
+      ['sqft', /sq\.? ?ft|square|sqft|living area|^gla$|total sf|^sf$/],
+      ['beds', /^beds?$|bedrooms?|^br$|^bd$/],
+      ['baths', /baths?|bathrooms?|^ba$/],
+      ['garage', /garage|stalls?/],
+      ['lot', /lot|acre/],
+      ['year', /year|^yr|built/],
+      ['status', /^status$|^st$/]
+    ];
+    var head = cells(lines[0]).map(function (h) { return h.trim().toLowerCase(); });
+    var map = {};
+    head.forEach(function (h, i) {
+      for (var a = 0; a < ALIAS.length; a++) {
+        if (map[ALIAS[a][0]] === undefined && ALIAS[a][1].test(h)) { map[ALIAS[a][0]] = i; break; }
+      }
+    });
+    if (map.price === undefined) return [];
+    var lotIsSqft = map.lot !== undefined && !/acre/.test(head[map.lot]);
+    return lines.slice(1).map(function (line) {
+      var c = cells(line), comp = { status: 'sold', use: true, cond: '3' };
+      Object.keys(map).forEach(function (k) { comp[k] = (c[map[k]] || '').trim(); });
+      if (comp.status) {
+        var s = comp.status.toLowerCase();
+        comp.status = /pend|contract|ucb/.test(s) ? 'pending' : /act|new|coming/.test(s) ? 'active' : 'sold';
+      }
+      if (comp.price) comp.price = String(num(comp.price) || '');
+      if (comp.lot) { var l = num(comp.lot); comp.lot = isFinite(l) ? String(lotIsSqft && l > 50 ? +(l / 43560).toFixed(3) : l) : ''; }
+      var d = parseDate(comp.date);
+      if (d) comp.date = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+      return comp;
+    }).filter(function (c) { return isFinite(num(c.price)); });
+  }
+
+  /* A clean, light report in its own window, ready to print. */
+  function cmaPrint(data) {
+    var res = cmaResult(data);
+    var w = window.open('', '_blank');
+    if (!w) { window.alert('Allow pop-ups for this site to print the report.'); return; }
+    var d = w.document;
+    d.open();
+    d.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>CMA</title><style>' +
+      'body{font:11pt/1.45 Georgia,serif;color:#111;margin:0.6in}h1{font-size:18pt;margin:0 0 .1in}h2{font-size:12pt;margin:.3in 0 .08in;border-bottom:1pt solid #000}' +
+      'table{width:100%;border-collapse:collapse;font:9pt/1.3 Arial,sans-serif}th,td{text-align:left;padding:4pt 5pt;border-bottom:.5pt solid #bbb}th{font-size:8pt;text-transform:uppercase;letter-spacing:.04em}' +
+      '.v{font-size:24pt;font-weight:bold}.m{font:10pt Arial,sans-serif;color:#333}.f{margin-top:.35in;font:8pt Arial,sans-serif;color:#555}</style></head><body></body></html>');
+    d.close();
+    var b = d.body;
+    function add(tag, text, parent) { var n = d.createElement(tag); if (text !== undefined) n.textContent = text; (parent || b).appendChild(n); return n; }
+    add('h1', 'Comparative Market Analysis');
+    add('div', (data.subject.address || 'Subject property') + ' · ' + new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }), b).className = 'm';
+    add('h2', 'Indicated value');
+    add('div', money(res.value)).className = 'v';
+    add('div', 'Range ' + money(res.low) + ' to ' + money(res.high) + ' · median adjusted ' + money(res.median) + ' · ' + res.used + ' comps').className = 'm';
+    add('h2', 'Subject');
+    var s = data.subject;
+    add('div', [s.sqft && s.sqft + ' sq ft', s.beds && s.beds + ' bd', s.baths && s.baths + ' ba', s.garage && s.garage + ' garage', s.lot && s.lot + ' ac', s.year && 'built ' + s.year, s.cond && CMA_COND[+s.cond]].filter(Boolean).join(' · ')).className = 'm';
+    add('h2', 'Comparables');
+    var t = add('table'), hr = add('tr', undefined, add('thead', undefined, t));
+    ['Address', 'Status', 'Price', 'Date', 'Sq ft', 'Bd', 'Ba', 'Adjusted', 'Net', 'Weight'].forEach(function (h) { add('th', h, hr); });
+    var tb = add('tbody', undefined, t);
+    res.rows.forEach(function (r) {
+      if (!r.usable) return;
+      var c = r.comp, tr = add('tr', undefined, tb);
+      [c.address || '', c.status || 'sold', money(r.price), c.date || '', c.sqft || '', c.beds || '', c.baths || '', money(r.adjusted), pct(r.net), Math.round(r.share * 100) + '%'].forEach(function (v) { add('td', v, tr); });
+    });
+    add('div', 'Prepared by John Spilotros, licensed Idaho real estate salesperson with Keller Williams Realty Boise. ' +
+      'A comparative market analysis is an opinion of price based on comparable sales, not an appraisal.').className = 'f';
+    w.focus();
+    setTimeout(function () { w.print(); }, 250);
+  }
 
   /* ---------- Listings ---------- */
 
