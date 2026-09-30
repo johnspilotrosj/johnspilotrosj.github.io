@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { animate, createDrawable, createTimeline, type JSAnimation } from 'animejs';
 import { BOISE, LAND, toXY } from './mapData';
+import { CONTOURS, ELEV_1DEG, M_PER_STEP } from './elevation';
 
 /* Equirectangular, cropped tight to the land: 82.8°N (Greenland) .. 56.9°S (Cape Horn). */
 const VIEW_Y = 20;
@@ -19,6 +20,15 @@ export function milesFromBoise(p: LatLon) {
   const dLat = (p.lat - BOISE.lat) * r, dLon = (p.lon - BOISE.lon) * r;
   const a = Math.sin(dLat / 2) ** 2 + Math.cos(BOISE.lat * r) * Math.cos(p.lat * r) * Math.sin(dLon / 2) ** 2;
   return 3958.8 * 2 * Math.asin(Math.min(1, Math.sqrt(a)));
+}
+
+let elevGrid: Uint8Array | null = null;
+/** Approximate ground elevation in metres from the 1° grid (0 = sea level or ocean). */
+export function elevationAt(p: LatLon) {
+  if (!elevGrid) elevGrid = Uint8Array.from(atob(ELEV_1DEG), (ch) => ch.charCodeAt(0));
+  const row = Math.min(179, Math.max(0, Math.floor(90 - p.lat)));
+  const col = Math.min(359, Math.max(0, Math.floor(p.lon + 180)));
+  return elevGrid[row * 360 + col] * M_PER_STEP;
 }
 
 /** The shortest route from Boise to p, as it falls on this flat map (split at the date line). */
@@ -56,7 +66,8 @@ type Props = {
 };
 
 /**
- * A fine-line world map you can use: hairline coastlines, engraved hatching and grain, over a 15° grid.
+ * A fine-line world map you can use: hairline coastlines, engraved hatching and grain,
+ * elevation contours, over a 15° grid.
  * Hover: a soft spotlight and hairline crosshair follow the pointer.
  * Click or tap: drop a pin and see the great-circle route and distance from Boise.
  * Keyboard: focus the map, arrows move (shift for 10°), Enter pins, Esc clears.
@@ -160,11 +171,21 @@ export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props)
         <g ref={toneRef} style={hidden}>
           <path d={LAND} fill={`url(#${uid}-h)`} />
           <path d={LAND} fill="#fff" filter={`url(#${uid}-n)`} opacity="0.35" />
+          {/* Elevation: filled contours at 500, 1000, 2000, 3000 and 4000 m.
+              They stack, so higher ground reads lighter, and each has a hairline edge. */}
+          {CONTOURS.map((d, i) => (
+            <path key={i} d={d} fill="#e2ddd3" fillOpacity="0.045" stroke="#e2ddd3" strokeOpacity={0.14 + i * 0.07} strokeWidth="0.7" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+          ))}
         </g>
         <path ref={coastRef} d={LAND} fill="none" stroke="currentColor" strokeOpacity="0.75" strokeWidth="0.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
 
-        {/* Spotlight: the coast near the pointer comes up to chalk */}
-        {c && <path d={LAND} fill={`url(#${uid}-hb)`} stroke="#e2ddd3" strokeWidth="1.2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" mask={`url(#${uid}-m)`} />}
+        {/* Spotlight: the coast and contours near the pointer come up to chalk */}
+        {c && (
+          <g mask={`url(#${uid}-m)`}>
+            <path d={LAND} fill={`url(#${uid}-hb)`} stroke="#e2ddd3" strokeWidth="1.2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+            {CONTOURS.map((d, i) => <path key={i} d={d} fill="none" stroke="#e2ddd3" strokeOpacity={0.5 + i * 0.1} strokeWidth="0.9" vectorEffect="non-scaling-stroke" />)}
+          </g>
+        )}
 
         {/* Crosshair */}
         {c && (

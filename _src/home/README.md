@@ -18,6 +18,10 @@ Prime 700 for the one phrase,
   graticule. Interactive:
   hover spotlight and crosshair, click/tap/Enter drops a pin with the
   great-circle route and distance from Boise, arrow keys move.
+- Elevation: filled contours at 500, 1,000, 2,000, 3,000 and 4,000 m plus a
+  1° grid for the pointer readout, generated into `src/elevation.ts` by
+  `node scripts/elevation.mjs` from `data/earth-topology.png` (the NASA-derived
+  topography map from github.com/vasturiano/three-globe, MIT).
 - Ventures: `src/Ticker.tsx`, a slow CSS ticker across the top that pauses
   on hover and focus and stands still with reduced motion.
 

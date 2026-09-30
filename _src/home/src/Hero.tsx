@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import Fade from './Fade';
-import WorldMap, { milesFromBoise, type LatLon } from './WorldMap';
+import WorldMap, { elevationAt, milesFromBoise, type LatLon } from './WorldMap';
 import type { BoiseNow } from './hooks';
 
 function fmt(c: LatLon) {
   return `${Math.abs(c.lat).toFixed(3)}° ${c.lat >= 0 ? 'n' : 's'}, ${Math.abs(c.lon).toFixed(3)}° ${c.lon >= 0 ? 'e' : 'w'}`;
 }
 const HOME = '43.615° n, 116.202° w';
+function elev(p: LatLon) {
+  const m = elevationAt(p);
+  if (m < 50) return 'near sea level';
+  return `≈ ${(Math.round((m * 3.28084) / 100) * 100).toLocaleString('en-US')} ft`;
+}
 const BOISE_LL: LatLon = { lat: 43.615, lon: -116.2023 };
 
 type Props = { still: boolean; now: BoiseNow; onTitleTap: () => void };
@@ -66,13 +71,13 @@ export default function Hero({ still, now, onTitleTap }: Props) {
                 </>
               ) : (
                 <>
-                  <span>fig. 01&ensp;home base</span>
+                  <span>fig. 01&ensp;home base&ensp;<span className="text-ash-2">· contours 500, 1k, 2k, 3k, 4k m</span></span>
                   <span className="text-ash-2">tap or click to measure</span>
                 </>
               )}
             </div>
             <div className="flex justify-between gap-4 text-ash-2">
-              <span>{cursor ? 'pointer' : pin ? 'pin' : 'boise'}</span>
+              <span>{cursor ? 'pointer' : pin ? 'pin' : 'boise'} · {elev(cursor ?? pin ?? BOISE_LL)}</span>
               <span>{fmt(cursor ?? pin ?? BOISE_LL)}</span>
             </div>
           </figcaption>
