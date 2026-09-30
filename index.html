@@ -31,15 +31,14 @@
   .map.live .xh { opacity: 1; }
   .map .here { fill: var(--gold); }
   .map .ping { fill: none; stroke: var(--gold); stroke-width: 1; vector-effect: non-scaling-stroke; }
-  .now { position: fixed; right: 1rem; top: 0.8rem; z-index: 3; font-size: 12px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; text-align: right; }
+  .now { position: fixed; right: 1.1rem; top: 0.9rem; z-index: 3; font-size: 15px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; text-align: right; }
   .now b { font-weight: 400; color: var(--ink); }
-  .coords { position: fixed; left: 1rem; bottom: 0.8rem; z-index: 1; font-size: 12px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+  .coords { position: fixed; left: 1.1rem; bottom: 0.9rem; z-index: 1; font-size: 15px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
 
   /* Center: title, then the sign in form or, once signed in, the tools */
   main { position: fixed; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; }
   .center { width: min(100% - 3rem, 17rem); pointer-events: auto; }
   h1 { margin: 0 0 1.4rem; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; text-align: center; }
-  .cursor { display: inline-block; width: 0.55em; height: 1.1em; margin-left: 0.08em; vertical-align: -0.16em; background: var(--gold); }
   label { display: block; font-size: 12px; color: var(--dim); letter-spacing: 0.06em; }
   input {
     width: 100%; margin: 0.15rem 0 0.9rem; padding: 0.35rem 0; border: 0; border-bottom: 1px solid var(--faint);
@@ -69,6 +68,7 @@
   .ring a.biz:hover, .ring a.biz:focus-visible { color: var(--ink); outline: none; }
 
   @media (max-width: 640px), (max-height: 560px) {
+    .now, .coords { font-size: 13px; }
     /* No room for a ring around the form: a still row along the bottom. */
     .ring { left: 0; right: 0; top: auto; bottom: 2.6rem; width: auto; height: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; padding: 0 1rem; }
     .ring li { position: static; transform: none; }
@@ -94,7 +94,7 @@
 
 <main>
   <div class="center">
-    <h1><span>spilo.xyz</span><span class="cursor" aria-hidden="true"></span></h1>
+    <h1><span>spilo.xyz</span></h1>
 
     <form id="login" class="fade" autocomplete="on">
       <label for="email">email</label>
@@ -111,9 +111,9 @@
 
 <ul class="ring fade" aria-label="Businesses">
   <li style="--a: -90deg"><a class="biz" href="https://spilotrosrealty.com/" target="_blank" rel="noopener">spilotros realty<small>real estate</small></a></li>
-  <li style="--a: 0deg"><span class="biz">benny&rsquo;s treats<small>ice cream</small></span></li>
+  <li style="--a: 0deg"><a class="biz" href="/bennys-treats/">benny&rsquo;s treats<small>ice cream</small></a></li>
   <li style="--a: 90deg"><a class="biz" href="https://drycreekservices.xyz/" target="_blank" rel="noopener">dry creek services<small>home services</small></a></li>
-  <li style="--a: 180deg"><span class="biz">web dev<small>websites</small></span></li>
+  <li style="--a: 180deg"><a class="biz" href="/web-dev/">web dev<small>websites</small></a></li>
 </ul>
 
 <script src="/assets/anime.umd.min.js"></script>
@@ -169,7 +169,7 @@
           out.push(s);
         });
         node.removeChild(child);
-      } else if (!child.classList.contains('cursor')) {
+      } else {
         split(child, out);
       }
     });
@@ -308,10 +308,6 @@
   });
 
   if (still) return;
-
-  /* Cursor: hard on/off blink */
-  var cursor = document.querySelector('.cursor'), on = true;
-  A.createTimer({ duration: 530, loop: true, onLoop: function () { on = !on; cursor.style.opacity = on ? 1 : 0; } });
 
   /* Boise: a slow ping */
   A.animate('.map .ping', { r: [1.6, 9], opacity: [0.8, 0], duration: 2400, loop: true, ease: 'outQuad' });
