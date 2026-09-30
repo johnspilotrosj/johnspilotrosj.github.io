@@ -56,7 +56,7 @@ type Props = {
 };
 
 /**
- * A fine-line world map you can use: hairline coastlines over a 15° grid.
+ * A fine-line world map you can use: hairline coastlines, engraved hatching and grain, over a 15° grid.
  * Hover: a soft spotlight and hairline crosshair follow the pointer.
  * Click or tap: drop a pin and see the great-circle route and distance from Boise.
  * Keyboard: focus the map, arrows move (shift for 10°), Enter pins, Esc clears.
@@ -66,7 +66,7 @@ type Props = {
 export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props) {
   const uid = useId().replace(/:/g, '');
   const coastRef = useRef<SVGPathElement>(null);
-  const toneRef = useRef<SVGPathElement>(null);
+  const toneRef = useRef<SVGGElement>(null);
   const markRef = useRef<HTMLSpanElement>(null);
   const ringRef = useRef<HTMLSpanElement>(null);
   const [keyMode, setKeyMode] = useState(false);
@@ -137,18 +137,34 @@ export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props)
           <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y={VIEW_Y} width="1000" height={VIEW_H}>
             {c && <circle cx={c.x} cy={c.y} r="90" fill={`url(#${uid}-g)`} />}
           </mask>
+          {/* Engraved land: fine 45° hatching, brighter under the spotlight */}
+          <pattern id={`${uid}-h`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="5" stroke="#e2ddd3" strokeOpacity="0.17" strokeWidth="0.8" />
+          </pattern>
+          <pattern id={`${uid}-hb`} width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="5" stroke="#e2ddd3" strokeOpacity="0.55" strokeWidth="0.8" />
+          </pattern>
+          {/* Printed grain: speckle that only lands inside the coastline */}
+          <filter id={`${uid}-n`} x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="4" />
+            <feColorMatrix values="0 0 0 0 0.89  0 0 0 0 0.87  0 0 0 0 0.83  0 0 0 1.4 -0.62" />
+            <feComposite in2="SourceGraphic" operator="in" />
+          </filter>
         </defs>
 
         {/* Graticule, with the equator a touch firmer */}
         <path d={GRID} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1" vectorEffect="non-scaling-stroke" />
         <line x1="0" x2="1000" y1="250" y2="250" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1" strokeDasharray="2 5" vectorEffect="non-scaling-stroke" />
 
-        {/* Land: a faint tone and a hairline coast */}
-        <path ref={toneRef} d={LAND} fill="#e2ddd3" fillOpacity="0.035" style={hidden} />
+        {/* Land: engraved hatching and grain, then a hairline coast */}
+        <g ref={toneRef} style={hidden}>
+          <path d={LAND} fill={`url(#${uid}-h)`} />
+          <path d={LAND} fill="#fff" filter={`url(#${uid}-n)`} opacity="0.35" />
+        </g>
         <path ref={coastRef} d={LAND} fill="none" stroke="currentColor" strokeOpacity="0.75" strokeWidth="0.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
 
         {/* Spotlight: the coast near the pointer comes up to chalk */}
-        {c && <path d={LAND} fill="#e2ddd3" fillOpacity="0.06" stroke="#e2ddd3" strokeWidth="1.2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" mask={`url(#${uid}-m)`} />}
+        {c && <path d={LAND} fill={`url(#${uid}-hb)`} stroke="#e2ddd3" strokeWidth="1.2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" mask={`url(#${uid}-m)`} />}
 
         {/* Crosshair */}
         {c && (

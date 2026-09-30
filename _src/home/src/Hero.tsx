@@ -34,7 +34,7 @@ export default function Hero({ still, now, onTitleTap }: Props) {
       {/* The phrase */}
       <div className="col-span-12 pb-8 pt-14 md:col-span-7 md:col-start-2 md:row-start-1 md:self-end md:pb-0 md:pt-5">
         <Fade still={still} delay={0.45}>
-          <h1 id="hero-title" onClick={onTitleTap} className="text-[clamp(16px,1.3vw,19px)] leading-snug font-normal text-chalk">
+          <h1 id="hero-title" onClick={onTitleTap} className="font-type text-[clamp(16px,1.3vw,19px)] leading-snug font-bold tracking-[0.01em] text-chalk">
             Four ventures, one home base.
           </h1>
         </Fade>
