@@ -5,3 +5,4 @@
 # Homepage source build deps
 _src/home/node_modules/
 _src/home/*.tsbuildinfo
+_src/home/*.png
