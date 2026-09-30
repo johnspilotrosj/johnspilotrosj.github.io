@@ -2,9 +2,9 @@ import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 
 import { animate, stagger, type JSAnimation } from 'animejs';
 import { BOISE, LAND, toXY } from './mapData';
 
-/* Equirectangular, cropped to 82.8°N .. 61.2°S. */
+/* Equirectangular, cropped tight to the land: 82.8°N (Greenland) .. 56.9°S (Cape Horn). */
 const VIEW_Y = 20;
-const VIEW_H = 400;
+const VIEW_H = 388;
 const STEP = 11;     // dot pitch in map units (the map is 1000 wide)
 const BANDS = 14;    // vertical strips, revealed one after another
 const home = toXY(BOISE.lon, BOISE.lat);
@@ -12,7 +12,7 @@ const homeBand = Math.floor(home.x / (1000 / BANDS));
 
 export type LatLon = { lat: number; lon: number };
 
-const clampLat = (v: number) => Math.max(-61, Math.min(82.5, v));
+const clampLat = (v: number) => Math.max(-56, Math.min(82.5, v));
 const wrapLon = (v: number) => ((((v + 180) % 360) + 360) % 360) - 180;
 const fromXY = (x: number, y: number): LatLon => ({ lon: (x / 1000) * 360 - 180, lat: 90 - (y / 500) * 180 });
 
@@ -128,7 +128,7 @@ export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props)
       tabIndex={0}
       aria-label="World map. Arrow keys move the crosshair, Enter drops a pin and measures the distance from Boise, Escape clears it."
       aria-describedby="map-readout"
-      className="relative aspect-[5/2] w-full cursor-crosshair touch-manipulation outline-offset-8"
+      className="relative aspect-[1000/388] w-full cursor-crosshair touch-manipulation outline-offset-8"
       onPointerMove={(e) => { if (e.pointerType === 'mouse') { setKeyMode(false); onCursor(toMap(e)); } }}
       onPointerLeave={() => { if (!keyMode) onCursor(null); }}
       onClick={(e) => onPin(toMap(e))}

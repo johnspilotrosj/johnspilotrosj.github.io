@@ -56,18 +56,18 @@ export default function Hero({ still, now, onTitleTap }: Props) {
       <Fade
         still={still}
         delay={0.2}
-        className="col-span-12 w-full max-w-[380px] self-end justify-self-end pb-10 md:col-span-5 md:col-start-8 md:pb-16 lg:col-span-4 lg:col-start-8"
+        className="col-span-12 w-full self-end pb-10 md:col-span-6 md:col-start-7 md:pb-14 lg:col-span-5 lg:col-start-8"
       >
         <figure>
           <div className="relative">
             {/* crop marks */}
-            <span aria-hidden="true" className="absolute -left-3 -top-3 h-2 w-2 border-l border-t border-ash-2" />
-            <span aria-hidden="true" className="absolute -right-3 -top-3 h-2 w-2 border-r border-t border-ash-2" />
-            <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-2 w-2 border-b border-l border-ash-2" />
-            <span aria-hidden="true" className="absolute -bottom-3 -right-3 h-2 w-2 border-b border-r border-ash-2" />
+            <span aria-hidden="true" className="absolute -left-2 -top-2 h-2 w-2 border-l border-t border-ash-2" />
+            <span aria-hidden="true" className="absolute -right-2 -top-2 h-2 w-2 border-r border-t border-ash-2" />
+            <span aria-hidden="true" className="absolute -bottom-2 -left-2 h-2 w-2 border-b border-l border-ash-2" />
+            <span aria-hidden="true" className="absolute -bottom-2 -right-2 h-2 w-2 border-b border-r border-ash-2" />
             <WorldMap still={still} cursor={cursor} pin={pin} onCursor={setCursor} onPin={setPin} />
           </div>
-          <figcaption className="mt-6 border-t border-rule pt-2 text-[11px] text-ash tabular-nums">
+          <figcaption className="mt-4 border-t border-rule pt-2 text-[11px] text-ash tabular-nums">
             <div id="map-readout" className="flex h-8 items-center justify-between gap-4">
               {pin ? (
                 <>
