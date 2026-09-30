@@ -91,44 +91,44 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
           key="admin"
           id="admin-panel"
           aria-label="Sign in"
-          initial={still ? false : { opacity: 0, y: -8 }}
+          initial={still ? false : { opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={still ? undefined : { opacity: 0, y: -8 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-5 right-5 top-[4.25rem] z-[70] border border-rule border-t-rust bg-asphalt/95 p-5 shadow-[8px_8px_0_rgb(0_0_0/0.45)] backdrop-blur-sm sm:right-auto sm:w-[19rem] md:left-10"
+          exit={still ? undefined : { opacity: 0, y: -4 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed left-5 right-5 top-16 z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:right-auto sm:w-64 md:left-10"
         >
-          <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] text-dim uppercase">
-            <span><span className="text-rust-2">00</span> — Admin</span>
-            <button type="button" onClick={onClose} className="text-dim hover:text-chalk" aria-label="Close">esc ×</button>
+          <div className="flex items-center justify-between text-[11px] text-ash">
+            <span>(00)&ensp;admin</span>
+            <button type="button" onClick={onClose} className="-mr-2 inline-flex min-h-8 items-center px-2 transition-colors hover:text-chalk" aria-label="Close">esc ×</button>
           </div>
 
           {signedIn ? (
-            <nav aria-label="Tools" className="mt-4">
-              <ul className="space-y-2">
+            <nav aria-label="Tools" className="mt-2">
+              <ul className="border-t border-rule">
                 {TOOLS.map((t, i) => (
-                  <li key={t.href}>
-                    <a ref={i === 0 ? firstTool : undefined} href={t.href} className="group flex items-baseline justify-between font-display text-2xl tracking-[0.01em] text-chalk uppercase hover:text-rust-2">
-                      {t.label}<span aria-hidden="true" className="font-mono text-sm text-dim transition-transform group-hover:translate-x-1 group-hover:text-rust-2">→</span>
+                  <li key={t.href} className="border-b border-rule">
+                    <a ref={i === 0 ? firstTool : undefined} href={t.href} className="group flex min-h-11 items-center justify-between text-chalk">
+                      {t.label.toLowerCase()}<span aria-hidden="true" className="text-ash transition-transform duration-500 group-hover:translate-x-0.5 group-hover:text-chalk">→</span>
                     </a>
                   </li>
                 ))}
               </ul>
-              <button type="button" onClick={signOut} className="mt-5 font-mono text-[10px] tracking-[0.2em] text-dim uppercase hover:text-chalk">Sign out</button>
+              <button type="button" onClick={signOut} className="mt-2 inline-flex min-h-9 items-center text-[11px] text-ash transition-colors hover:text-chalk">sign out</button>
             </nav>
           ) : (
-            <form onSubmit={submit} className="mt-4 space-y-3" autoComplete="on">
+            <form onSubmit={submit} className="mt-3 space-y-3" autoComplete="on">
               <label className="block">
-                <span className="font-mono text-[10px] tracking-[0.2em] text-dim uppercase">Email</span>
-                <input ref={email} name="email" type="email" required autoComplete="username" className="mt-1 block w-full border-0 border-b border-rule bg-transparent py-1.5 font-mono text-base text-chalk outline-none focus:border-rust-2" />
+                <span className="text-[11px] text-ash">email</span>
+                <input ref={email} name="email" type="email" required autoComplete="username" className="mt-0.5 block w-full border-0 border-b border-rule bg-transparent py-1.5 text-[16px] text-chalk outline-none focus:border-chalk focus-visible:outline-none sm:text-[13px]" />
               </label>
               <label className="block">
-                <span className="font-mono text-[10px] tracking-[0.2em] text-dim uppercase">Password</span>
-                <input name="password" type="password" required autoComplete="current-password" className="mt-1 block w-full border-0 border-b border-rule bg-transparent py-1.5 font-mono text-base text-chalk outline-none focus:border-rust-2" />
+                <span className="text-[11px] text-ash">password</span>
+                <input name="password" type="password" required autoComplete="current-password" className="mt-0.5 block w-full border-0 border-b border-rule bg-transparent py-1.5 text-[16px] text-chalk outline-none focus:border-chalk focus-visible:outline-none sm:text-[13px]" />
               </label>
-              <button type="submit" disabled={busy} className="mt-2 w-full border border-chalk/70 py-2.5 font-mono text-[11px] tracking-[0.18em] text-chalk uppercase transition-colors hover:border-rust hover:bg-rust disabled:opacity-50">
-                {busy ? 'Signing in…' : 'Sign in'}
+              <button type="submit" disabled={busy} className="mt-1 inline-flex min-h-10 w-full items-center justify-center border border-rule text-[12px] text-chalk transition-colors duration-500 hover:border-ash disabled:opacity-50">
+                {busy ? 'signing in…' : 'sign in'}
               </button>
-              <p role="alert" className="min-h-[1.2em] font-mono text-[11px] text-rust-2">{err}</p>
+              <p role="alert" className="min-h-[1.2em] text-[11px] text-rust">{err}</p>
             </form>
           )}
         </motion.aside>
