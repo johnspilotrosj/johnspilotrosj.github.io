@@ -19,10 +19,10 @@ export default function Hero({ still, now, onTitleTap }: Props) {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative mx-auto grid min-h-[calc(100svh-6.25rem)] max-w-[1440px] grid-cols-12 grid-rows-[auto_1fr_auto] px-5 md:px-10"
+      className="relative mx-auto grid min-h-[calc(100svh-6.25rem)] max-w-[1440px] grid-cols-12 content-start px-5 pb-12 md:px-10"
     >
       {/* Boise, right now: small, top right */}
-      <Fade still={still} delay={0.15} className="col-span-12 justify-self-end pt-5 text-right text-[12px] leading-5 text-ash tabular-nums">
+      <Fade still={still} delay={0.15} className="col-span-12 justify-self-end pt-5 text-right text-[12px] leading-5 text-ash tabular-nums md:col-span-4 md:col-start-9 md:row-start-1 md:self-end">
         <p>
           <time>{now.time.toLowerCase()}</time>
           {now.weather && <span> · {now.weather}</span>}
@@ -32,7 +32,7 @@ export default function Hero({ still, now, onTitleTap }: Props) {
       </Fade>
 
       {/* The phrase and the one call to action */}
-      <div className="col-span-12 self-center py-16 md:col-span-6 md:col-start-2 md:py-0 lg:col-span-5 lg:col-start-2">
+      <div className="col-span-12 pb-8 pt-14 md:col-span-7 md:col-start-2 md:row-start-1 md:self-end md:pb-0 md:pt-5">
         <Fade still={still} delay={0.3} as="p" className="text-[12px] text-ash">
           (01)&ensp;john spilotros, boise
         </Fade>
@@ -52,11 +52,11 @@ export default function Hero({ still, now, onTitleTap }: Props) {
         </Fade>
       </div>
 
-      {/* The map: a small figure, low and to the right */}
+      {/* The map: from the F of "Four" to the right edge, just under the coordinates */}
       <Fade
         still={still}
         delay={0.2}
-        className="col-span-12 w-full self-end pb-10 md:col-span-6 md:col-start-7 md:pb-14 lg:col-span-5 lg:col-start-8"
+        className="col-span-12 w-full md:col-span-11 md:col-start-2 md:row-start-2 md:mt-5"
       >
         <figure>
           <div className="relative">

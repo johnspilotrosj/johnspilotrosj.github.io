@@ -5,7 +5,7 @@ import { BOISE, LAND, toXY } from './mapData';
 /* Equirectangular, cropped tight to the land: 82.8°N (Greenland) .. 56.9°S (Cape Horn). */
 const VIEW_Y = 20;
 const VIEW_H = 388;
-const STEP = 11;     // dot pitch in map units (the map is 1000 wide)
+const STEP = 7;      // dot pitch in map units (the map is 1000 wide)
 const BANDS = 14;    // vertical strips, revealed one after another
 const home = toXY(BOISE.lon, BOISE.lat);
 const homeBand = Math.floor(home.x / (1000 / BANDS));
@@ -142,17 +142,17 @@ export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props)
             <stop offset="1" stopColor="#fff" stopOpacity="0" />
           </radialGradient>
           <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y={VIEW_Y} width="1000" height={VIEW_H}>
-            {c && <circle cx={c.x} cy={c.y} r="80" fill={`url(#${uid}-g)`} />}
+            {c && <circle cx={c.x} cy={c.y} r="70" fill={`url(#${uid}-g)`} />}
           </mask>
         </defs>
 
         <line x1="0" x2="1000" y1="250" y2="250" stroke="currentColor" strokeOpacity="0.18" strokeWidth="1" strokeDasharray="2 6" vectorEffect="non-scaling-stroke" />
         {bands.map((d, i) => (
-          <path key={i} data-band={i} d={d} stroke="currentColor" strokeOpacity="0.55" strokeWidth="3.4" strokeLinecap="round" style={hidden} />
+          <path key={i} data-band={i} d={d} stroke="currentColor" strokeOpacity="0.5" strokeWidth="2.3" strokeLinecap="round" style={hidden} />
         ))}
 
         {/* Spotlight: the dots near the pointer come up to chalk */}
-        {c && <path d={allDots} stroke="#e2ddd3" strokeWidth="3.8" strokeLinecap="round" mask={`url(#${uid}-m)`} />}
+        {c && <path d={allDots} stroke="#e2ddd3" strokeWidth="2.6" strokeLinecap="round" mask={`url(#${uid}-m)`} />}
 
         {/* Crosshair */}
         {c && (
