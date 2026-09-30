@@ -45,3 +45,17 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hairline::after { transition: none; }
 }
+
+/* ---------- Ventures ticker ---------- */
+.ticker-view { mask-image: linear-gradient(90deg, transparent, black 3rem, black calc(100% - 3rem), transparent); }
+.ticker-track.is-moving { animation: ticker 48s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+/* Keyboard: stop, reset, and let the browser scroll the focused link into view. */
+.ticker:focus-within .ticker-track { animation: none; }
+.ticker:focus-within .ticker-view, .ticker-track:not(.is-moving) { overflow-x: auto; scrollbar-width: none; }
+.ticker-view::-webkit-scrollbar { display: none; }
+@keyframes ticker { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track.is-moving { animation: none; }
+  .ticker-view { overflow-x: auto; scrollbar-width: none; }
+}

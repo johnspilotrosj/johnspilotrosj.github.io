@@ -95,7 +95,7 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
           animate={{ opacity: 1, y: 0 }}
           exit={still ? undefined : { opacity: 0, y: -4 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-5 right-5 top-16 z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:right-auto sm:w-64 md:left-10"
+          className="fixed left-5 right-5 top-[6.75rem] z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:right-auto sm:w-64 md:left-10"
         >
           <div className="flex items-center justify-between text-[11px] text-ash">
             <span>(00)&ensp;admin</span>

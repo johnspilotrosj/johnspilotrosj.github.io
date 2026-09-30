@@ -1,22 +1,25 @@
 import { useState } from 'react';
 import Fade from './Fade';
-import WorldMap from './WorldMap';
+import WorldMap, { milesFromBoise, type LatLon } from './WorldMap';
 import type { BoiseNow } from './hooks';
 
-function fmt(c: { lat: number; lon: number }) {
+function fmt(c: LatLon) {
   return `${Math.abs(c.lat).toFixed(3)}° ${c.lat >= 0 ? 'n' : 's'}, ${Math.abs(c.lon).toFixed(3)}° ${c.lon >= 0 ? 'e' : 'w'}`;
 }
 const HOME = '43.615° n, 116.202° w';
+const BOISE_LL: LatLon = { lat: 43.615, lon: -116.2023 };
 
 type Props = { still: boolean; now: BoiseNow; onTitleTap: () => void };
 
 export default function Hero({ still, now, onTitleTap }: Props) {
-  const [cursor, setCursor] = useState<{ lat: number; lon: number } | null>(null);
+  const [cursor, setCursor] = useState<LatLon | null>(null);
+  const [pin, setPin] = useState<LatLon | null>(null);
+  const miles = pin ? Math.round(milesFromBoise(pin)) : 0;
 
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative mx-auto grid min-h-[calc(100svh-3.5rem)] max-w-[1440px] grid-cols-12 grid-rows-[auto_1fr_auto] px-5 md:px-10"
+      className="relative mx-auto grid min-h-[calc(100svh-6.25rem)] max-w-[1440px] grid-cols-12 grid-rows-[auto_1fr_auto] px-5 md:px-10"
     >
       {/* Boise, right now: small, top right */}
       <Fade still={still} delay={0.15} className="col-span-12 justify-self-end pt-5 text-right text-[12px] leading-5 text-ash tabular-nums">
@@ -62,11 +65,28 @@ export default function Hero({ still, now, onTitleTap }: Props) {
             <span aria-hidden="true" className="absolute -right-3 -top-3 h-2 w-2 border-r border-t border-ash-2" />
             <span aria-hidden="true" className="absolute -bottom-3 -left-3 h-2 w-2 border-b border-l border-ash-2" />
             <span aria-hidden="true" className="absolute -bottom-3 -right-3 h-2 w-2 border-b border-r border-ash-2" />
-            <WorldMap still={still} onPointer={setCursor} />
+            <WorldMap still={still} cursor={cursor} pin={pin} onCursor={setCursor} onPin={setPin} />
           </div>
-          <figcaption className="mt-6 flex justify-between gap-4 border-t border-rule pt-2 text-[11px] text-ash tabular-nums">
-            <span>fig. 01&ensp;home base</span>
-            <span aria-live="off">{cursor ? fmt(cursor) : 'boise, idaho'}</span>
+          <figcaption className="mt-6 border-t border-rule pt-2 text-[11px] text-ash tabular-nums">
+            <div id="map-readout" className="flex h-8 items-center justify-between gap-4">
+              {pin ? (
+                <>
+                  <span className="text-chalk">{miles < 1 ? 'right here' : `${miles.toLocaleString('en-US')} mi from boise`}</span>
+                  <button type="button" onClick={() => setPin(null)} className="-mr-2 inline-flex h-8 items-center px-2 transition-colors duration-500 hover:text-chalk">
+                    clear ×
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span>fig. 01&ensp;home base</span>
+                  <span className="text-ash-2">tap or click to measure</span>
+                </>
+              )}
+            </div>
+            <div className="flex justify-between gap-4 text-ash-2">
+              <span>{cursor ? 'pointer' : pin ? 'pin' : 'boise'}</span>
+              <span>{fmt(cursor ?? pin ?? BOISE_LL)}</span>
+            </div>
           </figcaption>
         </figure>
       </Fade>

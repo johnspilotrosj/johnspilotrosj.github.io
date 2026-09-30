@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Header from './Header';
 import Hero from './Hero';
-import Ventures from './Ventures';
+import Ticker from './Ticker';
 import AdminPanel from './AdminPanel';
 import Grain from './Grain';
 import { useBoiseNow, useReducedMotionPref } from './hooks';
@@ -39,10 +39,10 @@ export default function App() {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[80] focus:bg-chalk focus:px-3 focus:py-2 focus:text-[12px] focus:text-ink">Skip to content</a>
       <Grain />
       <div className="relative z-10">
+        <Ticker still={still} />
         <Header still={still} />
         <main id="main">
           <Hero still={still} now={now} onTitleTap={onTitleTap} />
-          <Ventures still={still} />
         </main>
         <footer className="mx-auto max-w-[1440px] px-5 md:px-10">
           <div className="flex justify-between gap-4 border-t border-rule py-5 text-[11px] text-ash">

@@ -1,9 +1,8 @@
 import Fade from './Fade';
 
 const LINKS = [
-  { label: 'ventures', href: '#ventures' },
   { label: 'realty', href: 'https://spilotrosrealty.com/', external: true },
-  { label: 'web dev', href: '/web-dev/', wide: true },
+  { label: 'web dev', href: '/web-dev/' },
 ];
 
 /* Visually small, but every link keeps a 44px tall hit area. */
@@ -17,7 +16,7 @@ export default function Header({ still }: { still: boolean }) {
           </a>
           <ul className="flex items-center gap-4 sm:gap-7">
             {LINKS.map((l) => (
-              <li key={l.label} className={l.wide ? 'hidden sm:block' : undefined}>
+              <li key={l.label}>
                 <a
                   href={l.href}
                   {...(l.external ? { target: '_blank', rel: 'noopener' } : {})}
