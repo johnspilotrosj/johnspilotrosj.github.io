@@ -10,16 +10,15 @@
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#15171a">
-<link rel="preload" href="/assets/fonts/courier-prime-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/cutive-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face { font-family: "Courier Prime"; src: url(/assets/fonts/courier-prime-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
-  @font-face { font-family: "Courier Prime"; src: url(/assets/fonts/courier-prime-700.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+  @font-face { font-family: "Cutive Mono"; src: url(/assets/fonts/cutive-mono-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
   :root { --bg: #15171a; --ink: #e9e6df; --dim: #8a8f96; --faint: #3a3f46; --gold: #c9ad72; --r: min(40vmin, 320px); }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
   body {
     background: var(--bg); color: var(--ink); overflow: hidden;
-    font: 400 16px/1.6 "Courier Prime", "Courier New", Courier, monospace;
+    font: 400 17px/1.6 "Cutive Mono", "Courier New", Courier, monospace;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -33,7 +32,7 @@
   .map .ping { fill: none; stroke: var(--gold); stroke-width: 1; vector-effect: non-scaling-stroke; }
   .now { position: fixed; right: 1.1rem; top: 0.9rem; z-index: 3; font-size: 15px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; text-align: right; }
   .now b { font-weight: 400; color: var(--ink); }
-  .coords { position: fixed; left: 1.1rem; bottom: 0.9rem; z-index: 1; font-size: 15px; color: var(--dim); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+  .coords { color: var(--dim); }
 
   /* Center: title, then the sign in form or, once signed in, the tools */
   main { position: fixed; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; }
@@ -43,7 +42,7 @@
   .access input { margin-bottom: 0.6rem; font-size: 16px; }
   .access button { text-align: left; margin-top: 0.1rem; }
   .access .err { text-align: left; }
-  h1 { margin: 0 0 1.4rem; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; text-align: center; }
+  h1 { margin: 0 0 1.4rem; font-size: 1.75rem; font-weight: 400; letter-spacing: 0.02em; text-align: center; }
   label { display: block; font-size: 12px; color: var(--dim); letter-spacing: 0.06em; }
   input {
     width: 100%; margin: 0.15rem 0 0.9rem; padding: 0.35rem 0; border: 0; border-bottom: 1px solid var(--faint);
@@ -52,7 +51,7 @@
   input:focus { border-bottom-color: var(--gold); }
   button {
     display: block; width: 100%; margin-top: 0.4rem; padding: 0.5rem 0; border: 0; background: none;
-    color: var(--ink); font: inherit; font-weight: 700; letter-spacing: 0.04em; cursor: pointer;
+    color: var(--ink); font: inherit; font-weight: 400; letter-spacing: 0.04em; cursor: pointer;
   }
   button:hover, button:focus-visible { color: var(--gold); outline: none; }
   button:disabled { color: var(--dim); cursor: default; }
@@ -70,7 +69,7 @@
   .biz-list li + li { margin-top: 0.35rem; }
   .biz-list a { display: flex; align-items: baseline; gap: 0.5rem; color: var(--ink); text-decoration: none; }
   .biz-list .lead { flex: 1; border-bottom: 1px dotted var(--faint); transform: translateY(-0.3em); min-width: 1.5rem; }
-  .biz-list .kind { color: var(--dim); font-size: 14px; }
+  .biz-list .kind { color: var(--dim); font-size: 15px; }
   .biz-list a:hover .nm, .biz-list a:focus-visible .nm { color: var(--gold); }
   .biz-list a:hover .lead, .biz-list a:focus-visible .lead { border-bottom-color: var(--gold); }
   .biz-list a:focus-visible { outline: none; }
@@ -80,8 +79,8 @@
     body { overflow: auto; }
     main { position: relative; inset: auto; z-index: 2; min-height: 62vh; padding-top: 4.5rem; }
     .access { position: relative; right: auto; bottom: auto; z-index: 3; width: min(100% - 3rem, 17rem); margin: 1.5rem auto 3.5rem; }
-    .coords { display: none; }
-    .now, .coords { font-size: 13px; }
+    .coords, .now .sep { display: none; }
+    .now { font-size: 13px; }
   }
 
   /* Only hidden once the script takes over, so nothing ever goes blank. */
@@ -98,8 +97,7 @@
   <circle class="ping" cx="177.2" cy="128.8" r="1.6"/>
   <circle class="here" cx="177.2" cy="128.8" r="1.6"/>
 </svg>
-<div class="now" id="now" aria-live="off"><span id="clock"></span><span id="wx"></span></div>
-<div class="coords" aria-hidden="true">43.62&deg;N 116.20&deg;W</div>
+<div class="now" id="now" aria-live="off"><span class="coords" id="coords" aria-hidden="true">43.62&deg;N 116.20&deg;W</span><span class="sep" aria-hidden="true"> &middot; </span><span id="clock"></span><span id="wx"></span></div>
 
 <main>
   <div class="center">
@@ -113,7 +111,7 @@
   </div>
 </main>
 
-<aside class="access fade" aria-label="Sign in">
+<aside class="access" id="access" aria-label="Sign in" hidden>
     <form id="login" autocomplete="on">
       <label for="email">email</label>
       <input id="email" type="email" autocomplete="username" required>
@@ -255,6 +253,39 @@
   fitMap();
   window.addEventListener('resize', fitMap);
 
+  /* ---------- Hidden until asked for ----------
+     Type "admin" anywhere (outside a text box) to bring up the sign in, or
+     your tools if you are already signed in. Esc puts it away. Phones have no
+     keyboard until a field is focused, so five quick taps on the title do
+     the same. */
+  var access = $('access');
+  function reveal() {
+    if (!access.hidden) return;
+    access.hidden = false;
+    if (!$('login').hidden) $('email').focus();
+    else { var first = access.querySelector('#tools a'); if (first) first.focus(); }
+  }
+  function conceal() {
+    access.hidden = true;
+    if (document.activeElement && access.contains(document.activeElement)) document.activeElement.blur();
+  }
+  var typed = '';
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { conceal(); return; }
+    if (e.metaKey || e.ctrlKey || e.altKey || e.key.length !== 1) return;
+    var t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    typed = (typed + e.key.toLowerCase()).slice(-5);
+    if (typed === 'admin') { typed = ''; reveal(); }
+  });
+  var taps = [];
+  document.querySelector('h1').addEventListener('click', function () {
+    var now = Date.now();
+    taps = taps.filter(function (t) { return now - t < 2000; });
+    taps.push(now);
+    if (taps.length >= 5) { taps = []; reveal(); }
+  });
+
   /* ---------- Boise time and weather, top right ---------- */
   var TZ = 'America/Boise';
   function tick() {
@@ -321,7 +352,7 @@
 
   /* Crosshair and coordinates follow the pointer on the map. */
   var svg = document.querySelector('.map'), v = svg.querySelector('.xh-v'), h = svg.querySelector('.xh-h');
-  var coords = document.querySelector('.coords'), pt = svg.createSVGPoint();
+  var coords = $('coords'), pt = svg.createSVGPoint();
   window.addEventListener('pointermove', function (e) {
     if (e.pointerType !== 'mouse') return;
     pt.x = e.clientX; pt.y = e.clientY;
