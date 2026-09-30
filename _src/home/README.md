@@ -13,7 +13,7 @@ Design rule: everything small and quiet. One face (IBM Plex Mono 400),
   the marker and its slow pulse).
 - Grain: `src/Grain.tsx`, adapted from React Bits' Noise, drawn once.
 - Map: Natural Earth 110m land (public domain) via world-atlas, in
-  `src/mapData.ts`, sampled into sparse dots at runtime. Interactive:
+  `src/mapData.ts`, drawn as hairline coastlines over a 15° graticule. Interactive:
   hover spotlight and crosshair, click/tap/Enter drops a pin with the
   great-circle route and distance from Boise, arrow keys move.
 - Ventures: `src/Ticker.tsx`, a slow CSS ticker across the top that pauses

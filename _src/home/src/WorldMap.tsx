@@ -1,14 +1,11 @@
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
-import { animate, stagger, type JSAnimation } from 'animejs';
+import { animate, createDrawable, createTimeline, type JSAnimation } from 'animejs';
 import { BOISE, LAND, toXY } from './mapData';
 
 /* Equirectangular, cropped tight to the land: 82.8°N (Greenland) .. 56.9°S (Cape Horn). */
 const VIEW_Y = 20;
 const VIEW_H = 388;
-const STEP = 7;      // dot pitch in map units (the map is 1000 wide)
-const BANDS = 14;    // vertical strips, revealed one after another
 const home = toXY(BOISE.lon, BOISE.lat);
-const homeBand = Math.floor(home.x / (1000 / BANDS));
 
 export type LatLon = { lat: number; lon: number };
 
@@ -42,19 +39,13 @@ function routePath(p: LatLon) {
   return d;
 }
 
-/** Sample the Natural Earth land outline on a regular grid: sparse, accurate dots. */
-function landDots(): string[] {
-  const bands = Array.from({ length: BANDS }, () => '');
-  const ctx = typeof document !== 'undefined' ? document.createElement('canvas').getContext('2d') : null;
-  if (!ctx) return bands;
-  const land = new Path2D(LAND);
-  for (let y = VIEW_Y + STEP / 2; y < VIEW_Y + VIEW_H; y += STEP) {
-    for (let x = STEP / 2; x < 1000; x += STEP) {
-      if (ctx.isPointInPath(land, x, y)) bands[Math.min(BANDS - 1, Math.floor(x / (1000 / BANDS)))] += `M${x.toFixed(1)} ${y.toFixed(1)}h0`;
-    }
-  }
-  return bands;
-}
+/** A 15° grid of meridians and parallels. */
+const GRID = (() => {
+  let d = '';
+  for (let lon = -165; lon < 180; lon += 15) { const x = toXY(lon, 0).x; d += `M${x} ${VIEW_Y}V${VIEW_Y + VIEW_H}`; }
+  for (let lat = 75; lat > -60; lat -= 15) { const y = toXY(0, lat).y; d += `M0 ${y}H1000`; }
+  return d;
+})();
 
 type Props = {
   still: boolean;
@@ -65,32 +56,34 @@ type Props = {
 };
 
 /**
- * A small dot-matrix world map you can use.
+ * A fine-line world map you can use: hairline coastlines over a 15° grid.
  * Hover: a soft spotlight and hairline crosshair follow the pointer.
  * Click or tap: drop a pin and see the great-circle route and distance from Boise.
  * Keyboard: focus the map, arrows move (shift for 10°), Enter pins, Esc clears.
- * anime.js owns the entrance: strips fade in outward from Boise, then the marker.
+ * anime.js owns the entrance: the coastlines draw themselves, the land tone
+ * fades up, then the marker appears.
  */
 export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props) {
   const uid = useId().replace(/:/g, '');
-  const bands = useMemo(landDots, []);
-  const allDots = useMemo(() => bands.join(''), [bands]);
-  const svgRef = useRef<SVGSVGElement>(null);
+  const coastRef = useRef<SVGPathElement>(null);
+  const toneRef = useRef<SVGPathElement>(null);
   const markRef = useRef<HTMLSpanElement>(null);
   const ringRef = useRef<HTMLSpanElement>(null);
   const [keyMode, setKeyMode] = useState(false);
 
   useEffect(() => {
-    const strips = svgRef.current?.querySelectorAll('[data-band]');
-    if (still || !strips || !markRef.current || !ringRef.current) return;
+    if (still || !coastRef.current || !toneRef.current || !markRef.current || !ringRef.current) return;
     let pulse: JSAnimation | null = null;
     const ring = ringRef.current;
-    const reveal = animate(strips, { opacity: [0, 1], duration: 1400, delay: stagger(90, { from: homeBand, start: 400 }), ease: 'outQuad' });
-    const mark = animate(markRef.current, {
-      opacity: [0, 1], duration: 900, delay: 1500, ease: 'outQuad',
+    const [line] = createDrawable(coastRef.current);
+    const tl = createTimeline({
+      defaults: { ease: 'inOutSine' },
       onComplete: () => { pulse = animate(ring, { scale: [1, 2.6], opacity: [0.45, 0], duration: 2600, ease: 'outSine', loop: true, loopDelay: 2400 }); },
     });
-    return () => { reveal.revert(); mark.revert(); pulse?.revert(); };
+    tl.add(line, { draw: ['0 0', '0 1'], duration: 2600 }, 300)
+      .add(toneRef.current, { opacity: [0, 1], duration: 1200, ease: 'outQuad' }, 1900)
+      .add(markRef.current, { opacity: [0, 1], duration: 900, ease: 'outQuad' }, 2500);
+    return () => { tl.revert(); pulse?.revert(); };
   }, [still]);
 
   const toMap = (e: { clientX: number; clientY: number; currentTarget: Element }) => {
@@ -135,24 +128,27 @@ export default function WorldMap({ still, cursor, pin, onCursor, onPin }: Props)
       onKeyDown={onKey}
       onBlur={() => { setKeyMode(false); onCursor(null); }}
     >
-      <svg ref={svgRef} viewBox={`0 ${VIEW_Y} 1000 ${VIEW_H}`} className="absolute inset-0 h-full w-full overflow-visible text-ash" aria-hidden="true">
+      <svg viewBox={`0 ${VIEW_Y} 1000 ${VIEW_H}`} className="absolute inset-0 h-full w-full overflow-hidden text-ash" aria-hidden="true">
         <defs>
           <radialGradient id={`${uid}-g`}>
             <stop offset="0" stopColor="#fff" />
             <stop offset="1" stopColor="#fff" stopOpacity="0" />
           </radialGradient>
           <mask id={`${uid}-m`} maskUnits="userSpaceOnUse" x="0" y={VIEW_Y} width="1000" height={VIEW_H}>
-            {c && <circle cx={c.x} cy={c.y} r="70" fill={`url(#${uid}-g)`} />}
+            {c && <circle cx={c.x} cy={c.y} r="90" fill={`url(#${uid}-g)`} />}
           </mask>
         </defs>
 
-        <line x1="0" x2="1000" y1="250" y2="250" stroke="currentColor" strokeOpacity="0.18" strokeWidth="1" strokeDasharray="2 6" vectorEffect="non-scaling-stroke" />
-        {bands.map((d, i) => (
-          <path key={i} data-band={i} d={d} stroke="currentColor" strokeOpacity="0.5" strokeWidth="2.3" strokeLinecap="round" style={hidden} />
-        ))}
+        {/* Graticule, with the equator a touch firmer */}
+        <path d={GRID} fill="none" stroke="currentColor" strokeOpacity="0.1" strokeWidth="1" vectorEffect="non-scaling-stroke" />
+        <line x1="0" x2="1000" y1="250" y2="250" stroke="currentColor" strokeOpacity="0.22" strokeWidth="1" strokeDasharray="2 5" vectorEffect="non-scaling-stroke" />
 
-        {/* Spotlight: the dots near the pointer come up to chalk */}
-        {c && <path d={allDots} stroke="#e2ddd3" strokeWidth="2.6" strokeLinecap="round" mask={`url(#${uid}-m)`} />}
+        {/* Land: a faint tone and a hairline coast */}
+        <path ref={toneRef} d={LAND} fill="#e2ddd3" fillOpacity="0.035" style={hidden} />
+        <path ref={coastRef} d={LAND} fill="none" stroke="currentColor" strokeOpacity="0.75" strokeWidth="0.8" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+
+        {/* Spotlight: the coast near the pointer comes up to chalk */}
+        {c && <path d={LAND} fill="#e2ddd3" fillOpacity="0.06" stroke="#e2ddd3" strokeWidth="1.2" strokeLinejoin="round" vectorEffect="non-scaling-stroke" mask={`url(#${uid}-m)`} />}
 
         {/* Crosshair */}
         {c && (

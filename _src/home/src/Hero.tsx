@@ -31,24 +31,12 @@ export default function Hero({ still, now, onTitleTap }: Props) {
         <p>{HOME}</p>
       </Fade>
 
-      {/* The phrase and the one call to action */}
+      {/* The phrase */}
       <div className="col-span-12 pb-8 pt-14 md:col-span-7 md:col-start-2 md:row-start-1 md:self-end md:pb-0 md:pt-5">
-        <Fade still={still} delay={0.3} as="p" className="text-[12px] text-ash">
-          (01)&ensp;john spilotros, boise
-        </Fade>
         <Fade still={still} delay={0.45}>
-          <h1 id="hero-title" onClick={onTitleTap} className="mt-4 text-[clamp(16px,1.3vw,19px)] leading-snug font-normal text-chalk">
+          <h1 id="hero-title" onClick={onTitleTap} className="text-[clamp(16px,1.3vw,19px)] leading-snug font-normal text-chalk">
             Four ventures, one home base.
           </h1>
-        </Fade>
-        <Fade still={still} delay={0.6}>
-          <a
-            href="mailto:johnspilotros@kw.com?subject=Hello%20from%20spilo.xyz"
-            className="hairline group mt-3 -ml-1 inline-flex min-h-11 items-center gap-2 px-1 text-[13px] text-ash transition-colors duration-500 hover:text-chalk"
-          >
-            get in touch
-            <span aria-hidden="true" className="transition-transform duration-500 ease-(--ease-quiet) group-hover:translate-x-0.5">→</span>
-          </a>
         </Fade>
       </div>
 
