@@ -535,6 +535,12 @@
   .cma-find .btn { padding: 0.6rem 1.1rem; font-size: 0.78rem; align-self: stretch; }
   .cma-find .cma-note { margin: 0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
   .cma-find .cma-note b { color: var(--ink); }
+  .cma-setup ol { margin: 0.5rem 0 0.4rem; padding-left: 1.3rem; }
+  .cma-setup li { margin: 0.3rem 0; }
+  .cma-setup a { color: var(--gold); }
+  .cma-setup code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; color: var(--ink); background: var(--bg-alt); padding: 0.05rem 0.3rem; border-radius: 3px; }
+  .cma-setup .mini { border: 1px solid var(--line-strong); background: none; color: var(--gold); border-radius: var(--r-sm); cursor: pointer; padding: 0.1rem 0.45rem; font: inherit; }
+  .cma-setup p { margin: 0.4rem 0 0; }
   @media (max-width: 700px) { .cma-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>
 <link rel="stylesheet" href="/assets/backend-dark.css">
@@ -3968,7 +3974,8 @@
       }).catch(function (err) {
         fgo.disabled = false;
         fgo.textContent = 'Find comps';
-        fnote.textContent = err.setup ? CMA_SETUP_NOTE : String(err.message || err);
+        if (err.setup) { fnote.textContent = ''; fnote.appendChild(cmaSetupSteps()); }
+        else fnote.textContent = String(err.message || err);
       });
     });
     root.appendChild(find);
@@ -4099,7 +4106,40 @@
   /* ---------- Find comps (RentCast, through the cma-comps edge function) ---------- */
 
   var CMA_LIST_NOTE = 'Idaho keeps sale prices private, so off-market comps show their last list price. Confirm sold prices in Paragon and fix them here.';
-  var CMA_SETUP_NOTE = 'The comps lookup is not switched on yet. In Supabase: add a RENTCAST_API_KEY secret, then deploy the cma-comps function (the steps are in _src/supabase/README.md). If it is already deployed, the Supabase project may be paused.';
+  var CMA_SB_PROJECT = 'https://supabase.com/dashboard/project/zwsjdcrjwqkzsxollwnc';
+  var CMA_FN_SOURCE = '/_src/supabase/functions/cma-comps/index.ts';
+
+  /* One-time setup, shown until the cma-comps function answers. */
+  function cmaSetupSteps() {
+    var box = el('div', 'cma-setup');
+    box.appendChild(el('b', null, 'Comps lookup is not set up yet. One time, about 5 minutes:'));
+    var ol = el('ol');
+    function step(parts) {
+      var li = el('li');
+      parts.forEach(function (p) {
+        if (typeof p === 'string') { li.appendChild(document.createTextNode(p)); return; }
+        if (p.href) { var a = el('a', null, p.text); a.href = p.href; a.target = '_blank'; a.rel = 'noopener'; li.appendChild(a); return; }
+        if (p.code) { li.appendChild(el('code', null, p.code)); return; }
+        li.appendChild(p.node);
+      });
+      ol.appendChild(li);
+    }
+    var copy = el('button', 'mini', 'Copy the code'); copy.type = 'button';
+    copy.addEventListener('click', function () {
+      copy.disabled = true;
+      fetch(CMA_FN_SOURCE).then(function (r) { if (!r.ok) throw new Error(); return r.text(); })
+        .then(function (t) { return navigator.clipboard.writeText(t); })
+        .then(function () { copy.textContent = 'Copied'; }, function () { window.open(CMA_FN_SOURCE, '_blank'); copy.textContent = 'Copy the code'; })
+        .then(function () { copy.disabled = false; });
+    });
+    step(['Get a RentCast API key (free plan: 50 lookups a month): ', { href: 'https://app.rentcast.io/app/api', text: 'app.rentcast.io/app/api' }, '.']);
+    step(['In Supabase, open ', { href: CMA_SB_PROJECT + '/functions/secrets', text: 'Edge Functions > Secrets' }, ' and add ', { code: 'RENTCAST_API_KEY' }, ' with that key as the value.']);
+    step(['Open ', { href: CMA_SB_PROJECT + '/functions', text: 'Edge Functions' }, ', choose Deploy a new function > Via editor, name it ', { code: 'cma-comps' }, ', delete the sample code, paste ours (', { node: copy }, '), then Deploy.']);
+    step(['Open the new function\'s Details and turn ', { code: 'Verify JWT' }, ' off (the function checks your sign-in itself). Then hit Find comps again.']);
+    box.appendChild(ol);
+    box.appendChild(el('p', null, 'Already done all this? The Supabase project may be paused; open the project and hit Restore.'));
+    return box;
+  }
 
   function cmaFindComps(body, retry) {
     var s = loadSession();
