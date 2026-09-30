@@ -1,0 +1,30 @@
+/* spilo.xyz tools: a tighter layout so more fits on screen. Screen only, so
+   the printable open house sign keeps its paper sizing. Loaded after
+   backend-dark.css on the dashboard, security page and listings manager. */
+@media screen {
+  html { font-size: 14.5px; }
+  body { font-size: 0.95rem; line-height: 1.5; }
+  .page { width: min(100% - 1.5rem, 1320px); padding: 1rem 0 3rem; }
+  .bar-inner, .tabs { width: min(100% - 1.5rem, 1320px); }
+  .bar-inner { padding: 0.5rem 0; }
+  .bar h1 { font-size: 1.35rem; }
+  .tabs { padding-bottom: 0.45rem; }
+  .tab { padding: 0.4rem 0.85rem; }
+  .panel-card { padding: 1rem 1.1rem; margin-bottom: 0.75rem; }
+  .panel-card h2 { font-size: 1.2rem; }
+  .stats { gap: 0.6rem; margin-bottom: 1rem; }
+  .stat { padding: 0.6rem 0.8rem; }
+  .stat b { font-size: 1.5rem; }
+  .chips { gap: 0.35rem; margin-bottom: 1rem; }
+  .chip { padding-top: 0.3rem; padding-bottom: 0.3rem; }
+  .links-row { gap: 0.4rem; margin-top: 0.8rem; }
+  .btn { padding: 0.65em 1.15em; font-size: 0.8rem; letter-spacing: 0.06em; }
+  .lead { padding: 0.6rem 0.75rem; }
+  .lead-actions a, .lead-actions button { padding: 0.32rem 0.6rem; }
+  .lst-row { padding: 0.6rem 0; grid-template-columns: 84px 1fr; }
+  .lst-thumb { width: 84px; }
+}
+/* Phones zoom into any field under 16px when you tap it. */
+@media screen and (max-width: 700px) {
+  input, select, textarea { font-size: 16px !important; }
+}

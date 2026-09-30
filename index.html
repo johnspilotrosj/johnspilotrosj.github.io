@@ -10,13 +10,81 @@
 <meta name="robots" content="noindex">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#15171a">
+<link rel="preload" href="/assets/fonts/courier-prime-400.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  @font-face { font-family: "Courier Prime"; src: url(/assets/fonts/courier-prime-400.woff2) format("woff2"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Courier Prime"; src: url(/assets/fonts/courier-prime-700.woff2) format("woff2"); font-weight: 700; font-display: swap; }
+  :root { --bg: #15171a; --ink: #e9e6df; --dim: #8a8f96; --gold: #c9ad72; }
   html, body { height: 100%; margin: 0; }
-  body { display: grid; place-items: center; background: #15171a; }
-  img { display: block; width: min(320px, 70vw); height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 4px; }
+  body {
+    display: grid; place-items: center; background: var(--bg); color: var(--ink);
+    font: 400 17px/1.7 "Courier Prime", "Courier New", Courier, monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { width: min(100% - 3rem, 22rem); }
+  h1 { margin: 0 0 1.6rem; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.02em; }
+  .cursor { display: inline-block; width: 0.55em; height: 1.1em; margin-left: 0.08em; vertical-align: -0.16em; background: var(--gold); }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li + li { margin-top: 0.35rem; }
+  a { color: var(--dim); text-decoration: none; transition: color 0.15s ease; }
+  a:hover, a:focus-visible { color: var(--ink); outline: none; }
+  a:hover .pfx, a:focus-visible .pfx { color: var(--gold); }
+  /* Only hidden once the script has taken over, so the page never goes blank. */
+  .typing .ch { opacity: 0; }
 </style>
 </head>
 <body>
-<img src="https://i.imgflip.com/9u1k5q.png" alt="Meme: &ldquo;Sorry bro, it&rsquo;s still being built&rdquo;" width="320" height="320">
+<main>
+  <h1><span>spilo.xyz</span><span class="cursor" aria-hidden="true"></span></h1>
+  <nav aria-label="Tools">
+    <ul>
+      <li><a href="/dashboard/"><span class="pfx" aria-hidden="true">&gt; </span>dashboard</a></li>
+      <li><a href="/dashboard/#listings"><span class="pfx" aria-hidden="true">&gt; </span>listings</a></li>
+      <li><a href="/dashboard/#qr"><span class="pfx" aria-hidden="true">&gt; </span>sign-in sheets</a></li>
+      <li><a href="/security/"><span class="pfx" aria-hidden="true">&gt; </span>security</a></li>
+    </ul>
+  </nav>
+</main>
+<script src="/assets/anime.umd.min.js"></script>
+<script>
+(function () {
+  if (!window.anime || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var stagger = anime.stagger, createTimeline = anime.createTimeline;
+
+  /* Wrap every character of the title and of each link (its "> " included)
+     in a span so it can be typed out. The characters stay in the DOM, so the
+     links read normally to screen readers. */
+  function split(node, out) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+      if (child.nodeType === 3) {
+        Array.prototype.forEach.call(child.textContent, function (c) {
+          var s = document.createElement('span');
+          s.className = 'ch';
+          s.textContent = c;
+          node.insertBefore(s, child);
+          out.push(s);
+        });
+        node.removeChild(child);
+      } else if (!child.classList.contains('cursor')) {
+        split(child, out);
+      }
+    });
+    return out;
+  }
+  var blocks = Array.prototype.map.call(document.querySelectorAll('h1, nav a'), function (node) {
+    return split(node, []);
+  });
+  document.body.classList.add('typing');
+
+  var tl = createTimeline({ defaults: { duration: 1, ease: 'linear' } });
+  blocks.forEach(function (chars, i) {
+    tl.add(chars, { opacity: 1, delay: stagger(i === 0 ? 95 : 38) }, i === 0 ? 250 : '+=' + (i === 1 ? 420 : 140));
+  });
+
+  /* Hard on/off blink, like a terminal cursor. */
+  var cursor = document.querySelector('.cursor'), on = true;
+  anime.createTimer({ duration: 530, loop: true, onLoop: function () { on = !on; cursor.style.opacity = on ? 1 : 0; } });
+})();
+</script>
 </body>
 </html>
