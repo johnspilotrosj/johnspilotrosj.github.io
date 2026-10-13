@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 
-# Every page on spilo.xyz carries <meta name="robots" content="noindex">.
-# Crawling stays allowed so search engines can read that tag and keep
-# the pages out of results.
+# spilo.xyz is not meant to appear in search. Every page carries
+# <meta name="robots" content="noindex, nofollow"> and no description,
+# Open Graph, canonical or structured-data tags. Crawling stays allowed
+# so search engines can read the noindex tag and drop the pages.
