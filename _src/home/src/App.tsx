@@ -42,7 +42,7 @@ export default function App() {
         <Ticker still={still} />
         <Header still={still} />
         <main id="main">
-          <Hero still={still} now={now} onTitleTap={onTitleTap} />
+          <Hero still={still} now={now} onTitleTap={onTitleTap} ownerOpen={admin} onOwner={() => setAdmin((o) => !o)} />
         </main>
         <footer className="mx-auto max-w-[1440px] px-5 md:px-10">
           <div className="flex justify-between gap-4 border-t border-rule py-5 text-[11px] text-ash">

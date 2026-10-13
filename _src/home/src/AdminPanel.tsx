@@ -34,8 +34,9 @@ async function token(grant: 'password' | 'refresh_token', body: object): Promise
 }
 
 /**
- * Hidden sign in. Type "admin" anywhere outside a text field (or tap the
- * headline five times) to bring it up; Esc puts it away. It sits on the top
+ * Owner sign in. The "owner? click here" button under the headline opens
+ * it, as does typing "admin" anywhere outside a text field or tapping the
+ * headline five times; Esc puts it away. It sits on the top
  * layer, over the headline and the ventures.
  */
 export default function AdminPanel({ open, onClose, still }: { open: boolean; onClose: () => void; still: boolean }) {
@@ -95,7 +96,7 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
           animate={{ opacity: 1, y: 0 }}
           exit={still ? undefined : { opacity: 0, y: -4 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-5 right-5 top-[6.75rem] z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:right-auto sm:w-64 md:left-10"
+          className="fixed left-5 right-5 top-[6.75rem] z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:left-auto sm:right-5 sm:w-64 md:right-10"
         >
           <div className="flex items-center justify-between text-[11px] text-ash">
             <span>(00)&ensp;admin</span>
