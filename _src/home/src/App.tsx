@@ -4,12 +4,15 @@ import Hero from './Hero';
 import Ticker from './Ticker';
 import AdminPanel from './AdminPanel';
 import Grain from './Grain';
+import Gate from './Gate';
 import { useBoiseNow, useReducedMotionPref } from './hooks';
 
 export default function App() {
   const still = useReducedMotionPref();
   const now = useBoiseNow();
   const [admin, setAdmin] = useState(false);
+  /* Nothing of the site renders until the owner asks for it. */
+  const [owner, setOwner] = useState(false);
   const typed = useRef('');
   const taps = useRef<number[]>([]);
 
@@ -21,7 +24,7 @@ export default function App() {
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       typed.current = (typed.current + e.key.toLowerCase()).slice(-5);
-      if (typed.current === 'admin') { typed.current = ''; setAdmin(true); }
+      if (typed.current === 'admin') { typed.current = ''; setOwner(true); setAdmin(true); }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
@@ -34,6 +37,15 @@ export default function App() {
     if (taps.current.length >= 5) { taps.current = []; setAdmin(true); }
   }, []);
 
+  if (!owner) {
+    return (
+      <>
+        <Grain />
+        <Gate still={still} onOwner={() => { setOwner(true); setAdmin(true); }} />
+      </>
+    );
+  }
+
   return (
     <>
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[80] focus:bg-chalk focus:px-3 focus:py-2 focus:text-[12px] focus:text-ink">Skip to content</a>
@@ -42,7 +54,7 @@ export default function App() {
         <Ticker still={still} />
         <Header still={still} />
         <main id="main">
-          <Hero still={still} now={now} onTitleTap={onTitleTap} ownerOpen={admin} onOwner={() => setAdmin((o) => !o)} />
+          <Hero still={still} now={now} onTitleTap={onTitleTap} />
         </main>
         <footer className="mx-auto max-w-[1440px] px-5 md:px-10">
           <div className="flex justify-between gap-4 border-t border-rule py-5 text-[11px] text-ash">

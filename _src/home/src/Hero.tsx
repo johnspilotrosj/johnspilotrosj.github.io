@@ -14,9 +14,9 @@ function elev(p: LatLon) {
 }
 const BOISE_LL: LatLon = { lat: 43.615, lon: -116.2023 };
 
-type Props = { still: boolean; now: BoiseNow; onTitleTap: () => void; ownerOpen: boolean; onOwner: () => void };
+type Props = { still: boolean; now: BoiseNow; onTitleTap: () => void };
 
-export default function Hero({ still, now, onTitleTap, ownerOpen, onOwner }: Props) {
+export default function Hero({ still, now, onTitleTap }: Props) {
   const [cursor, setCursor] = useState<LatLon | null>(null);
   const [pin, setPin] = useState<LatLon | null>(null);
   const miles = pin ? Math.round(milesFromBoise(pin)) : 0;
@@ -42,26 +42,6 @@ export default function Hero({ still, now, onTitleTap, ownerOpen, onOwner }: Pro
           <h1 id="hero-title" onClick={onTitleTap} className="font-type text-[clamp(16px,1.3vw,19px)] leading-snug font-bold tracking-[0.01em] text-chalk">
             Four ventures, one home base.
           </h1>
-        </Fade>
-        <Fade still={still} delay={0.6}>
-          <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-            <a
-              href="https://spilotrosrealty.com/"
-              className="group inline-flex min-h-11 items-center gap-3 border border-ash px-5 text-[13px] text-chalk transition-colors duration-500 hover:border-chalk hover:bg-chalk hover:text-ink"
-            >
-              enter site
-              <span aria-hidden="true" className="transition-transform duration-500 group-hover:translate-x-0.5">→</span>
-            </a>
-            <button
-              type="button"
-              onClick={onOwner}
-              aria-expanded={ownerOpen}
-              aria-controls="admin-panel"
-              className="hairline inline-flex min-h-11 items-center px-1 text-[12px] text-ash transition-colors duration-500 hover:text-chalk"
-            >
-              owner? click here
-            </button>
-          </div>
         </Fade>
       </div>
 

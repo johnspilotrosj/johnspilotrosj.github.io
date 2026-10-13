@@ -34,9 +34,9 @@ async function token(grant: 'password' | 'refresh_token', body: object): Promise
 }
 
 /**
- * Owner sign in. The "owner? click here" button under the headline opens
- * it, as does typing "admin" anywhere outside a text field or tapping the
- * headline five times; Esc puts it away. It sits on the top
+ * Owner sign in. "owner? click here" on the gate opens it along with the
+ * rest of the page; after that, typing "admin" anywhere outside a text
+ * field or tapping the headline five times brings it back. Esc puts it away. It sits on the top
  * layer, over the headline and the ventures.
  */
 export default function AdminPanel({ open, onClose, still }: { open: boolean; onClose: () => void; still: boolean }) {
