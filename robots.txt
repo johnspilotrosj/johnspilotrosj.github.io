@@ -1,7 +1,3 @@
+# spilo.xyz is private. No search engine or crawler should read any of it.
 User-agent: *
-Allow: /
-
-# spilo.xyz is not meant to appear in search. Every page carries
-# <meta name="robots" content="noindex, nofollow"> and no description,
-# Open Graph, canonical or structured-data tags. Crawling stays allowed
-# so search engines can read the noindex tag and drop the pages.
+Disallow: /
