@@ -39,10 +39,7 @@ export default function App() {
 
   if (!owner) {
     return (
-      <>
-        <Grain />
-        <Gate still={still} onOwner={() => { setOwner(true); setAdmin(true); }} />
-      </>
+      <Gate still={still} onOwner={() => { setOwner(true); setAdmin(true); }} />
     );
   }
 

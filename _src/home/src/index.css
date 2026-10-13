@@ -60,3 +60,27 @@ body {
   .ticker-track.is-moving { animation: none; }
   .ticker-view { overflow-x: auto; scrollbar-width: none; }
 }
+
+/* ---------- Gate: dressed as spilotrosrealty.com's hero ---------- */
+.gate { background: oklch(0.26 0.008 250); color: #fff; }
+.gate-video { transition: opacity 1.3s ease; }
+.gate-scrim {
+  background:
+    linear-gradient(180deg, #1d22276b, #1d222747 45%, #161b209e),
+    radial-gradient(90% 70% at 20% 75%, oklch(0.22 0.012 250 / 0.5), transparent 60%);
+}
+.gate-btn {
+  display: inline-flex; align-items: center; gap: 0.55em;
+  padding: 0.95em 1.7em; border: 1px solid #ffffff73; border-radius: 3px;
+  background: #ffffff1f; color: #fff;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  font-family: "Archivo", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.gate-btn:hover { background: #ffffff33; border-color: #ffffffb3; }
+.gate-owner { font-family: "Archivo", "Segoe UI", system-ui, sans-serif; letter-spacing: 0.02em; }
+.gate :focus-visible { outline-color: #fff; }
+@media (prefers-reduced-motion: reduce) {
+  .gate-video, .gate-btn { transition: none; }
+}
