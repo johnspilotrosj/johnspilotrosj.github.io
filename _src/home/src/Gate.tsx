@@ -6,8 +6,8 @@ const VIDEO = 'https://videos.pexels.com/video-files/4761059/4761059-hd_1920_108
 
 /**
  * What every visitor sees: spilotrosrealty.com's hero video over the whole
- * screen, "enter site", and nothing of spilo.xyz. The owner link lets the
- * rest of the page mount and opens the sign in.
+ * screen, "enter site", and nothing of spilo.xyz. The owner link opens the
+ * password sign in; nothing else of the site renders until it succeeds.
  *
  * Entering dips to the realty hero's own first frame (its charcoal under
  * the same scrim): the buttons fade, then the video, and only then does
@@ -16,7 +16,7 @@ const VIDEO = 'https://videos.pexels.com/video-files/4761059/4761059-hd_1920_108
  */
 const BUTTONS_OUT = 350;
 const VIDEO_OUT = 800;
-export default function Gate({ still, onOwner }: { still: boolean; onOwner: () => void }) {
+export default function Gate({ still, hideButtons = false, onOwner }: { still: boolean; hideButtons?: boolean; onOwner: () => void }) {
   const [playing, setPlaying] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const video = useRef<HTMLVideoElement>(null);
@@ -61,7 +61,7 @@ export default function Gate({ still, onOwner }: { still: boolean; onOwner: () =
       <div aria-hidden="true" className="gate-scrim absolute inset-0" />
       <div
         style={{ transitionDuration: `${BUTTONS_OUT}ms` }}
-        className={`relative grid h-full place-items-center px-5 transition-opacity ease-out ${leaving ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+        className={`relative grid h-full place-items-center px-5 transition-opacity ease-out ${leaving || hideButtons ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
       >
         <div className="flex flex-col items-center gap-5">
           <a href={REALTY} onClick={enter} className="gate-btn">

@@ -11,7 +11,7 @@ export default function App() {
   const still = useReducedMotionPref();
   const now = useBoiseNow();
   const [admin, setAdmin] = useState(false);
-  /* Nothing of the site renders until the owner asks for it. */
+  /* Nothing of the site renders until the owner signs in with the password. */
   const [owner, setOwner] = useState(false);
   const typed = useRef('');
   const taps = useRef<number[]>([]);
@@ -24,7 +24,7 @@ export default function App() {
       const t = e.target as HTMLElement | null;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       typed.current = (typed.current + e.key.toLowerCase()).slice(-5);
-      if (typed.current === 'admin') { typed.current = ''; setOwner(true); setAdmin(true); }
+      if (typed.current === 'admin') { typed.current = ''; setAdmin(true); }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
@@ -39,7 +39,17 @@ export default function App() {
 
   if (!owner) {
     return (
-      <Gate still={still} onOwner={() => { setOwner(true); setAdmin(true); }} />
+      <>
+        <Gate still={still} hideButtons={admin} onOwner={() => setAdmin(true)} />
+        <AdminPanel
+          open={admin}
+          onClose={() => setAdmin(false)}
+          still={still}
+          fresh
+          centered
+          onSignedIn={() => setOwner(true)}
+        />
+      </>
     );
   }
 
@@ -60,7 +70,7 @@ export default function App() {
           </div>
         </footer>
       </div>
-      <AdminPanel open={admin} onClose={() => setAdmin(false)} still={still} />
+      <AdminPanel open={admin} onClose={() => setAdmin(false)} still={still} onSignedOut={() => { setAdmin(false); setOwner(false); }} />
     </>
   );
 }

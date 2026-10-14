@@ -34,12 +34,27 @@ async function token(grant: 'password' | 'refresh_token', body: object): Promise
 }
 
 /**
- * Owner sign in. "owner? click here" on the gate opens it along with the
- * rest of the page; after that, typing "admin" anywhere outside a text
- * field or tapping the headline five times brings it back. Esc puts it away. It sits on the top
- * layer, over the headline and the ventures.
+ * Owner sign in.
+ *
+ * On the gate (`fresh`) it always asks for the password, whatever session
+ * this browser has saved, and only a successful sign in (`onSignedIn`)
+ * lets the rest of spilo.xyz render. Once in, it lists the tools; typing
+ * "admin" or tapping the headline five times brings it back, Esc puts it
+ * away, and signing out (`onSignedOut`) drops back to the gate.
  */
-export default function AdminPanel({ open, onClose, still }: { open: boolean; onClose: () => void; still: boolean }) {
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  still: boolean;
+  /** Ignore any saved session and ask for the password. */
+  fresh?: boolean;
+  /** Centered on the screen instead of tucked under the header. */
+  centered?: boolean;
+  onSignedIn?: () => void;
+  onSignedOut?: () => void;
+};
+
+export default function AdminPanel({ open, onClose, still, fresh = false, centered = false, onSignedIn, onSignedOut }: Props) {
   const [signedIn, setSignedIn] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
@@ -47,12 +62,13 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
   const firstTool = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
+    if (fresh) return;
     const s = load();
     const now = Math.floor(Date.now() / 1000);
     if (!s) return;
     if (s.expires_at && s.expires_at - 60 > now) setSignedIn(true);
     else if (s.refresh_token) token('refresh_token', { refresh_token: s.refresh_token }).then(() => setSignedIn(true), () => clear());
-  }, []);
+  }, [fresh]);
 
   useEffect(() => {
     if (!open) return;
@@ -68,6 +84,7 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
     try {
       await token('password', { email: String(f.get('email') || '').trim(), password: String(f.get('password') || '') });
       setSignedIn(true);
+      onSignedIn?.();
     } catch (x) {
       const msg = String(x instanceof Error ? x.message : x);
       setErr(/failed to fetch|networkerror|load failed/i.test(msg) ? 'cannot reach the database right now' : msg.toLowerCase());
@@ -83,6 +100,7 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
     }
     clear();
     setSignedIn(false);
+    onSignedOut?.();
   }
 
   return (
@@ -92,11 +110,15 @@ export default function AdminPanel({ open, onClose, still }: { open: boolean; on
           key="admin"
           id="admin-panel"
           aria-label="Sign in"
-          initial={still ? false : { opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={still ? undefined : { opacity: 0, y: -4 }}
+          initial={still ? false : { opacity: 0, x: centered ? '-50%' : 0, y: centered ? 'calc(-50% - 4px)' : -4 }}
+          animate={{ opacity: 1, x: centered ? '-50%' : 0, y: centered ? '-50%' : 0 }}
+          exit={still ? undefined : { opacity: 0, x: centered ? '-50%' : 0, y: centered ? 'calc(-50% - 4px)' : -4 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed left-5 right-5 top-[6.75rem] z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm sm:left-auto sm:right-5 sm:w-64 md:right-10"
+          className={`fixed z-[70] border border-rule bg-ink/95 p-4 text-[13px] backdrop-blur-sm ${
+            centered
+              ? 'left-1/2 top-1/2 w-[min(18rem,calc(100vw-2.5rem))]'
+              : 'left-5 right-5 top-[6.75rem] sm:left-auto sm:right-5 sm:w-64 md:right-10'
+          }`}
         >
           <div className="flex items-center justify-between text-[11px] text-ash">
             <span>(00)&ensp;admin</span>
