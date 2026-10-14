@@ -67,6 +67,9 @@ body {
 .gate-video.is-on { opacity: 1; }
 /* Leaving: the video sinks into the charcoal the realty hero opens on. */
 .gate.is-leaving .gate-video { opacity: 0; transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+/* The preloaded realty page: invisible and untouchable until entering crossfades it in. */
+.gate-frame { opacity: 0; pointer-events: none; transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+.gate-frame.is-on { opacity: 1; }
 .gate-scrim {
   background:
     linear-gradient(180deg, #1d22276b, #1d222747 45%, #161b209e),
