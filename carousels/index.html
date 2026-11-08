@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treasure Valley Carousels</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f4efe6">
+<link rel="stylesheet" href="carousel.css">
+<style>
+  :root {
+    --paper: #f4efe6; --ink: #1b1815; --muted: #5f574e; --rule: #d9cfc0; --warn: #7a2e34;
+    --serif: "Bodoni", Georgia, serif; --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--paper); }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.5 var(--sans); }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 16px 96px; }
+  header.top h1 { font: 400 clamp(40px, 7vw, 76px)/1 var(--serif); font-variation-settings: "opsz" 30; margin: 0 0 14px; letter-spacing: -0.02em; }
+  header.top h1 em { font-style: italic; }
+  header.top p { max-width: 720px; color: var(--muted); margin: 0 0 8px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; margin: 26px 0 8px; padding: 14px 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule); font: 600 12px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+  .bar a { color: var(--ink); }
+  .bar label { display: inline-flex; gap: 8px; align-items: center; cursor: pointer; }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  section.set { margin-top: 72px; }
+  .set-head { display: grid; grid-template-columns: 1fr auto; gap: 8px 24px; align-items: end; border-bottom: 1px solid var(--ink); padding-bottom: 12px; }
+  .set-head h2 { margin: 0; font: 400 clamp(28px, 4.5vw, 44px)/1.05 var(--serif); font-variation-settings: "opsz" 30; }
+  .set-head .q { grid-column: 1 / -1; color: var(--muted); margin: 0; }
+  .set-head .n { font: 600 12px/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .strip { display: flex; gap: 18px; overflow-x: auto; padding: 22px 2px 18px; scroll-snap-type: x mandatory; }
+  .card { flex: none; width: 302px; scroll-snap-align: start; }
+  .frame { width: 302px; height: 403px; position: relative; overflow: hidden; background: #ddd; box-shadow: 0 1px 0 var(--rule), 0 8px 24px rgba(27, 24, 21, .1); }
+  .frame > .slide { transform: scale(.2796); transform-origin: 0 0; position: absolute; left: 0; top: 0; }
+  .card .cap { display: flex; justify-content: space-between; margin-top: 10px; font: 600 11px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .card .cap a { color: var(--ink); }
+  .card details { margin-top: 8px; font-size: 13px; color: var(--muted); }
+  .card summary { cursor: pointer; font: 600 11px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+  .card details p { margin: 6px 0; }
+  .card details b { color: var(--ink); font-weight: 600; }
+  .warn { margin-top: 8px; padding: 8px 10px; border-left: 3px solid var(--warn); background: rgba(122, 46, 52, .06); font-size: 12.5px; color: var(--ink); }
+  .warn b { color: var(--warn); font: 700 10.5px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; display: block; }
+  .warn ul { margin: 2px 0 0; padding-left: 16px; }
+  body:not(.proof) .warn { display: none; }
+  body:not(.proof) .slide .photo-tag { display: none; }
+  .caption { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; margin-top: 6px; padding: 18px; background: #ebe4d8; }
+  .caption pre { margin: 0; white-space: pre-wrap; font: 400 14px/1.55 var(--sans); }
+  .caption button { align-self: start; font: 600 11px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; padding: 10px 14px; background: var(--ink); color: var(--paper); border: 0; cursor: pointer; }
+  .sources { margin-top: 80px; border-top: 1px solid var(--ink); padding-top: 16px; font-size: 13px; color: var(--muted); }
+  .sources h2 { font: 400 32px/1.1 var(--serif); color: var(--ink); margin: 0 0 12px; }
+  .sources a { color: var(--ink); }
+  @media (max-width: 560px) { .caption { grid-template-columns: 1fr; } .card { width: 260px; } .frame { width: 260px; height: 347px; } .frame > .slide { transform: scale(.2407); } }
+</style>
+</head>
+<body class="proof">
+<div class="wrap">
+  <header class="top">
+    <h1>Five posts worth <em>saving</em></h1>
+    <p>Five standalone Instagram carousels for John Spilotros, plus a seven-slide concept deck. Slides are drawn live from <code>content.js</code>. Final JPGs (1080 × 1440) sit under each slide.</p>
+    <p>Proof mode marks everything that still needs confirming before posting, along with the placeholder photos.</p>
+  </header>
+  <div class="bar">
+    <label><input type="checkbox" id="proof" checked> Proof mode</label>
+    <a href="SPEC.md">Full copy spec (SPEC.md)</a>
+    <nav class="toc" id="toc"></nav>
+  </div>
+  <main id="sets"></main>
+  <div class="sources" id="sources"></div>
+</div>
+<script src="content.js"></script>
+<script src="engine.js"></script>
+<script>
+  const D = window.CAROUSEL_DATA, { renderSlide, esc, md } = window.Carousels;
+  const sets = [...D.carousels, D.deck];
+  const main = document.getElementById("sets"), toc = document.getElementById("toc");
+  const pad = (n) => String(n).padStart(2, "0");
+
+  sets.forEach((c, n) => {
+    const name = c.id === "deck" ? "Concept deck" : `${n + 1}. ${c.title}`;
+    toc.insertAdjacentHTML("beforeend", `<a href="#${c.id}">${c.id === "deck" ? "Deck" : n + 1}</a>`);
+    const sec = document.createElement("section");
+    sec.className = "set"; sec.id = c.id;
+    sec.innerHTML = `<div class="set-head"><h2>${esc(name)}</h2><span class="n">${c.slides.length} slides</span>${c.question ? `<p class="q">Answers: “${esc(c.question)}” · For ${esc(c.audience.toLowerCase())}</p>` : ""}</div><div class="strip"></div>`;
+    const strip = sec.querySelector(".strip");
+    c.slides.forEach((s, i) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      const frame = document.createElement("div");
+      frame.className = "frame";
+      frame.appendChild(renderSlide(c, s, i));
+      card.appendChild(frame);
+      const file = `export/${c.id}/${pad(i + 1)}.jpg`;
+      card.insertAdjacentHTML("beforeend", `
+        <div class="cap"><span>${pad(i + 1)} / ${pad(c.slides.length)} · ${esc(s.type)}</span><a href="${file}" download>JPG</a></div>
+        ${s.confirm && s.confirm.length ? `<div class="warn"><b>Confirm before posting</b><ul>${s.confirm.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+        <details><summary>Direction</summary>
+          ${s.photoDirection ? `<p><b>Photo:</b> ${esc(s.photoDirection)}</p>` : ""}
+          ${s.photo ? `<p><b>Photo file:</b> carousels/${esc(s.photo)}</p>` : ""}
+          ${s.layout ? `<p><b>Layout:</b> ${esc(s.layout)}</p>` : ""}
+        </details>`);
+      strip.appendChild(card);
+    });
+    if (c.caption) {
+      const cap = document.createElement("div");
+      cap.className = "caption";
+      const text = `${c.caption}\n\n${c.hashtags}`;
+      cap.innerHTML = `<pre></pre><button type="button">Copy caption</button>`;
+      cap.querySelector("pre").textContent = text;
+      cap.querySelector("button").addEventListener("click", (e) => {
+        navigator.clipboard.writeText(text).then(() => { e.target.textContent = "Copied"; setTimeout(() => (e.target.textContent = "Copy caption"), 1600); });
+      });
+      sec.appendChild(cap);
+    }
+    main.appendChild(sec);
+  });
+
+  document.getElementById("sources").innerHTML = `<h2>Sources</h2><p>Checked ${esc(D.researched)}. Handle: ${esc(D.handle)} (${esc(D.handleConfirm)})</p><ul>${D.sources.map((s) => `<li><a href="${esc(s[1])}" rel="noopener">${esc(s[0])}</a></li>`).join("")}</ul>`;
+
+  const proof = document.getElementById("proof");
+  try { if (localStorage.getItem("carousel-proof") === "0") proof.checked = false; } catch (e) {}
+  const apply = () => { document.body.classList.toggle("proof", proof.checked); try { localStorage.setItem("carousel-proof", proof.checked ? "1" : "0"); } catch (e) {} };
+  proof.addEventListener("change", apply); apply();
+</script>
+</body>
+</html>

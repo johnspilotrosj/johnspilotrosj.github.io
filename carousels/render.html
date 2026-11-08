@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Slide render</title>
+<link rel="stylesheet" href="carousel.css">
+<style>html,body{margin:0;padding:0;background:#000}body{width:1080px;height:1440px;overflow:hidden}</style>
+</head>
+<body>
+<script src="content.js"></script>
+<script src="engine.js"></script>
+<script>
+  // render.html?c=weekend&s=1[&export=1]  — one slide at exactly 1080 x 1440
+  const q = new URLSearchParams(location.search);
+  const c = Carousels.findCarousel(q.get("c") || "weekend");
+  const i = Math.max(0, (parseInt(q.get("s"), 10) || 1) - 1);
+  const el = Carousels.renderSlide(c, c.slides[i], i);
+  if (q.get("export")) el.classList.add("export");
+  document.body.appendChild(el);
+  Promise.all([document.fonts.ready, el._ready()]).then(() => { window.__ready = true; });
+</script>
+</body>
+</html>
