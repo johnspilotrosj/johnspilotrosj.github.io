@@ -735,3 +735,20 @@
 .method .col .formula td.r { font-size: 66px; }
 .method .col .formula td.m { font-size: 38px; }
 .method .col .formula td.c { font-size: 30px; }
+
+/* ---------- Friday picks, v2: occasion first, then the venue ---------- */
+.pick .col .reason {
+  position: static; padding-top: 0;
+  font-family: var(--serif); font-style: italic; font-size: 64px; line-height: 1;
+  color: var(--ink-2); font-variation-settings: "opsz" 30;
+}
+.pick .col .reason::before { display: none; }
+.pick .col .headline.xl { margin-top: 18px; font-size: 176px; line-height: .92; white-space: nowrap; }
+.pick .col .why { margin: 54px 0 0; font: 500 44px/1.28 var(--sans); text-wrap: pretty; }
+.pick .col .trio { margin-top: auto; }
+.pick .col .trio .row { grid-template-columns: 190px 1fr; padding: 28px 0; }
+.pick .col .trio .v { font-size: 35px; }
+
+/* covers: ivory arrow, and room for it */
+.cover.friday h1 { font-size: 158px; text-shadow: 0 4px 50px rgba(0, 0, 0, .45); }
+.cover.friday .overlay { background: linear-gradient(180deg, rgba(14, 9, 6, .08) 0%, rgba(14, 9, 6, .44) 30%, rgba(14, 9, 6, .5) 68%, rgba(14, 9, 6, .34) 100%); }

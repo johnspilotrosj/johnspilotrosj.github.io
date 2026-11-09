@@ -34,16 +34,45 @@
         radial-gradient(22% 18% at 80% 56%,#1b1612 60%,transparent 62%);filter:blur(6px)"></div>
       <div style="position:absolute;left:0;right:0;bottom:0;height:30%;background:linear-gradient(180deg,transparent,#0e0c0a 70%)"></div>`,
     lamps: `
-      <div style="position:absolute;inset:0;background:linear-gradient(180deg,#2a1b12 0%,#1f140e 55%,#120c08 100%)"></div>
-      <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 3px,transparent 3px 64px);opacity:.6"></div>
-      <div style="position:absolute;inset:0;background:
-        radial-gradient(14% 10% at 18% 20%,rgba(255,196,120,.95),rgba(255,150,70,.35) 45%,transparent 72%),
-        radial-gradient(13% 9% at 50% 15%,rgba(255,200,130,.9),rgba(255,150,70,.3) 45%,transparent 72%),
-        radial-gradient(14% 10% at 82% 21%,rgba(255,190,115,.92),rgba(255,140,60,.32) 45%,transparent 72%),
-        radial-gradient(50% 20% at 50% 82%,rgba(255,160,80,.28),transparent 70%),
-        radial-gradient(10% 5% at 30% 78%,rgba(255,200,140,.5),transparent 70%),
-        radial-gradient(9% 5% at 70% 80%,rgba(255,200,140,.45),transparent 70%)"></div>
-      <div style="position:absolute;left:0;right:0;top:70%;height:6%;background:linear-gradient(180deg,rgba(90,52,30,.9),rgba(40,24,14,.95));box-shadow:0 -2px 0 rgba(255,180,110,.25)"></div>`,
+      <svg viewBox="0 0 1080 1440" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+        <defs>
+          <linearGradient id="rWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a2c1a"/><stop offset=".45" stop-color="#2c1a10"/><stop offset="1" stop-color="#140c07"/></linearGradient>
+          <radialGradient id="rLamp"><stop offset="0" stop-color="#fff1cf"/><stop offset=".4" stop-color="#ffc878"/><stop offset="1" stop-color="#ff9a45" stop-opacity="0"/></radialGradient>
+          <radialGradient id="rHalo"><stop offset="0" stop-color="#ffab58" stop-opacity=".7"/><stop offset="1" stop-color="#ffab58" stop-opacity="0"/></radialGradient>
+          <linearGradient id="rShelf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb866" stop-opacity=".55"/><stop offset="1" stop-color="#b8662a" stop-opacity=".2"/></linearGradient>
+          <linearGradient id="rTable" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6b4226"/><stop offset=".2" stop-color="#3a2416"/><stop offset="1" stop-color="#120b07"/></linearGradient>
+          <filter id="rBlur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="14"/></filter>
+          <filter id="rSoft"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <g filter="url(#rBlur)">
+          <rect x="-60" y="-60" width="1200" height="1560" fill="url(#rWall)"/>
+          <!-- wood panelling -->
+          <g fill="#000" opacity=".22"><rect x="150" y="-20" width="10" height="1200"/><rect x="420" y="-20" width="10" height="1200"/><rect x="690" y="-20" width="10" height="1200"/><rect x="950" y="-20" width="10" height="1200"/></g>
+          <!-- back bar: lit shelves and bottles -->
+          <rect x="-40" y="330" width="1160" height="150" fill="url(#rShelf)"/>
+          <rect x="-40" y="476" width="1160" height="14" fill="#1a0f08"/>
+          <g fill="#1d120a"><rect x="60" y="372" width="34" height="106" rx="8"/><rect x="118" y="352" width="30" height="126" rx="8"/><rect x="176" y="384" width="38" height="94" rx="8"/><rect x="300" y="360" width="32" height="118" rx="8"/><rect x="356" y="380" width="36" height="98" rx="8"/><rect x="520" y="356" width="30" height="122" rx="8"/><rect x="574" y="378" width="38" height="100" rx="8"/><rect x="640" y="366" width="30" height="112" rx="8"/><rect x="790" y="350" width="34" height="128" rx="8"/><rect x="850" y="382" width="36" height="96" rx="8"/><rect x="960" y="362" width="32" height="116" rx="8"/></g>
+          <g fill="#ffcf8a" opacity=".5"><rect x="238" y="384" width="26" height="94" rx="7"/><rect x="446" y="372" width="28" height="106" rx="7"/><rect x="716" y="388" width="26" height="90" rx="7"/><rect x="906" y="376" width="24" height="102" rx="7"/></g>
+          <!-- pendant lamps -->
+          <g stroke="#0e0805" stroke-width="5"><line x1="170" y1="-20" x2="170" y2="150"/><line x1="440" y1="-20" x2="440" y2="96"/><line x1="700" y1="-20" x2="700" y2="160"/><line x1="940" y1="-20" x2="940" y2="84"/></g>
+          <circle cx="170" cy="214" r="220" fill="url(#rHalo)"/><circle cx="440" cy="158" r="240" fill="url(#rHalo)"/><circle cx="700" cy="224" r="220" fill="url(#rHalo)"/><circle cx="940" cy="146" r="230" fill="url(#rHalo)"/>
+          <g fill="#150c07"><path d="M112 150h116l34 62H78z"/><path d="M382 96h116l34 62H348z"/><path d="M642 160h116l34 62H608z"/><path d="M882 84h116l34 62H848z"/></g>
+          <ellipse cx="170" cy="226" rx="100" ry="40" fill="url(#rLamp)"/><ellipse cx="440" cy="172" rx="100" ry="40" fill="url(#rLamp)"/><ellipse cx="700" cy="236" rx="100" ry="40" fill="url(#rLamp)"/><ellipse cx="940" cy="160" rx="100" ry="40" fill="url(#rLamp)"/><g fill="#fff6e0"><ellipse cx="170" cy="222" rx="50" ry="14"/><ellipse cx="440" cy="168" rx="50" ry="14"/><ellipse cx="700" cy="232" rx="50" ry="14"/><ellipse cx="940" cy="156" rx="50" ry="14"/></g>
+          <!-- table in the foreground -->
+          <rect x="-60" y="1236" width="1200" height="300" fill="url(#rTable)"/>
+          <ellipse cx="300" cy="1250" rx="230" ry="16" fill="#ffc27a" opacity=".5"/><ellipse cx="800" cy="1254" rx="210" ry="14" fill="#ffc27a" opacity=".4"/>
+          <!-- candles -->
+          <rect x="268" y="1170" width="64" height="74" rx="12" fill="#ffb25a" opacity=".85"/><circle cx="300" cy="1180" r="120" fill="url(#rHalo)"/><ellipse cx="300" cy="1162" rx="18" ry="34" fill="#fff6e0"/>
+          <rect x="790" y="1182" width="56" height="66" rx="12" fill="#ffb25a" opacity=".75"/><circle cx="818" cy="1190" r="104" fill="url(#rHalo)"/><ellipse cx="818" cy="1174" rx="16" ry="30" fill="#fff6e0"/>
+          <!-- wine glasses -->
+          <g fill="none" stroke="#f1d5ac" stroke-width="5" opacity=".55"><path d="M508 1046c0 74 26 108 62 108s62-34 62-108z"/><line x1="570" y1="1154" x2="570" y2="1234"/><line x1="530" y1="1238" x2="610" y2="1238"/><path d="M936 1066c0 66 22 96 54 96s54-30 54-96z"/><line x1="990" y1="1162" x2="990" y2="1236"/></g>
+          <path d="M514 1090c8 44 28 62 56 62s48-18 56-62z" fill="#6a1a24" opacity=".7"/>
+        </g>
+        <g filter="url(#rSoft)" fill="#ffc27a">
+          <circle cx="92" cy="700" r="46" opacity=".1"/><circle cx="1000" cy="640" r="58" opacity=".09"/><circle cx="210" cy="960" r="36" opacity=".1"/>
+          <circle cx="900" cy="930" r="44" opacity=".1"/><circle cx="640" cy="1010" r="30" opacity=".1"/><circle cx="60" cy="1100" r="52" opacity=".08"/>
+        </g>
+      </svg>`,
     kitchen: `
       <svg viewBox="0 0 1080 1440" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
         <defs>
@@ -173,7 +202,7 @@
             ${s.kicker ? `<div class="kicker">${md(s.kicker)}</div>` : ""}
             <h1>${s.titleHtml}</h1>
             ${s.sub ? `<div class="sub">${md(s.sub)}</div>` : ""}
-          </div>${handle()}`;
+          </div>${handle()}<div class="swipe">${arrow()}</div>`;
         break;
       }
       case "money": {
@@ -188,19 +217,30 @@
           </div>${handle()}<div class="swipe">${arrow()}</div>`;
         break;
       }
-      case "stop":
       case "pick": {
         el.classList.add("interior");
         const picks = c.slides.filter((x) => x.type === "pick");
-        const metaRow = s.type === "pick"
-          ? `<div class="meta"><span class="when">Friday night · ${String(picks.indexOf(s) + 1).padStart(2, "0")} of ${String(picks.length).padStart(2, "0")}</span><span class="where">${md(s.where)}</span></div>`
-          : meta(s);
-        html = `${metaRow}
+        const n = String(picks.indexOf(s) + 1).padStart(2, "0");
+        html = `<div class="meta"><span class="when">Friday night · ${n} of ${String(picks.length).padStart(2, "0")}</span><span class="where">${md(s.where)}</span></div>
+          <div class="col">
+            <div class="reason">${md(s.when)}</div>
+            <h2 class="headline xl">${md(s.headline)}</h2>
+            <p class="why">${md(s.lead)}</p>
+            <div class="trio">
+              <div class="row"><div class="k">Order</div><div class="v">${md(s.order)}</div></div>
+              <div class="row"><div class="k">Book it</div><div class="v">${md(s.detail)}</div></div>
+              <div class="row"><div class="k">Find it</div><div class="v">${md(s.find)}</div></div>
+            </div>
+          </div>${handle()}${swipe()}`;
+        break;
+      }
+      case "stop": {
+        el.classList.add("interior");
+        html = `${meta(s)}
           <h2 class="headline ${s.headlineSize || ""}">${md(s.headline)}</h2>
-          ${s.type === "pick" ? `<div class="reason">${md(s.when)}</div>` : ""}
           <div class="body">
-            <div class="block lead"><div class="label">${s.type === "pick" ? "Why pick it" : "Why go"}</div><p>${md(s.lead)}</p></div>
-            <div class="block detail"><div class="label">${s.type === "pick" ? "Book it" : "Good to know"}</div><p>${md(s.detail)}</p></div>
+            <div class="block lead"><div class="label">Why go</div><p>${md(s.lead)}</p></div>
+            <div class="block detail"><div class="label">Good to know</div><p>${md(s.detail)}</p></div>
             ${s.aside ? `<div class="block aside"><p>${md(s.aside)}</p></div>` : ""}
           </div>${handle()}${last ? "" : swipe()}`;
         break;

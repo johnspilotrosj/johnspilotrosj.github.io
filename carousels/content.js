@@ -124,69 +124,77 @@ window.CAROUSEL_DATA = {
           type: "cover", variant: "friday",
           photo: "photos/friday-cover.jpg", scene: "lamps",
           sceneLabel: "Low-lit restaurant: warm lamps, dark wood",
-          kicker: "A dinner guide for every kind of Friday",
+          kicker: "Boise dinner guide",
           titleHtml: "The perfect <em>Friday night</em> in Boise",
           sub: "Five spots, five reasons to go out",
-          photoDirection: "A low-lit downtown dining room or bar: warm pendant lamps or sconces, dark wood, a few glasses catching light, nobody identifiable. Ideally shot at one of the five featured spots, with their permission. Keep the center of the frame simple and dark (a wall, the back bar) so white type sits on it cleanly.",
-          layout: "Full-bleed photo with a soft dark overlay. White serif title centered in the middle of the frame, with \"Friday night\" in italic. Kicker above, short sans line below."
+          photoDirection: "A low-lit downtown dining room or bar: warm pendant lamps, dark wood, a lit back bar, a candle and a glass of wine in the foreground, nobody identifiable. The cover currently uses an illustrated, out-of-focus version of this scene. To swap in a photo, shoot it at one of the five featured spots with their permission, and keep the center of the frame simple and dark so white type sits on it cleanly.",
+          layout: "Full-bleed image with a soft dark overlay. White serif title centered in the middle of the frame, with \"Friday night\" in italic. Small tracked kicker above, short sans line below. Handle bottom-left, thin ivory swipe arrow bottom-right."
         },
         {
           type: "pick",
-          when: "For date night", where: "Downtown · W Idaho St",
-          headline: "*Alavita*", headlineSize: "xl",
+          when: "For date night", where: "Downtown · 8th & Idaho",
+          headline: "*Alavita*",
           lead: "House-made pasta and local ingredients, in a room that's dressed up without being stiff.",
-          detail: "Book on OpenTable. Friday dinner 5–10 p.m. 807 W Idaho St.",
-          layout: "Interior layout with the venue name as an extra-large italic serif headline. \"Why pick it\" lead, then the reservation detail under a rule.",
-          confirm: ["Alavita's Friday dinner hours (OpenTable lists 5–10 p.m.; Gayot lists lunch too)."]
+          order: "Whatever fresh pasta is on tonight.",
+          detail: "Reservations suggested. Book on OpenTable.",
+          find: "807 W Idaho St",
+          layout: "Off-white. Meta row with the count and the neighborhood. The occasion in muted italic serif, then the venue name as an extra-large italic serif headline. One \"why\" sentence in medium sans, then three ruled rows: Order · Book it · Find it. Swipe arrow."
         },
         {
           type: "pick",
           when: "For a big occasion", where: "Downtown · Hotel 43",
-          headline: "*Chandlers*", headlineSize: "xl",
+          headline: "*Chandlers*",
           lead: "Prime steaks, fine seafood and live jazz every night of the week.",
-          detail: "Dinner from 5:30 p.m. Reservations recommended: 208-383-4300. 981 W Grove St.",
-          layout: "Same as above.",
-          confirm: ["Chandlers' dinner start time. Two listings give 5:30 p.m., but one of them is older."]
+          order: "A martini at the bar first, then a prime steak.",
+          detail: "Reservations recommended: OpenTable or 208-383-4300.",
+          find: "981 W Grove St, inside Hotel 43",
+          layout: "Same as the Alavita slide."
         },
         {
           type: "pick",
           when: "For dinner with friends", where: "Linen District",
-          headline: "*Txikiteo*", headlineSize: "xl",
-          lead: "Basque small plates and a long Basque-and-French wine list. Order pintxos for the table and keep them coming.",
-          detail: "14th & Idaho. Walk-in only, counter service. Go early if you're more than four.",
-          layout: "Same as above.",
+          headline: "*Txikiteo*",
+          lead: "Basque small plates and a long Basque-and-French wine list. Made for sharing.",
+          order: "Pintxos for the table, and keep them coming.",
+          detail: "No reservations. Walk in and order at the counter, so go early with a group.",
+          find: "14th & Idaho",
+          layout: "Same as the Alavita slide.",
           confirm: [
-            "Walk-in-only policy (per OpenTable). Make sure they still don't take reservations.",
-            "Address: listings give both 175 N 14th St and 1401 W Idaho St (14th & Idaho). The slide only says \"14th & Idaho\", which fits both."
+            "Txikiteo's walk-in-only, counter-service policy (per OpenTable).",
+            "Street number: listings give both 175 N 14th St and 1401 W Idaho St, so the slide says \"14th & Idaho\", which fits both."
           ]
         },
         {
           type: "pick",
-          when: "Before a show", where: "Downtown · 8th & Main",
-          headline: "*Fork*", headlineSize: "xl",
-          lead: "Locally sourced Northwest cooking, a block from the Egyptian Theatre. Start with the asparagus fries.",
-          detail: "Book an early table on OpenTable. 199 N 8th St. The Egyptian is at 700 W Main St.",
-          layout: "Same as above.",
-          confirm: ["Asparagus fries are still on the menu (a local tip; I couldn't see a current menu)."]
+          when: "Before a show", where: "Downtown · 8th & Idaho",
+          headline: "*Fork*",
+          lead: "Locally sourced Northwest cooking, two blocks from the Egyptian Theatre.",
+          order: "Start with the asparagus fries.",
+          detail: "Book an early table on OpenTable so you make the curtain.",
+          find: "199 N 8th St",
+          layout: "Same as the Alavita slide.",
+          confirm: ["Asparagus fries are still on Fork's menu (a long-running local favorite; I couldn't open the current menu)."]
         },
         {
           type: "pick",
           when: "For the nightcap", where: "Downtown · 14th floor",
-          headline: "*Ampersand*", headlineSize: "xl",
-          lead: "A speakeasy fourteen floors up. There's no menu: the bartender builds a drink around what you like.",
-          detail: "Check in at Art Haus downstairs, 999 Main St. Book online for up to four.",
-          layout: "Same as above.",
-          confirm: ["Ampersand's Friday hours (the two OpenTable listings disagree: 4–11 p.m. vs 5–11 p.m.)."]
+          headline: "*Ampersand*",
+          lead: "A speakeasy hidden on the 14th floor. One last drink, made just for you.",
+          order: "There's no menu. Tell the bartender what you like.",
+          detail: "Book online for up to four, then check in at Art Haus downstairs.",
+          find: "999 Main St",
+          layout: "Same as the Alavita slide."
         },
         {
           type: "close",
           headline: "Send this to whoever's *picking dinner.*",
           small: "Menus, hours and reservation policies change. Confirm before you go.",
-          layout: "Off-white, centered typography. No arrow."
+          ask: "Which spot did I miss? Tell me in the comments.",
+          layout: "Off-white, centered typography. Serif CTA, one muted line, then a bolder line asking for a comment. Name, brokerage and handle at the bottom. No arrow."
         }
       ],
-      caption: "Friday plans, sorted 🍝🎷\n\nDate night → Alavita\nBig occasion → Chandlers\nDinner with friends → Txikiteo\nBefore a show → Fork\nNightcap → Ampersand\n\nSend this to whoever's picking dinner. Where would you add?\n\nJohn Spilotros · Keller Williams Realty Boise",
-      hashtags: "#BoiseEats #BoiseFood #DowntownBoise #BoiseDateNight #BoiseIdaho #TreasureValley #FridayNight #BoiseRestaurants"
+      caption: "Friday night in Boise, sorted. 🍝🎷\n\nSave this for the next \"where do you want to eat?\" standoff:\n\nDate night → Alavita\nBig occasion → Chandlers\nDinner with friends → Txikiteo\nBefore a show → Fork\nNightcap → Ampersand\n\nSend this to whoever's picking dinner. Which spot did I miss? Tell me in the comments.\n\nMenus, hours and reservation policies change, so confirm before you go.\n\nJohn Spilotros · Keller Williams Realty Boise",
+      hashtags: "#BoiseEats #BoiseFood #DowntownBoise #BoiseDateNight #BoiseIdaho #BoiseRestaurants #ThingsToDoInBoise #TreasureValley"
     },
 
     /* ======================================================

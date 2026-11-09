@@ -25,7 +25,7 @@ function copy(c, s, i) {
     case "pick": {
       const picks = c.slides.filter((x) => x.type === "pick");
       const n = String(picks.indexOf(s) + 1).padStart(2, "0");
-      return q("Meta row", `FRIDAY NIGHT · ${n} OF ${String(picks.length).padStart(2, "0")}  |  ${s.where}`) + q("Headline", s.headline) + q("Reason (serif italic)", s.when) + q("Why pick it", s.lead) + q("Book it", s.detail) + q("Footer", `${D.handle} + swipe arrow`);
+      return q("Meta row", `FRIDAY NIGHT · ${n} OF ${String(picks.length).padStart(2, "0")}  |  ${s.where}`) + q("Occasion (serif italic)", s.when) + q("Headline", s.headline) + q("Why", s.lead) + q("Order", s.order) + q("Book it", s.detail) + q("Find it", s.find) + q("Footer", `${D.handle} + swipe arrow`);
     }
     case "method":
       return q("Meta row", `${s.when}  |  ${s.where}`) + q("Headline", s.headline) + q("Formula", s.eq) + s.rows.map((r) => `- **Row:** ${r[0].toUpperCase()} · ${r[1]}/sq ft · ${r[2]}\n`).join("") + q("Note", s.note) + q("Footer", `${D.handle} + swipe arrow`);

@@ -137,86 +137,92 @@ John Spilotros · Keller Williams Realty Boise
 
 ### Slide 1: cover
 
-- **Kicker:** A dinner guide for every kind of Friday
+- **Kicker:** Boise dinner guide
 - **Title:** The perfect *Friday night* in Boise
 - **Sub-line:** Five spots, five reasons to go out
 - **Footer:** @johnspilotros
 - **Photo file:** carousels/photos/friday-cover.jpg
-- **Photo direction:** A low-lit downtown dining room or bar: warm pendant lamps or sconces, dark wood, a few glasses catching light, nobody identifiable. Ideally shot at one of the five featured spots, with their permission. Keep the center of the frame simple and dark (a wall, the back bar) so white type sits on it cleanly.
-- **Layout:** Full-bleed photo with a soft dark overlay. White serif title centered in the middle of the frame, with "Friday night" in italic. Kicker above, short sans line below.
+- **Photo direction:** A low-lit downtown dining room or bar: warm pendant lamps, dark wood, a lit back bar, a candle and a glass of wine in the foreground, nobody identifiable. The cover currently uses an illustrated, out-of-focus version of this scene. To swap in a photo, shoot it at one of the five featured spots with their permission, and keep the center of the frame simple and dark so white type sits on it cleanly.
+- **Layout:** Full-bleed image with a soft dark overlay. White serif title centered in the middle of the frame, with "Friday night" in italic. Small tracked kicker above, short sans line below. Handle bottom-left, thin ivory swipe arrow bottom-right.
 
 ### Slide 2: pick
 
-- **Meta row:** FRIDAY NIGHT · 01 OF 05  |  Downtown · W Idaho St
+- **Meta row:** FRIDAY NIGHT · 01 OF 05  |  Downtown · 8th & Idaho
+- **Occasion (serif italic):** For date night
 - **Headline:** *Alavita*
-- **Reason (serif italic):** For date night
-- **Why pick it:** House-made pasta and local ingredients, in a room that's dressed up without being stiff.
-- **Book it:** Book on OpenTable. Friday dinner 5–10 p.m. 807 W Idaho St.
+- **Why:** House-made pasta and local ingredients, in a room that's dressed up without being stiff.
+- **Order:** Whatever fresh pasta is on tonight.
+- **Book it:** Reservations suggested. Book on OpenTable.
+- **Find it:** 807 W Idaho St
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Interior layout with the venue name as an extra-large italic serif headline. "Why pick it" lead, then the reservation detail under a rule.
-- **⚠ Confirm before posting:**
-  - Alavita's Friday dinner hours (OpenTable lists 5–10 p.m.; Gayot lists lunch too).
+- **Layout:** Off-white. Meta row with the count and the neighborhood. The occasion in muted italic serif, then the venue name as an extra-large italic serif headline. One "why" sentence in medium sans, then three ruled rows: Order · Book it · Find it. Swipe arrow.
 
 ### Slide 3: pick
 
 - **Meta row:** FRIDAY NIGHT · 02 OF 05  |  Downtown · Hotel 43
+- **Occasion (serif italic):** For a big occasion
 - **Headline:** *Chandlers*
-- **Reason (serif italic):** For a big occasion
-- **Why pick it:** Prime steaks, fine seafood and live jazz every night of the week.
-- **Book it:** Dinner from 5:30 p.m. Reservations recommended: 208-383-4300. 981 W Grove St.
+- **Why:** Prime steaks, fine seafood and live jazz every night of the week.
+- **Order:** A martini at the bar first, then a prime steak.
+- **Book it:** Reservations recommended: OpenTable or 208-383-4300.
+- **Find it:** 981 W Grove St, inside Hotel 43
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Same as above.
-- **⚠ Confirm before posting:**
-  - Chandlers' dinner start time. Two listings give 5:30 p.m., but one of them is older.
+- **Layout:** Same as the Alavita slide.
 
 ### Slide 4: pick
 
 - **Meta row:** FRIDAY NIGHT · 03 OF 05  |  Linen District
+- **Occasion (serif italic):** For dinner with friends
 - **Headline:** *Txikiteo*
-- **Reason (serif italic):** For dinner with friends
-- **Why pick it:** Basque small plates and a long Basque-and-French wine list. Order pintxos for the table and keep them coming.
-- **Book it:** 14th & Idaho. Walk-in only, counter service. Go early if you're more than four.
+- **Why:** Basque small plates and a long Basque-and-French wine list. Made for sharing.
+- **Order:** Pintxos for the table, and keep them coming.
+- **Book it:** No reservations. Walk in and order at the counter, so go early with a group.
+- **Find it:** 14th & Idaho
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Same as above.
+- **Layout:** Same as the Alavita slide.
 - **⚠ Confirm before posting:**
-  - Walk-in-only policy (per OpenTable). Make sure they still don't take reservations.
-  - Address: listings give both 175 N 14th St and 1401 W Idaho St (14th & Idaho). The slide only says "14th & Idaho", which fits both.
+  - Txikiteo's walk-in-only, counter-service policy (per OpenTable).
+  - Street number: listings give both 175 N 14th St and 1401 W Idaho St, so the slide says "14th & Idaho", which fits both.
 
 ### Slide 5: pick
 
-- **Meta row:** FRIDAY NIGHT · 04 OF 05  |  Downtown · 8th & Main
+- **Meta row:** FRIDAY NIGHT · 04 OF 05  |  Downtown · 8th & Idaho
+- **Occasion (serif italic):** Before a show
 - **Headline:** *Fork*
-- **Reason (serif italic):** Before a show
-- **Why pick it:** Locally sourced Northwest cooking, a block from the Egyptian Theatre. Start with the asparagus fries.
-- **Book it:** Book an early table on OpenTable. 199 N 8th St. The Egyptian is at 700 W Main St.
+- **Why:** Locally sourced Northwest cooking, two blocks from the Egyptian Theatre.
+- **Order:** Start with the asparagus fries.
+- **Book it:** Book an early table on OpenTable so you make the curtain.
+- **Find it:** 199 N 8th St
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Same as above.
+- **Layout:** Same as the Alavita slide.
 - **⚠ Confirm before posting:**
-  - Asparagus fries are still on the menu (a local tip; I couldn't see a current menu).
+  - Asparagus fries are still on Fork's menu (a long-running local favorite; I couldn't open the current menu).
 
 ### Slide 6: pick
 
 - **Meta row:** FRIDAY NIGHT · 05 OF 05  |  Downtown · 14th floor
+- **Occasion (serif italic):** For the nightcap
 - **Headline:** *Ampersand*
-- **Reason (serif italic):** For the nightcap
-- **Why pick it:** A speakeasy fourteen floors up. There's no menu: the bartender builds a drink around what you like.
-- **Book it:** Check in at Art Haus downstairs, 999 Main St. Book online for up to four.
+- **Why:** A speakeasy hidden on the 14th floor. One last drink, made just for you.
+- **Order:** There's no menu. Tell the bartender what you like.
+- **Book it:** Book online for up to four, then check in at Art Haus downstairs.
+- **Find it:** 999 Main St
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Same as above.
-- **⚠ Confirm before posting:**
-  - Ampersand's Friday hours (the two OpenTable listings disagree: 4–11 p.m. vs 5–11 p.m.).
+- **Layout:** Same as the Alavita slide.
 
 ### Slide 7: close
 
 - **Headline:** Send this to whoever's *picking dinner.*
 - **Small line:** Menus, hours and reservation policies change. Confirm before you go.
 - **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
-- **Layout:** Off-white, centered typography. No arrow.
+- **Layout:** Off-white, centered typography. Serif CTA, one muted line, then a bolder line asking for a comment. Name, brokerage and handle at the bottom. No arrow.
 
 ### Caption
 
 ```
-Friday plans, sorted 🍝🎷
+Friday night in Boise, sorted. 🍝🎷
+
+Save this for the next "where do you want to eat?" standoff:
 
 Date night → Alavita
 Big occasion → Chandlers
@@ -224,11 +230,13 @@ Dinner with friends → Txikiteo
 Before a show → Fork
 Nightcap → Ampersand
 
-Send this to whoever's picking dinner. Where would you add?
+Send this to whoever's picking dinner. Which spot did I miss? Tell me in the comments.
+
+Menus, hours and reservation policies change, so confirm before you go.
 
 John Spilotros · Keller Williams Realty Boise
 
-#BoiseEats #BoiseFood #DowntownBoise #BoiseDateNight #BoiseIdaho #TreasureValley #FridayNight #BoiseRestaurants
+#BoiseEats #BoiseFood #DowntownBoise #BoiseDateNight #BoiseIdaho #BoiseRestaurants #ThingsToDoInBoise #TreasureValley
 ```
 
 ---
@@ -686,12 +694,9 @@ John Spilotros · Keller Williams Realty Boise
 - **A weekend guide to Boise, slide 6:** Goldy's weekend opening time. Downtown Boise and Casago both list 7:30 a.m. on weekends, but their weekday hours disagree.
 - **A weekend guide to Boise, slide 7:** Distance and climb differ by route and by source (3.1–4.1 mi, 750–1,000 ft). The slide uses Visit Boise's figure. The sunset closure is from the City of Boise Ridge to Rivers page.
 - **A weekend guide to Boise, slide 8:** Winter Garden aGlow 2026 dates. The garden's event page shows Nov. 27–Dec. 30, but it doesn't state the year. Drop the line if it isn't confirmed by posting day.
-- **The perfect Friday night in Boise, slide 2:** Alavita's Friday dinner hours (OpenTable lists 5–10 p.m.; Gayot lists lunch too).
-- **The perfect Friday night in Boise, slide 3:** Chandlers' dinner start time. Two listings give 5:30 p.m., but one of them is older.
-- **The perfect Friday night in Boise, slide 4:** Walk-in-only policy (per OpenTable). Make sure they still don't take reservations.
-- **The perfect Friday night in Boise, slide 4:** Address: listings give both 175 N 14th St and 1401 W Idaho St (14th & Idaho). The slide only says "14th & Idaho", which fits both.
-- **The perfect Friday night in Boise, slide 5:** Asparagus fries are still on the menu (a local tip; I couldn't see a current menu).
-- **The perfect Friday night in Boise, slide 6:** Ampersand's Friday hours (the two OpenTable listings disagree: 4–11 p.m. vs 5–11 p.m.).
+- **The perfect Friday night in Boise, slide 4:** Txikiteo's walk-in-only, counter-service policy (per OpenTable).
+- **The perfect Friday night in Boise, slide 4:** Street number: listings give both 175 N 14th St and 1401 W Idaho St, so the slide says "14th & Idaho", which fits both.
+- **The perfect Friday night in Boise, slide 5:** Asparagus fries are still on Fork's menu (a long-running local favorite; I couldn't open the current menu).
 - **What $700K buys around Boise, slide 2:** Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS; a second report says about $320).
 - **What $700K buys around Boise, slide 2:** Meridian about $280/sq ft (Redfin, three months ending Sept. 2026; other sources $273–$282).
 - **What $700K buys around Boise, slide 2:** Eagle: $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), shown as a range.
