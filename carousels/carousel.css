@@ -694,3 +694,44 @@
 /* deck cover: title clear of the two tilted previews */
 .deck-cover .title { top: 380px; }
 .deck-cover h1 { font-size: 180px; }
+
+/* ---------- $700K cover, v2 ---------- */
+.cover.money .inner { justify-content: center; padding-top: 150px; }
+.money .stack { font-size: 46px; letter-spacing: .2em; }
+.money .stack.top { margin-bottom: 0; }
+.money .figure { font-size: 344px; font-variation-settings: "opsz" 22; text-shadow: 0 6px 60px rgba(0, 0, 0, .35); }
+.money .stack.bottom { margin-top: 26px; }
+.money .stack-row { margin-top: 56px; }
+.money .hook {
+  margin-top: 40px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 58px;
+  line-height: 1.08;
+  font-variation-settings: "opsz" 30;
+  color: var(--ivory);
+}
+.on-photo .swipe { color: rgba(245, 238, 226, .9); }
+.photo .scene svg { display: block; }
+
+/* city slides with three stats */
+.stats.n3 { grid-template-columns: 1.15fr 1fr 1fr; }
+.stats.n3 .n { font-size: 92px; }
+.stats.n3 .cell { padding: 34px 0 34px; }
+.stats.n3 .cell + .cell { padding-left: 32px; }
+.stats.n3 .u { font-size: 21px; margin-top: 14px; }
+.city .col .example { font-size: 33px; line-height: 1.38; color: var(--ink); margin-top: 38px; }
+.city .col .example b { font-weight: 700; }
+
+/* question prompts */
+.recap .ask { margin-top: auto; font-family: var(--serif); font-style: italic; font-size: 54px; line-height: 1.1; font-variation-settings: "opsz" 30; }
+.close .ask { margin-top: 34px; max-width: 780px; font: 600 28px/1.45 var(--sans); letter-spacing: .04em; color: var(--ink); text-wrap: balance; }
+.recap td { padding: 22px 18px 22px 0; }
+.recap td.k { padding-top: 28px; }
+
+.cover.money .inner { padding-top: 0; padding-bottom: 110px; }
+.money .stack.top { margin-bottom: 18px; }
+.method .col .formula td { padding: 40px 0; }
+.method .col .formula td.r { font-size: 66px; }
+.method .col .formula td.m { font-size: 38px; }
+.method .col .formula td.c { font-size: 30px; }

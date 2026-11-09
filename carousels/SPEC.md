@@ -246,25 +246,25 @@ John Spilotros · Keller Williams Realty Boise
 - **Ruled line:** BOISE · MERIDIAN · EAGLE
 - **Footer:** @johnspilotros
 - **Photo file:** carousels/photos/700k-cover.jpg
-- **Photo direction:** A darkened kitchen or living room, lit only by window light or a single pendant: an island edge, a soft glow, mostly shadow. It should read as "a nice house", not a specific listing. Use your own photo or a licensed one, never another brokerage's listing photo. Keep the middle third dark and quiet for the $700K.
-- **Layout:** Full-bleed photo with a heavier overlay. Compact uppercase sans stacked above ("What") and below ("buys around Boise") a huge ivory serif $700K that runs nearly edge to edge. A ruled line underneath lists the three cities.
+- **Photo direction:** A darkened kitchen at dusk, shot slightly out of focus: pendant lights glowing over an island, a window with the last blue light, mostly shadow. It should read as "a nice house", not a specific listing. The cover currently uses an illustrated version of this scene. To swap in a photo, use your own or a licensed one, never another brokerage's listing photo, and keep the middle third dark for the $700K.
+- **Layout:** Full-bleed image with a soft dark overlay. Compact uppercase sans stacked above ("What") and below ("actually buys around Boise") a huge ivory serif $700K that runs nearly edge to edge. A ruled line lists the three cities, then the hook in italic serif. Handle bottom-left, thin ivory swipe arrow bottom-right.
 
 ### Slide 2: method
 
-- **Meta row:** How to read this  |  Sept. 2026 data
-- **Headline:** Start with *price per square foot*
-- **Formula:** $700,000 ÷ local $/sq ft ≈ house you get
+- **Meta row:** The short answer  |  Sept. 2026 sales
+- **Headline:** Here's the *math*
+- **Formula:** $700,000 ÷ price per sq ft = square feet
 - **Row:** BOISE · $317/sq ft · ~2,200 sq ft
 - **Row:** MERIDIAN · $280/sq ft · ~2,500 sq ft
-- **Row:** EAGLE · $322–345/sq ft · ~2,000–2,200
-- **Note:** Median sale price per sq ft, single-family, around September 2026. Your neighborhood, the home's age and the lot can move these a lot.
+- **Row:** EAGLE · $322–345/sq ft · ~2,100 sq ft
+- **Note:** Median sale price per sq ft, around Sept. 2026. Sources: Boise Regional REALTORS data via Build Idaho; Redfin. Neighborhood, age and lot size move these a lot.
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Interior layout. Serif headline, a one-line serif formula over a rule, then a three-row table: city, $/sq ft, and roughly what $700K buys. Source note at the bottom in muted sans.
+- **Layout:** Off-white. Gives the answer on the first swipe: serif headline, the one-line formula over a rule, then a three-row table of city, $/sq ft and what $700K buys in big serif numerals. Source note at the bottom in muted sans. Swipe arrow.
 - **⚠ Confirm before posting:**
-  - Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS). Re-pull from BRR/IMLS.
-  - Meridian ~$280/sq ft (Redfin, 3 months ending Sept. 2026).
-  - Eagle: sources range from $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), hence the range.
-  - Update all three to the latest monthly report before posting.
+  - Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS; a second report says about $320).
+  - Meridian about $280/sq ft (Redfin, three months ending Sept. 2026; other sources $273–$282).
+  - Eagle: $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), shown as a range.
+  - BRR's October 2026 report wasn't published when this was built. If it's out, update the three numbers and the date.
 
 ### Slide 3: city
 
@@ -272,16 +272,14 @@ John Spilotros · Keller Williams Realty Boise
 - **City:** BOISE
 - **Headline:** Location over *square footage*
 - **Stat:** ~2,200 — Sq ft at / $700K
+- **Stat:** $317 — Median / per sq ft
 - **Stat:** 1985 — Median / year built
-- **Stat:** $519K — Median / sale price
-- **Stat:** 3 · 2 — Example / bd · ba
-- **Example line:** Market example: Southeast Boise (83706), 3 bd · 2 ba · 1,881 sq ft, listed at $699,500. Status as of [date].
+- **Example line:** $700K vs. the median: well above it. Boise's median sale price is in the low-to-mid $500Ks.
 - **The trade-off:** You're paying for a short drive to downtown, the Greenbelt and the foothills. Expect an older home and less interior space than the same budget buys in Meridian.
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Off-white. City name in bold tracked sans, then a serif trade-off headline. A four-cell stat bar (sq ft, median year built, median price, example beds and baths). One line describing the example, then the trade-off in a tinted panel. Swipe arrow.
+- **Layout:** Off-white. City name in bold tracked sans, then a serif trade-off headline. A three-cell stat bar in big serif numerals (sq ft at $700K, median $/sq ft, median year built). One line placing $700K against the city's median, then the trade-off in a tinted panel. Swipe arrow.
 - **⚠ Confirm before posting:**
-  - Example listing (1260 E Woodvine, 83706: $699,500, 3/2, 1,881 sq ft) was shown as PENDING on an aggregator page with no date, and its year built is unknown. Swap in an active MLS listing on posting day, add the listing date, and get the listing broker's permission if it isn't your listing.
-  - Boise median sale price $519K (Sept. 2026, Build Idaho citing BRR). Redfin shows ~$541K, so re-pull before posting.
+  - Boise median sale price: sources give $519K–$541K for Sept. 2026, so the slide says "low-to-mid $500Ks".
   - Median year built 1985 (2023 ACS via City-Stats).
 
 ### Slide 4: city
@@ -290,17 +288,15 @@ John Spilotros · Keller Williams Realty Boise
 - **City:** MERIDIAN
 - **Headline:** More house, *newer* house
 - **Stat:** ~2,500 — Sq ft at / $700K
-- **Stat:** 2005 — Median / year built
-- **Stat:** $572K — Median / sale price
-- **Stat:** 4 · 3 — Example / bd · ba
-- **Example line:** Market example: Meridian, 4 bd · 3 ba · 2,914 sq ft, listed at $725,000. Status as of [date].
-- **The trade-off:** Same budget, noticeably more room, and usually a newer subdivision with an HOA. The trade-off is a longer drive to downtown Boise.
+- **Stat:** $280 — Median / per sq ft
+- **Stat:** 2006 — Median / year built
+- **Example line:** $700K vs. the median: above it. Meridian's median sale price is in the mid $500Ks.
+- **The trade-off:** Same budget, about 300 more square feet than Boise, and usually a newer subdivision with an HOA. The trade-off is a longer drive to downtown Boise.
 - **Footer:** @johnspilotros + swipe arrow
 - **Layout:** Same as the Boise slide.
 - **⚠ Confirm before posting:**
-  - Example listing (1168 W Karluk River Dr: $725,000, 4/3, 2,914 sq ft, MLS 99004435) was shown ACTIVE on a Coldwell Banker page with no date. Replace or re-confirm on posting day, with the listing broker's permission.
-  - Meridian median $572K (Redfin, 3 months ending Sept. 2026, all home types).
-  - Median year built 2005 comes from property-records data, not the ACS. Check Census table B25035 for Meridian city before posting.
+  - Meridian median sale price: sources give $525K–$572K, so the slide says "mid $500Ks".
+  - Median year built 2006 (2023 ACS via City-Stats; another site says 2007).
 
 ### Slide 5: city
 
@@ -308,16 +304,14 @@ John Spilotros · Keller Williams Realty Boise
 - **City:** EAGLE
 - **Headline:** The address, with a *tighter* fit
 - **Stat:** ~2,100 — Sq ft at / $700K
+- **Stat:** $322 — Per sq ft / (up to $345)
 - **Stat:** 2007 — Median / year built
-- **Stat:** $800K+ — Median / sale price
-- **Stat:** 3 · 3 — Example / bd · ba
-- **Example line:** Market example: Eagle (Lilac Springs), 3 bd · 3 ba · 2,123 sq ft, listed at $700,000. Status as of [date].
-- **The trade-off:** In Eagle, $700K sits below the typical sale price. Expect a smaller home or lot, or a newer subdivision farther from the village center.
+- **Example line:** $700K vs. the median: below it. Eagle's median sale price is about $800K or more.
+- **The trade-off:** Here $700K is an entry point, not a move-up budget. Expect a smaller home or lot, or a newer subdivision farther from downtown Eagle.
 - **Footer:** @johnspilotros + swipe arrow
 - **Layout:** Same as the Boise slide.
 - **⚠ Confirm before posting:**
-  - Example listing (2045 N Foudy Ave: $700,000, 3/3, 2,123 sq ft) came from an aggregator snapshot with no date. Replace or re-confirm on posting day, with the listing broker's permission.
-  - Eagle median: sources range from ~$800K (Redfin) to $846,782 (Build Idaho, Sept. 2026), hence "$800K+".
+  - Eagle median sale price: sources range from about $800K (Redfin) to $847K (Build Idaho, Sept. 2026) and higher.
   - Median year built 2007 (2020–2024 ACS 5-year via Neilsberg).
 
 ### Slide 6: recap
@@ -329,37 +323,43 @@ John Spilotros · Keller Williams Realty Boise
   | | Boise | Meridian | Eagle |
   |---|---|---|---|
   | Sq ft | ~2,200 | ~2,500 | ~2,100 |
-  | Typical age | Older / (1985 median) | Newer / (2005) | Newest / (2007) |
-  | $700K vs median | Above | Above | Below |
-  | You get | Location | Space | Address |
+  | Typical age | Built / ~1985 | Built / ~2006 | Built / ~2007 |
+  | Vs. median | Above | Above | Below |
+  | You get | Location | Space | The address |
   | You give up | Square footage | Commute time | Size or lot |
 
 - **Footer:** @johnspilotros + swipe arrow
-- **Layout:** Off-white. Serif headline, then a four-column table: row labels in small tracked sans, city columns with the big figures set in serif.
+- **Layout:** Off-white. Serif headline, then a four-column table: row labels in small tracked sans, city columns with the square footage in big serif numerals. The question sits under the table in italic serif to prompt comments.
 - **⚠ Confirm before posting:**
   - The recap repeats the figures from slides 2–5. Update it whenever those change.
 
 ### Slide 7: close
 
 - **Headline:** DM me *“700K”* for current options.
-- **Small line:** I'll send what's actually on the market in Boise, Meridian and Eagle this week, with the trade-offs.
+- **Small line:** I'll send what's actually for sale in Boise, Meridian and Eagle this week, with the trade-offs.
 - **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
-- **Layout:** Off-white, centered typography. The CTA keyword is in italic serif with curly quotes. Name, brokerage and handle at the bottom.
+- **Layout:** Off-white, centered typography. The CTA keyword is in italic serif with curly quotes. A second, smaller line asks for a comment. Name, brokerage and handle at the bottom.
 
 ### Caption
 
 ```
-What does $700K actually buy around Boise? 🏡
+Same $700K. Three very different houses. 🏡
 
-Boise: about 2,200 sq ft. You're paying for location.
-Meridian: about 2,500 sq ft, usually newer. You give up commute time.
-Eagle: about 2,100 sq ft. $700K is under the typical sale price there.
+Here's what that budget buys around Boise right now:
 
-These are market medians (Sept. 2026), so every street is different. DM me "700K" and I'll send current options in all three.
+📍 Boise: about 2,200 sq ft. You're paying for location.
+📍 Meridian: about 2,500 sq ft, usually newer. You give up commute time.
+📍 Eagle: about 2,100 sq ft. $700K is under the typical sale price there.
+
+Which would you pick? Tell me in the comments.
+
+DM me "700K" and I'll send what's actually for sale in all three this week.
+
+Numbers are median sale prices per square foot, around September 2026 (Boise Regional REALTORS data via Build Idaho; Redfin). Every street is different.
 
 John Spilotros · Keller Williams Realty Boise
 
-#BoiseRealEstate #MeridianIdaho #EagleIdaho #TreasureValleyHomes #BoiseHomes #IdahoRealEstate #MovingToBoise #HomeBuying
+#BoiseRealEstate #MovingToBoise #BoiseIdaho #MeridianIdaho #EagleIdaho #TreasureValley #BoiseHomes #IdahoRealEstate
 ```
 
 ---
@@ -642,7 +642,7 @@ John Spilotros · Keller Williams Realty Boise
 - **Number:** 03 / 05
 - **Headline:** What does *$700K* buy around here?
 - **Mock cover:** What $700K buys around Boise (slide 1)
-- **Explanation:** Boise, Meridian and Eagle at the same budget: square footage, home age and the main trade-off in each, then a side-by-side recap.
+- **Explanation:** Boise, Meridian and Eagle at the same budget: square footage, price per square foot, home age and the main trade-off in each, then a side-by-side recap.
 - **The post:** 7 slides · DM “700K” / For move-up and relocating buyers
 - **Footer:** long arrow across the bottom
 - **Layout:** Same.
@@ -692,18 +692,15 @@ John Spilotros · Keller Williams Realty Boise
 - **The perfect Friday night in Boise, slide 4:** Address: listings give both 175 N 14th St and 1401 W Idaho St (14th & Idaho). The slide only says "14th & Idaho", which fits both.
 - **The perfect Friday night in Boise, slide 5:** Asparagus fries are still on the menu (a local tip; I couldn't see a current menu).
 - **The perfect Friday night in Boise, slide 6:** Ampersand's Friday hours (the two OpenTable listings disagree: 4–11 p.m. vs 5–11 p.m.).
-- **What $700K buys around Boise, slide 2:** Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS). Re-pull from BRR/IMLS.
-- **What $700K buys around Boise, slide 2:** Meridian ~$280/sq ft (Redfin, 3 months ending Sept. 2026).
-- **What $700K buys around Boise, slide 2:** Eagle: sources range from $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), hence the range.
-- **What $700K buys around Boise, slide 2:** Update all three to the latest monthly report before posting.
-- **What $700K buys around Boise, slide 3:** Example listing (1260 E Woodvine, 83706: $699,500, 3/2, 1,881 sq ft) was shown as PENDING on an aggregator page with no date, and its year built is unknown. Swap in an active MLS listing on posting day, add the listing date, and get the listing broker's permission if it isn't your listing.
-- **What $700K buys around Boise, slide 3:** Boise median sale price $519K (Sept. 2026, Build Idaho citing BRR). Redfin shows ~$541K, so re-pull before posting.
+- **What $700K buys around Boise, slide 2:** Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS; a second report says about $320).
+- **What $700K buys around Boise, slide 2:** Meridian about $280/sq ft (Redfin, three months ending Sept. 2026; other sources $273–$282).
+- **What $700K buys around Boise, slide 2:** Eagle: $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), shown as a range.
+- **What $700K buys around Boise, slide 2:** BRR's October 2026 report wasn't published when this was built. If it's out, update the three numbers and the date.
+- **What $700K buys around Boise, slide 3:** Boise median sale price: sources give $519K–$541K for Sept. 2026, so the slide says "low-to-mid $500Ks".
 - **What $700K buys around Boise, slide 3:** Median year built 1985 (2023 ACS via City-Stats).
-- **What $700K buys around Boise, slide 4:** Example listing (1168 W Karluk River Dr: $725,000, 4/3, 2,914 sq ft, MLS 99004435) was shown ACTIVE on a Coldwell Banker page with no date. Replace or re-confirm on posting day, with the listing broker's permission.
-- **What $700K buys around Boise, slide 4:** Meridian median $572K (Redfin, 3 months ending Sept. 2026, all home types).
-- **What $700K buys around Boise, slide 4:** Median year built 2005 comes from property-records data, not the ACS. Check Census table B25035 for Meridian city before posting.
-- **What $700K buys around Boise, slide 5:** Example listing (2045 N Foudy Ave: $700,000, 3/3, 2,123 sq ft) came from an aggregator snapshot with no date. Replace or re-confirm on posting day, with the listing broker's permission.
-- **What $700K buys around Boise, slide 5:** Eagle median: sources range from ~$800K (Redfin) to $846,782 (Build Idaho, Sept. 2026), hence "$800K+".
+- **What $700K buys around Boise, slide 4:** Meridian median sale price: sources give $525K–$572K, so the slide says "mid $500Ks".
+- **What $700K buys around Boise, slide 4:** Median year built 2006 (2023 ACS via City-Stats; another site says 2007).
+- **What $700K buys around Boise, slide 5:** Eagle median sale price: sources range from about $800K (Redfin) to $847K (Build Idaho, Sept. 2026) and higher.
 - **What $700K buys around Boise, slide 5:** Median year built 2007 (2020–2024 ACS 5-year via Neilsberg).
 - **What $700K buys around Boise, slide 6:** The recap repeats the figures from slides 2–5. Update it whenever those change.
 - **What happens after your offer is accepted, slide 2:** The 5-business-day default for earnest money comes from search excerpts of the RE-21 (March 2026 edition), not the full form. Check it against the current RE-21 before posting.
@@ -736,7 +733,7 @@ John Spilotros · Keller Williams Realty Boise
 - [Ada County Aug. 2026 (BRR official)](https://www.boirealtors.com/wp-content/uploads/2026/09/Market-Report-August-2026-Ada-County.pdf)
 - [Boise median year built (2023 ACS)](https://city-stats.com/idaho/boise-city/housing)
 - [Eagle median year built (2020–24 ACS)](https://www.neilsberg.com/insights/topic/eagle-id/)
-- [Example listings (unverified status)](https://www.coldwellbanker.com/city/id/meridian)
+- [Meridian median year built (2023 ACS)](https://city-stats.com/idaho/meridian/housing)
 - [RE-21 March 2026 edition (earnest money, inspection defaults)](https://adc-tenbox-prod.imgix.net/resi/propertyDocuments/1439359/PURCHASE_AGREEMENT/8A93ECF3CB3A484D9EE2FA184CB1ACA0.v1.pdf)
 - [Idaho REALTORS legal hotline: earnest money](https://idahorealtors.com/ir-legal-hotline/earnest-money/)
 - [Idaho Code 54-2053: advertising must show the broker's licensed business name](https://legislature.idaho.gov/statutesrules/idstat/Title54/T54CH20/SECT54-2053)

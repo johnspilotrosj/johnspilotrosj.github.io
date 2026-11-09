@@ -45,14 +45,47 @@
         radial-gradient(9% 5% at 70% 80%,rgba(255,200,140,.45),transparent 70%)"></div>
       <div style="position:absolute;left:0;right:0;top:70%;height:6%;background:linear-gradient(180deg,rgba(90,52,30,.9),rgba(40,24,14,.95));box-shadow:0 -2px 0 rgba(255,180,110,.25)"></div>`,
     kitchen: `
-      <div style="position:absolute;inset:0;background:linear-gradient(170deg,#2b2925 0%,#1c1a17 50%,#0f0e0c 100%)"></div>
-      <div style="position:absolute;left:-5%;top:8%;width:42%;height:62%;background:linear-gradient(100deg,rgba(220,205,180,.42),rgba(220,205,180,.06) 70%,transparent);filter:blur(18px)"></div>
-      <div style="position:absolute;inset:0;background:
-        radial-gradient(9% 7% at 40% 12%,rgba(255,214,160,.85),rgba(255,180,110,.2) 50%,transparent 75%),
-        radial-gradient(9% 7% at 62% 12%,rgba(255,214,160,.8),rgba(255,180,110,.2) 50%,transparent 75%),
-        radial-gradient(40% 14% at 52% 66%,rgba(255,200,140,.22),transparent 70%)"></div>
-      <div style="position:absolute;left:8%;right:8%;top:68%;height:2.4%;background:linear-gradient(90deg,rgba(210,195,170,.15),rgba(230,215,190,.55) 45%,rgba(210,195,170,.2));"></div>
-      <div style="position:absolute;left:8%;right:8%;top:70.4%;bottom:0;background:linear-gradient(180deg,#1a1815,#0c0b0a)"></div>`,
+      <svg viewBox="0 0 1080 1440" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+        <defs>
+          <linearGradient id="kWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a372a"/><stop offset=".55" stop-color="#33261d"/><stop offset="1" stop-color="#1b140f"/></linearGradient>
+          <linearGradient id="kSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c3d5e"/><stop offset=".5" stop-color="#6d6a8c"/><stop offset=".8" stop-color="#d79a78"/><stop offset="1" stop-color="#f3c592"/></linearGradient>
+          <radialGradient id="kLamp"><stop offset="0" stop-color="#fff3d6"/><stop offset=".35" stop-color="#ffd08a"/><stop offset="1" stop-color="#ffb060" stop-opacity="0"/></radialGradient>
+          <radialGradient id="kHalo"><stop offset="0" stop-color="#ffbf73" stop-opacity=".75"/><stop offset="1" stop-color="#ffbf73" stop-opacity="0"/></radialGradient>
+          <linearGradient id="kTop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8f7659"/><stop offset=".55" stop-color="#f0d9b4"/><stop offset="1" stop-color="#a88b68"/></linearGradient>
+          <linearGradient id="kFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2b20"/><stop offset="1" stop-color="#140f0b"/></linearGradient>
+          <filter id="kBlur" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="15"/></filter>
+          <filter id="kSoft"><feGaussianBlur stdDeviation="5"/></filter>
+        </defs>
+        <g filter="url(#kBlur)">
+          <rect x="-60" y="-60" width="1200" height="1560" fill="url(#kWall)"/>
+          <!-- window, dusk outside -->
+          <rect x="70" y="70" width="360" height="560" fill="url(#kSky)"/>
+          <rect x="242" y="70" width="14" height="560" fill="#241a13"/><rect x="70" y="330" width="360" height="12" fill="#241a13"/>
+          <rect x="52" y="52" width="396" height="596" fill="none" stroke="#1f1610" stroke-width="30"/>
+          <polygon points="70,650 430,650 640,1120 150,1120" fill="#f3c592" opacity=".1"/>
+          <!-- back wall: shelf with under-light -->
+          <rect x="540" y="470" width="600" height="250" fill="#2a1e16"/>
+          <rect x="540" y="462" width="600" height="14" fill="#ffd9a0" opacity=".9"/>
+          <rect x="540" y="476" width="600" height="120" fill="#ffc37a" opacity=".16"/>
+          <rect x="610" y="380" width="46" height="84" rx="8" fill="#6b5340"/><rect x="676" y="404" width="34" height="60" rx="6" fill="#8a6c50"/><rect x="900" y="372" width="60" height="92" rx="10" fill="#5c4636"/>
+          <!-- pendants -->
+          <g stroke="#120d09" stroke-width="5"><line x1="590" y1="-20" x2="590" y2="232"/><line x1="790" y1="-20" x2="790" y2="196"/><line x1="985" y1="-20" x2="985" y2="250"/></g>
+          <circle cx="590" cy="290" r="210" fill="url(#kHalo)"/><circle cx="790" cy="254" r="230" fill="url(#kHalo)"/><circle cx="985" cy="308" r="200" fill="url(#kHalo)"/>
+          <circle cx="590" cy="290" r="62" fill="url(#kLamp)"/><circle cx="790" cy="254" r="68" fill="url(#kLamp)"/><circle cx="985" cy="308" r="58" fill="url(#kLamp)"/>
+          <!-- island -->
+          <rect x="-60" y="1196" width="1200" height="44" fill="url(#kTop)"/>
+          <rect x="-60" y="1240" width="1200" height="300" fill="url(#kFront)"/>
+          <ellipse cx="640" cy="1216" rx="150" ry="13" fill="#fff0cf" opacity=".85"/><ellipse cx="900" cy="1218" rx="110" ry="10" fill="#fff0cf" opacity=".6"/>
+          <!-- things on the island -->
+          <rect x="150" y="1106" width="60" height="92" rx="12" fill="#c9b08d"/><circle cx="180" cy="1078" r="46" fill="#55633f"/><circle cx="214" cy="1056" r="32" fill="#4a5837"/>
+          <ellipse cx="420" cy="1186" rx="92" ry="18" fill="#e6d2b2"/>
+        </g>
+        <!-- foreground bokeh -->
+        <g filter="url(#kSoft)" fill="#ffcf8f">
+          <circle cx="508" cy="820" r="54" opacity=".1"/><circle cx="912" cy="700" r="72" opacity=".08"/><circle cx="330" cy="1240" r="64" opacity=".09"/>
+          <circle cx="760" cy="1290" r="46" opacity=".1"/><circle cx="1010" cy="960" r="38" opacity=".12"/><circle cx="96" cy="860" r="44" opacity=".08"/>
+        </g>
+      </svg>`,
     neutral: `
       <div style="position:absolute;inset:0;background:linear-gradient(160deg,#cfc6b8 0%,#b8ae9f 45%,#9a9083 100%)"></div>
       <div style="position:absolute;left:14%;top:30%;width:72%;height:44%;background:#ddd5c8;transform:rotate(-3deg);box-shadow:0 0 0 18px rgba(0,0,0,.03)"></div>
@@ -145,13 +178,14 @@
       }
       case "money": {
         el.classList.add("cover", "money", "on-photo");
-        html = `<div class="overlay" style="background:linear-gradient(180deg,rgba(12,10,8,.5),rgba(12,10,8,.42) 45%,rgba(12,10,8,.72))"></div>
+        html = `<div class="overlay" style="background:linear-gradient(180deg,rgba(14,10,7,.28) 0%,rgba(14,10,7,.48) 34%,rgba(14,10,7,.56) 66%,rgba(14,10,7,.7) 100%)"></div>
           <div class="inner">
             <div class="stack top">What</div>
             <div class="figure">$700<em>K</em></div>
             <div class="stack bottom"><span class="thin">actually</span> buys<br>around Boise</div>
             <div class="stack-row"><span>Boise</span><span>Meridian</span><span>Eagle</span></div>
-          </div>${handle()}`;
+            <div class="hook">${md(s.hook || "")}</div>
+          </div>${handle()}<div class="swipe">${arrow()}</div>`;
         break;
       }
       case "stop":
@@ -190,8 +224,8 @@
           <div class="col">
             <div class="cityname">${esc(s.city)}</div>
             <h2 class="headline">${md(s.headline)}</h2>
-            <div class="stats">${s.stats.map((x) => `<div class="cell"><div class="n">${esc(x[0])}</div><div class="u">${md(x[1])}</div></div>`).join("")}</div>
-            <div class="example">${s.exampleHtml}</div>
+            <div class="stats n${s.stats.length}">${s.stats.map((x) => `<div class="cell"><div class="n">${esc(x[0])}</div><div class="u">${md(x[1])}</div></div>`).join("")}</div>
+            <div class="example">${s.exampleHtml || ""}</div>
             <div class="tradeoff"><div class="label">The trade-off</div><p>${md(s.tradeoff)}</p></div>
           </div>${handle()}${swipe()}`;
         break;
@@ -205,6 +239,7 @@
               <thead><tr><th></th>${s.cols.map((x) => `<th>${esc(x)}</th>`).join("")}</tr></thead>
               <tbody>${s.rows.map((r) => `<tr><td class="k">${esc(r[0])}</td>${r[1].map((v) => `<td>${r[2] ? `<span class="big">${esc(v)}</span>` : md(v)}</td>`).join("")}</tr>`).join("")}</tbody>
             </table>
+            ${s.ask ? `<div class="ask">${md(s.ask)}</div>` : ""}
           </div>${handle()}${swipe()}`;
         break;
       }
@@ -263,6 +298,7 @@
             <div class="mark"></div>
             <h2>${md(s.headline)}</h2>
             ${s.small ? `<div class="small">${md(s.small)}</div>` : ""}
+            ${s.ask ? `<div class="ask">${md(s.ask)}</div>` : ""}
             ${s.callout ? `<div class="callout">${md(s.callout)}</div>` : ""}
           </div>
           <div class="sig"><b>${esc(D.name)}</b> · ${esc(D.brokerage)}<br>${esc(D.handle)}</div>`;

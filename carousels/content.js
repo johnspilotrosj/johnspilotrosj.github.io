@@ -202,39 +202,39 @@ window.CAROUSEL_DATA = {
           type: "money",
           photo: "photos/700k-cover.jpg", scene: "kitchen",
           sceneLabel: "Darkened kitchen or living room",
-          photoDirection: "A darkened kitchen or living room, lit only by window light or a single pendant: an island edge, a soft glow, mostly shadow. It should read as \"a nice house\", not a specific listing. Use your own photo or a licensed one, never another brokerage's listing photo. Keep the middle third dark and quiet for the $700K.",
-          layout: "Full-bleed photo with a heavier overlay. Compact uppercase sans stacked above (\"What\") and below (\"buys around Boise\") a huge ivory serif $700K that runs nearly edge to edge. A ruled line underneath lists the three cities."
+          hook: "Same budget.\nThree very different houses.",
+          photoDirection: "A darkened kitchen at dusk, shot slightly out of focus: pendant lights glowing over an island, a window with the last blue light, mostly shadow. It should read as \"a nice house\", not a specific listing. The cover currently uses an illustrated version of this scene. To swap in a photo, use your own or a licensed one, never another brokerage's listing photo, and keep the middle third dark for the $700K.",
+          layout: "Full-bleed image with a soft dark overlay. Compact uppercase sans stacked above (\"What\") and below (\"actually buys around Boise\") a huge ivory serif $700K that runs nearly edge to edge. A ruled line lists the three cities, then the hook in italic serif. Handle bottom-left, thin ivory swipe arrow bottom-right."
         },
         {
           type: "method",
-          when: "How to read this", where: "Sept. 2026 data",
-          headline: "Start with *price per square foot*",
-          eq: "$700,000 ÷ local $/sq ft ≈ house you get",
+          when: "The short answer", where: "Sept. 2026 sales",
+          headline: "Here's the *math*",
+          eq: "$700,000 ÷ price per sq ft = square feet",
           rows: [
             ["Boise", "$317", "~2,200 sq ft"],
             ["Meridian", "$280", "~2,500 sq ft"],
-            ["Eagle", "$322–345", "~2,000–2,200"]
+            ["Eagle", "$322–345", "~2,100 sq ft"]
           ],
-          note: "Median sale price per sq ft, single-family, around September 2026. Your neighborhood, the home's age and the lot can move these a lot.",
-          layout: "Interior layout. Serif headline, a one-line serif formula over a rule, then a three-row table: city, $/sq ft, and roughly what $700K buys. Source note at the bottom in muted sans.",
+          note: "Median sale price per sq ft, around Sept. 2026. Sources: Boise Regional REALTORS data via Build Idaho; Redfin. Neighborhood, age and lot size move these a lot.",
+          layout: "Off-white. Gives the answer on the first swipe: serif headline, the one-line formula over a rule, then a three-row table of city, $/sq ft and what $700K buys in big serif numerals. Source note at the bottom in muted sans. Swipe arrow.",
           confirm: [
-            "Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS). Re-pull from BRR/IMLS.",
-            "Meridian ~$280/sq ft (Redfin, 3 months ending Sept. 2026).",
-            "Eagle: sources range from $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), hence the range.",
-            "Update all three to the latest monthly report before posting."
+            "Boise $316.88/sq ft (Sept. 2026, Build Idaho citing Boise Regional REALTORS; a second report says about $320).",
+            "Meridian about $280/sq ft (Redfin, three months ending Sept. 2026; other sources $273–$282).",
+            "Eagle: $322 (Redfin) to $344.52 (Build Idaho, Sept. 2026), shown as a range.",
+            "BRR's October 2026 report wasn't published when this was built. If it's out, update the three numbers and the date."
           ]
         },
         {
           type: "city",
           city: "Boise",
           headline: "Location over *square footage*",
-          stats: [["~2,200", "Sq ft at\n$700K"], ["1985", "Median\nyear built"], ["$519K", "Median\nsale price"], ["3 · 2", "Example\nbd · ba"]],
-          exampleHtml: "<b>Market example:</b> Southeast Boise (83706), 3 bd · 2 ba · 1,881 sq ft, listed at $699,500. <b>Status as of [date]</b>.",
+          stats: [["~2,200", "Sq ft at\n$700K"], ["$317", "Median\nper sq ft"], ["1985", "Median\nyear built"]],
+          exampleHtml: "<b>$700K vs. the median:</b> well above it. Boise's median sale price is in the low-to-mid $500Ks.",
           tradeoff: "You're paying for a short drive to downtown, the Greenbelt and the foothills. Expect an older home and less interior space than the same budget buys in Meridian.",
-          layout: "Off-white. City name in bold tracked sans, then a serif trade-off headline. A four-cell stat bar (sq ft, median year built, median price, example beds and baths). One line describing the example, then the trade-off in a tinted panel. Swipe arrow.",
+          layout: "Off-white. City name in bold tracked sans, then a serif trade-off headline. A three-cell stat bar in big serif numerals (sq ft at $700K, median $/sq ft, median year built). One line placing $700K against the city's median, then the trade-off in a tinted panel. Swipe arrow.",
           confirm: [
-            "Example listing (1260 E Woodvine, 83706: $699,500, 3/2, 1,881 sq ft) was shown as PENDING on an aggregator page with no date, and its year built is unknown. Swap in an active MLS listing on posting day, add the listing date, and get the listing broker's permission if it isn't your listing.",
-            "Boise median sale price $519K (Sept. 2026, Build Idaho citing BRR). Redfin shows ~$541K, so re-pull before posting.",
+            "Boise median sale price: sources give $519K–$541K for Sept. 2026, so the slide says \"low-to-mid $500Ks\".",
             "Median year built 1985 (2023 ACS via City-Stats)."
           ]
         },
@@ -242,27 +242,25 @@ window.CAROUSEL_DATA = {
           type: "city",
           city: "Meridian",
           headline: "More house, *newer* house",
-          stats: [["~2,500", "Sq ft at\n$700K"], ["2005", "Median\nyear built"], ["$572K", "Median\nsale price"], ["4 · 3", "Example\nbd · ba"]],
-          exampleHtml: "<b>Market example:</b> Meridian, 4 bd · 3 ba · 2,914 sq ft, listed at $725,000. <b>Status as of [date]</b>.",
-          tradeoff: "Same budget, noticeably more room, and usually a newer subdivision with an HOA. The trade-off is a longer drive to downtown Boise.",
+          stats: [["~2,500", "Sq ft at\n$700K"], ["$280", "Median\nper sq ft"], ["2006", "Median\nyear built"]],
+          exampleHtml: "<b>$700K vs. the median:</b> above it. Meridian's median sale price is in the mid $500Ks.",
+          tradeoff: "Same budget, about 300 more square feet than Boise, and usually a newer subdivision with an HOA. The trade-off is a longer drive to downtown Boise.",
           layout: "Same as the Boise slide.",
           confirm: [
-            "Example listing (1168 W Karluk River Dr: $725,000, 4/3, 2,914 sq ft, MLS 99004435) was shown ACTIVE on a Coldwell Banker page with no date. Replace or re-confirm on posting day, with the listing broker's permission.",
-            "Meridian median $572K (Redfin, 3 months ending Sept. 2026, all home types).",
-            "Median year built 2005 comes from property-records data, not the ACS. Check Census table B25035 for Meridian city before posting."
+            "Meridian median sale price: sources give $525K–$572K, so the slide says \"mid $500Ks\".",
+            "Median year built 2006 (2023 ACS via City-Stats; another site says 2007)."
           ]
         },
         {
           type: "city",
           city: "Eagle",
           headline: "The address, with a *tighter* fit",
-          stats: [["~2,100", "Sq ft at\n$700K"], ["2007", "Median\nyear built"], ["$800K+", "Median\nsale price"], ["3 · 3", "Example\nbd · ba"]],
-          exampleHtml: "<b>Market example:</b> Eagle (Lilac Springs), 3 bd · 3 ba · 2,123 sq ft, listed at $700,000. <b>Status as of [date]</b>.",
-          tradeoff: "In Eagle, $700K sits below the typical sale price. Expect a smaller home or lot, or a newer subdivision farther from the village center.",
+          stats: [["~2,100", "Sq ft at\n$700K"], ["$322", "Per sq ft\n(up to $345)"], ["2007", "Median\nyear built"]],
+          exampleHtml: "<b>$700K vs. the median:</b> below it. Eagle's median sale price is about $800K or more.",
+          tradeoff: "Here $700K is an entry point, not a move-up budget. Expect a smaller home or lot, or a newer subdivision farther from downtown Eagle.",
           layout: "Same as the Boise slide.",
           confirm: [
-            "Example listing (2045 N Foudy Ave: $700,000, 3/3, 2,123 sq ft) came from an aggregator snapshot with no date. Replace or re-confirm on posting day, with the listing broker's permission.",
-            "Eagle median: sources range from ~$800K (Redfin) to $846,782 (Build Idaho, Sept. 2026), hence \"$800K+\".",
+            "Eagle median sale price: sources range from about $800K (Redfin) to $847K (Build Idaho, Sept. 2026) and higher.",
             "Median year built 2007 (2020–2024 ACS 5-year via Neilsberg)."
           ]
         },
@@ -273,23 +271,25 @@ window.CAROUSEL_DATA = {
           cols: ["Boise", "Meridian", "Eagle"],
           rows: [
             ["Sq ft", ["~2,200", "~2,500", "~2,100"], true],
-            ["Typical age", ["Older\n(1985 median)", "Newer\n(2005)", "Newest\n(2007)"]],
-            ["$700K vs median", ["Above", "Above", "Below"]],
-            ["You get", ["Location", "Space", "Address"]],
+            ["Typical age", ["Built\n~1985", "Built\n~2006", "Built\n~2007"]],
+            ["Vs. median", ["Above", "Above", "Below"]],
+            ["You get", ["Location", "Space", "The address"]],
             ["You give up", ["Square footage", "Commute time", "Size or lot"]]
           ],
-          layout: "Off-white. Serif headline, then a four-column table: row labels in small tracked sans, city columns with the big figures set in serif.",
+          ask: "Which one would you pick?",
+          layout: "Off-white. Serif headline, then a four-column table: row labels in small tracked sans, city columns with the square footage in big serif numerals. The question sits under the table in italic serif to prompt comments.",
           confirm: ["The recap repeats the figures from slides 2–5. Update it whenever those change."]
         },
         {
           type: "close",
-          headline: "DM me *“700K”* for current options.",
-          small: "I'll send what's actually on the market in Boise, Meridian and Eagle this week, with the trade-offs.",
-          layout: "Off-white, centered typography. The CTA keyword is in italic serif with curly quotes. Name, brokerage and handle at the bottom."
+          headline: "DM me *\u201C700K\u201D* for current options.",
+          small: "I'll send what's actually for sale in Boise, Meridian and Eagle this week, with the trade-offs.",
+          ask: "Or comment the city you'd pick.",
+          layout: "Off-white, centered typography. The CTA keyword is in italic serif with curly quotes. A second, smaller line asks for a comment. Name, brokerage and handle at the bottom."
         }
       ],
-      caption: "What does $700K actually buy around Boise? 🏡\n\nBoise: about 2,200 sq ft. You're paying for location.\nMeridian: about 2,500 sq ft, usually newer. You give up commute time.\nEagle: about 2,100 sq ft. $700K is under the typical sale price there.\n\nThese are market medians (Sept. 2026), so every street is different. DM me \"700K\" and I'll send current options in all three.\n\nJohn Spilotros · Keller Williams Realty Boise",
-      hashtags: "#BoiseRealEstate #MeridianIdaho #EagleIdaho #TreasureValleyHomes #BoiseHomes #IdahoRealEstate #MovingToBoise #HomeBuying"
+      caption: "Same $700K. Three very different houses. 🏡\n\nHere's what that budget buys around Boise right now:\n\n📍 Boise: about 2,200 sq ft. You're paying for location.\n📍 Meridian: about 2,500 sq ft, usually newer. You give up commute time.\n📍 Eagle: about 2,100 sq ft. $700K is under the typical sale price there.\n\nWhich would you pick? Tell me in the comments.\n\nDM me \"700K\" and I'll send what's actually for sale in all three this week.\n\nNumbers are median sale prices per square foot, around September 2026 (Boise Regional REALTORS data via Build Idaho; Redfin). Every street is different.\n\nJohn Spilotros · Keller Williams Realty Boise",
+      hashtags: "#BoiseRealEstate #MovingToBoise #BoiseIdaho #MeridianIdaho #EagleIdaho #TreasureValley #BoiseHomes #IdahoRealEstate"
     },
 
     /* ======================================================
@@ -488,7 +488,7 @@ window.CAROUSEL_DATA = {
         explain: "Five dinner spots, one reason each: date night, a big occasion, friends, before a show and the nightcap. Each comes with a reservation or menu detail.",
         facts: "7 slides · Send to a friend\nFor couples and groups", layout: "Same." },
       { type: "deckIdea", no: "03 / 05", ref: "700k", headline: "What does *$700K* buy around here?",
-        explain: "Boise, Meridian and Eagle at the same budget: square footage, home age and the main trade-off in each, then a side-by-side recap.",
+        explain: "Boise, Meridian and Eagle at the same budget: square footage, price per square foot, home age and the main trade-off in each, then a side-by-side recap.",
         facts: "7 slides · DM “700K”\nFor move-up and relocating buyers", layout: "Same." },
       { type: "deckIdea", no: "04 / 05", ref: "seller", headline: "What should I fix *before* I list?",
         explain: "Five seller decisions in priority order, each with what buyers notice, a practical fix, and when to leave it alone. Ends with a checklist.",
@@ -527,8 +527,8 @@ window.CAROUSEL_DATA = {
     ["Ada County Aug. 2026 (BRR official)", "https://www.boirealtors.com/wp-content/uploads/2026/09/Market-Report-August-2026-Ada-County.pdf"],
     ["Boise median year built (2023 ACS)", "https://city-stats.com/idaho/boise-city/housing"],
     ["Eagle median year built (2020–24 ACS)", "https://www.neilsberg.com/insights/topic/eagle-id/"],
-    ["Example listings (unverified status)", "https://www.coldwellbanker.com/city/id/meridian"],
-    ["RE-21 March 2026 edition (earnest money, inspection defaults)", "https://adc-tenbox-prod.imgix.net/resi/propertyDocuments/1439359/PURCHASE_AGREEMENT/8A93ECF3CB3A484D9EE2FA184CB1ACA0.v1.pdf"],
+    ["Meridian median year built (2023 ACS)", "https://city-stats.com/idaho/meridian/housing"],
+        ["RE-21 March 2026 edition (earnest money, inspection defaults)", "https://adc-tenbox-prod.imgix.net/resi/propertyDocuments/1439359/PURCHASE_AGREEMENT/8A93ECF3CB3A484D9EE2FA184CB1ACA0.v1.pdf"],
     ["Idaho REALTORS legal hotline: earnest money", "https://idahorealtors.com/ir-legal-hotline/earnest-money/"],
     ["Idaho Code 54-2053: advertising must show the broker's licensed business name", "https://legislature.idaho.gov/statutesrules/idstat/Title54/T54CH20/SECT54-2053"],
     ["NAR Code of Ethics, Article 12: advertising other brokers' listings", "https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/code-comprehension-article-12-display-of-competitors-listings-on-social-media-websites"]
