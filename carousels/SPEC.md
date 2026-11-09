@@ -46,21 +46,18 @@ Research date: November 8, 2026. Rendered slides: `carousels/export/<id>/NN.jpg`
 - **Footer:** @johnspilotros + swipe arrow
 - **Photo direction:** Interior slides are typographic on off-white, no photo.
 - **Layout:** Meta row (day and time left, neighborhood right) over a hairline rule. Big serif headline with the venue name in italic. Lead line in medium sans, then a ruled "good to know" detail. Thin swipe arrow bottom-right, handle bottom-left.
-- **⚠ Confirm before posting:**
-  - Hyde Perk's current Saturday opening time (none of the sources I found listed hours).
 
 ### Slide 3: stop
 
-- **Meta row:** Saturday · 9:30 AM  |  Downtown · The Grove Plaza
+- **Meta row:** Saturday · Mid-morning  |  Downtown · The Grove Plaza
 - **Headline:** Walk the *Capital City* Public Market
 - **Why go:** Growers, bakers and makers fill the Grove Plaza and the blocks around it every Saturday.
-- **Good to know:** 2026 season: Saturdays through Dec. 19, 9:30 a.m.–1:30 p.m. Late-season hours can shift, so check before you go.
+- **Good to know:** The 2026 season runs every Saturday through Dec. 19. Hours shift late in the season, so check before you go.
 - **Aside:** Two blocks away: Freak Alley Gallery. It's free and open 24/7, in the alley between 8th and 9th off Bannock.
 - **Footer:** @johnspilotros + swipe arrow
 - **Layout:** Same interior layout. The headline runs to three lines at medium size. The Freak Alley detour sits as a muted aside so the slide stays on one stop.
 - **⚠ Confirm before posting:**
-  - Market hours for November–December 2026. In 2025 the market moved to 10 a.m.–2 p.m. in late October. I found no 2026 notice either way.
-  - The Dec. 19, 2026 end date, which comes from CBS2 / Idaho News coverage of the season opening.
+  - The Dec. 19, 2026 season end date comes from CBS2 / Idaho News coverage of the season opening.
 
 ### Slide 4: stop
 
@@ -76,11 +73,9 @@ Research date: November 8, 2026. Rendered slides: `carousels/export/<id>/NN.jpg`
 - **Meta row:** Saturday · 7:00 PM  |  Downtown · Basque Block
 - **Headline:** Dinner at *Bar Gernika*
 - **Why go:** A Basque Block institution. Order the croquetas and the solomo: pork loin marinated in sweet red pepper.
-- **Good to know:** 202 S Capitol Blvd. Open until 10 p.m. Friday and Saturday. Closed Sunday and Monday.
+- **Good to know:** 202 S Capitol Blvd, on the corner of the Basque Block. It's a small room, so expect a short wait on a Saturday.
 - **Footer:** @johnspilotros + swipe arrow
 - **Layout:** Same interior layout.
-- **⚠ Confirm before posting:**
-  - Bar Gernika's current hours. The only listing I found (Casago) is undated: Tue–Thu 11:30–9, Fri–Sat 11:30–10, closed Sun–Mon.
 
 ### Slide 6: stop
 
@@ -107,11 +102,10 @@ Research date: November 8, 2026. Rendered slides: `carousels/export/<id>/NN.jpg`
 ### Slide 8: close
 
 - **Headline:** Save this for your next *Boise* weekend.
-- **Small line:** In season: Winter Garden aGlow at the Idaho Botanical Garden, Nov. 27–Dec. 30.
+- **Small line:** Hours shift with the seasons, so check before you go.
+- **Comment prompt:** What would you swap in? Tell me in the comments.
 - **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
 - **Layout:** Off-white, centered typography: a short rule, serif CTA, one muted sans line, then name, brokerage and handle at the bottom. No arrow.
-- **⚠ Confirm before posting:**
-  - Winter Garden aGlow 2026 dates. The garden's event page shows Nov. 27–Dec. 30, but it doesn't state the year. Drop the line if it isn't confirmed by posting day.
 
 ### Caption
 
@@ -214,6 +208,7 @@ John Spilotros · Keller Williams Realty Boise
 
 - **Headline:** Send this to whoever's *picking dinner.*
 - **Small line:** Menus, hours and reservation policies change. Confirm before you go.
+- **Comment prompt:** Which spot did I miss? Tell me in the comments.
 - **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
 - **Layout:** Off-white, centered typography. Serif CTA, one muted line, then a bolder line asking for a comment. Name, brokerage and handle at the bottom. No arrow.
 
@@ -345,6 +340,7 @@ John Spilotros · Keller Williams Realty Boise
 
 - **Headline:** DM me *“700K”* for current options.
 - **Small line:** I'll send what's actually for sale in Boise, Meridian and Eagle this week, with the trade-offs.
+- **Comment prompt:** Or comment the city you'd pick.
 - **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
 - **Layout:** Off-white, centered typography. The CTA keyword is in italic serif with curly quotes. A second, smaller line asks for a comment. Name, brokerage and handle at the bottom.
 
@@ -612,6 +608,218 @@ John Spilotros · Keller Williams Realty Boise
 
 ---
 
+## 6. Say it like a local (8 slides)
+
+**Search question:** How do you pronounce Boise (and Kuna, and Owyhee)?  
+**For:** Newcomers, people relocating, and locals who love correcting them.
+
+### Slide 1: cover
+
+- **Kicker:** A local's pronunciation guide
+- **Title:** It's / *BOY-see.*
+- **Sub-line:** And five more Idaho names worth getting right
+- **Footer:** @johnspilotros
+- **Photo file:** carousels/photos/say-cover.jpg
+- **Photo direction:** The Boise foothills just after sunset, with the valley lights coming on below. The cover currently uses an illustrated version of this scene. To swap in a photo, keep the upper half calm sky for the type.
+- **Layout:** Full-bleed image with a soft dark overlay. Small tracked kicker, "It's" in roman serif, then "BOY-see." in oversized italic serif on its own line. One short sans line below. Handle bottom-left, ivory swipe arrow bottom-right.
+
+### Slide 2: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 01 OF 06  |  Ada County
+- **Spelled:** Boise
+- **Said (large italic serif):** BOY-see
+- **Not (struck through):** BOY-zee
+- **Note:** There's no Z. Say it with an S and nobody will ask how long you've lived here.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Off-white. Meta row with the count and the county. "Spelled" label and the name in roman serif; a rule; "Said" label and the pronunciation in very large italic serif; the wrong version struck through in muted sans; one line of context under a hairline. Swipe arrow.
+
+### Slide 3: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 02 OF 06  |  Ada County
+- **Spelled:** Kuna
+- **Said (large italic serif):** KYOO-nuh
+- **Not (struck through):** KOO-nuh
+- **Note:** It starts like the letter Q. The town sits just south of Meridian.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same as the Boise card.
+
+### Slide 4: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 03 OF 06  |  Boise · Meridian
+- **Spelled:** Ustick
+- **Said (large italic serif):** YOO-stick
+- **Not (struck through):** US-tick
+- **Note:** You'll drive Ustick Road sooner or later. Say it like "you stick."
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same as the Boise card.
+
+### Slide 5: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 04 OF 06  |  Owyhee County
+- **Spelled:** Owyhee
+- **Said (large italic serif):** oh-WYE-hee
+- **Not (struck through):** OW-ee-hee
+- **Note:** It's an old spelling of Hawaii. The county and river are named for three Hawaiian fur trappers who vanished here in 1819.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same as the Boise card.
+
+### Slide 6: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 05 OF 06  |  Washington County
+- **Spelled:** Weiser
+- **Said (large italic serif):** WEE-zer
+- **Not (struck through):** WYE-zer
+- **Note:** Rhymes with geezer, not with wiser.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same as the Boise card.
+
+### Slide 7: say
+
+- **Meta row:** SAY IT LIKE A LOCAL · 06 OF 06  |  Kootenai County
+- **Spelled:** Coeur d'Alene
+- **Said (large italic serif):** kore-duh-LANE
+- **Not (struck through):** core-dee-uh-LEEN
+- **Note:** North Idaho's lake city. When in doubt, do what locals do and write CdA.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same as the Boise card, with the pronunciation set one size smaller to fit.
+
+### Slide 8: close
+
+- **Headline:** Send this to someone who still says *Boy-zee.*
+- **Small line:** Pronunciations follow the Idaho Press Club's guide and local usage.
+- **Comment prompt:** Which Idaho name did I miss? Tell me in the comments.
+- **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
+- **Layout:** Off-white, centered typography. Serif CTA with "Boy-zee." in italic, a muted source line, then a bolder line asking for a comment. Name, brokerage and handle at the bottom.
+
+### Caption
+
+```
+It's BOY-see. Not Boy-zee. 🗣️
+
+Six Idaho names worth getting right before you move here (or before your in-laws visit):
+
+Boise → BOY-see
+Kuna → KYOO-nuh
+Ustick → YOO-stick
+Owyhee → oh-WYE-hee
+Weiser → WEE-zer
+Coeur d'Alene → kore-duh-LANE
+
+Send this to someone who still says Boy-zee. Which name did I miss? Tell me in the comments.
+
+John Spilotros · Keller Williams Realty Boise
+
+#Boise #BoiseIdaho #Idaho #MovingToBoise #MovingToIdaho #TreasureValley #IdahoLife #BoiseRealEstate
+```
+
+---
+
+## 7. What nobody tells you about moving to Boise (8 slides)
+
+**Search question:** What should I know before moving to Boise?  
+**For:** People relocating to the Treasure Valley, and locals who'll add their own.
+
+### Slide 1: cover
+
+- **Kicker:** Six things locals learn the hard way
+- **Title:** What *nobody tells you* about moving to Boise
+- **Sub-line:** Save this before you pack the truck
+- **Footer:** @johnspilotros
+- **Photo file:** carousels/photos/moving-cover.jpg
+- **Photo direction:** The Boise foothills in early morning light with the valley below. The cover currently uses an illustrated version of this scene. To swap in a photo, keep the middle of the frame soft for the title.
+- **Layout:** Full-bleed image with a soft dark overlay. Small tracked kicker, ivory serif title centered with "nobody tells you" in italic, one short sans line below. Handle bottom-left, ivory swipe arrow bottom-right.
+
+### Slide 2: stop
+
+- **Meta row:** Nobody tells you · 01 of 06  |  Bogus Basin
+- **Headline:** You can ski *after work*
+- **The reality:** Bogus Basin is a nonprofit ski area about 16.5 miles up the road from Boise.
+- **Good to know:** In season the lifts run for night skiing until 10 p.m., so a few weeknight laps are a real option.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Off-white interior layout: meta row with the count and the topic, big serif headline with one italic phrase, "The reality" in medium sans, then a ruled "Good to know" line. Swipe arrow.
+- **⚠ Confirm before posting:**
+  - Bogus Basin's night-skiing hours for the 2026–27 season (10 p.m. per Boise State Public Radio and KIVI; this season's schedule isn't confirmed).
+
+### Slide 3: stop
+
+- **Meta row:** Nobody tells you · 02 of 06  |  Boise River
+- **Headline:** In summer, *everyone* floats the river
+- **The reality:** It's a six-mile float from Barber Park to Ann Morrison Park, and it takes two to three hours.
+- **Good to know:** The season opens once the river is safe. In 2026 it ran June 20 through Labor Day.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same interior layout.
+
+### Slide 4: stop
+
+- **Meta row:** Nobody tells you · 03 of 06  |  Winter
+- **Headline:** Some winter weeks, the valley goes *gray*
+- **The reality:** It's called an inversion: cold air gets trapped on the valley floor, and fog and stale air can sit for days.
+- **Do this:** Drive up Bogus Basin Road. You can often climb above the clouds into blue sky.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same interior layout, with the headline at medium size.
+
+### Slide 5: stop
+
+- **Meta row:** Nobody tells you · 04 of 06  |  Your yard
+- **Headline:** Your lawn may run on *canal water*
+- **The reality:** Many Treasure Valley neighborhoods water their yards with pressurized irrigation, separate from the drinking water.
+- **Do this:** It runs roughly April to October, depending on the year's water supply. Ask how a home is irrigated before you buy it.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same interior layout.
+
+### Slide 6: stop
+
+- **Meta row:** Nobody tells you · 05 of 06  |  The commute
+- **Headline:** *Eagle Road* runs your schedule
+- **The reality:** It's Idaho's busiest non-interstate highway, carrying more than 60,000 vehicles a day.
+- **Do this:** Drive your commute at rush hour before you choose a neighborhood.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same interior layout.
+- **⚠ Confirm before posting:**
+  - The 60,000+ vehicles a day figure is from an Idaho Transportation Department release dated August 2024.
+
+### Slide 7: stop
+
+- **Meta row:** Nobody tells you · 06 of 06  |  Property taxes
+- **Headline:** There's a tax break you have to *ask for*
+- **The reality:** Idaho's homeowner's exemption takes 50% of your home's value, up to $125,000, off what's taxed on a primary residence.
+- **Do this:** It isn't automatic. Apply with your county assessor once you move in.
+- **Footer:** @johnspilotros + swipe arrow
+- **Layout:** Same interior layout, with the headline at medium size.
+- **⚠ Confirm before posting:**
+  - The homeowner's exemption maximum ($125,000) and how to apply, with the Ada County Assessor. I found the amount on secondary sites quoting the Idaho State Tax Commission, and the filing deadline differed by source, so the slide gives no date.
+
+### Slide 8: close
+
+- **Headline:** Send this to someone *moving to Boise.*
+- **Small line:** Thinking about the move? DM me “BOISE” and ask me anything.
+- **Comment prompt:** Locals: what did I leave out? Tell me in the comments.
+- **Signature:** John Spilotros · Keller Williams Realty Boise / @johnspilotros
+- **Layout:** Off-white, centered typography. Serif CTA, a muted DM line, then a bolder line asking locals to comment. Name, brokerage and handle at the bottom.
+
+### Caption
+
+```
+What nobody tells you about moving to Boise 👀
+
+1 · You can ski after work
+2 · In summer, everyone floats the river
+3 · Some winter weeks, the valley goes gray
+4 · Your lawn may run on canal water
+5 · Eagle Road runs your schedule
+6 · There's a tax break you have to ask for
+
+Send this to someone who's moving here. Locals: what did I leave out? Tell me in the comments.
+
+Thinking about the move? DM me "BOISE" and ask me anything.
+
+John Spilotros · Keller Williams Realty Boise
+
+#MovingToBoise #BoiseIdaho #Boise #MovingToIdaho #TreasureValley #BoiseRealEstate #IdahoLife #RelocatingToIdaho
+```
+
+---
+
 ## Concept deck (7 slides)
 
 ### Slide 1: deckCover
@@ -687,13 +895,9 @@ John Spilotros · Keller Williams Realty Boise
 ## Everything to confirm, in one list
 
 - Confirm the Instagram handle. It is set once, here, and used on every slide.
-- **A weekend guide to Boise, slide 2:** Hyde Perk's current Saturday opening time (none of the sources I found listed hours).
-- **A weekend guide to Boise, slide 3:** Market hours for November–December 2026. In 2025 the market moved to 10 a.m.–2 p.m. in late October. I found no 2026 notice either way.
-- **A weekend guide to Boise, slide 3:** The Dec. 19, 2026 end date, which comes from CBS2 / Idaho News coverage of the season opening.
-- **A weekend guide to Boise, slide 5:** Bar Gernika's current hours. The only listing I found (Casago) is undated: Tue–Thu 11:30–9, Fri–Sat 11:30–10, closed Sun–Mon.
+- **A weekend guide to Boise, slide 3:** The Dec. 19, 2026 season end date comes from CBS2 / Idaho News coverage of the season opening.
 - **A weekend guide to Boise, slide 6:** Goldy's weekend opening time. Downtown Boise and Casago both list 7:30 a.m. on weekends, but their weekday hours disagree.
 - **A weekend guide to Boise, slide 7:** Distance and climb differ by route and by source (3.1–4.1 mi, 750–1,000 ft). The slide uses Visit Boise's figure. The sunset closure is from the City of Boise Ridge to Rivers page.
-- **A weekend guide to Boise, slide 8:** Winter Garden aGlow 2026 dates. The garden's event page shows Nov. 27–Dec. 30, but it doesn't state the year. Drop the line if it isn't confirmed by posting day.
 - **The perfect Friday night in Boise, slide 4:** Txikiteo's walk-in-only, counter-service policy (per OpenTable).
 - **The perfect Friday night in Boise, slide 4:** Street number: listings give both 175 N 14th St and 1401 W Idaho St, so the slide says "14th & Idaho", which fits both.
 - **The perfect Friday night in Boise, slide 5:** Asparagus fries are still on Fork's menu (a long-running local favorite; I couldn't open the current menu).
@@ -710,6 +914,9 @@ John Spilotros · Keller Williams Realty Boise
 - **What $700K buys around Boise, slide 6:** The recap repeats the figures from slides 2–5. Update it whenever those change.
 - **What happens after your offer is accepted, slide 2:** The 5-business-day default for earnest money comes from search excerpts of the RE-21 (March 2026 edition), not the full form. Check it against the current RE-21 before posting.
 - **What happens after your offer is accepted, slide 3:** RE-21 default response window for the seller: 3 business days if left blank (from 2026 edition excerpts). The slide stays general on purpose, saying "a few business days".
+- **What nobody tells you about moving to Boise, slide 2:** Bogus Basin's night-skiing hours for the 2026–27 season (10 p.m. per Boise State Public Radio and KIVI; this season's schedule isn't confirmed).
+- **What nobody tells you about moving to Boise, slide 6:** The 60,000+ vehicles a day figure is from an Idaho Transportation Department release dated August 2024.
+- **What nobody tells you about moving to Boise, slide 7:** The homeowner's exemption maximum ($125,000) and how to apply, with the Ada County Assessor. I found the amount on secondary sites quoting the Idaho State Tax Commission, and the filing deadline differed by source, so the slide gives no date.
 - **Every cover:** replace the placeholder scene with a real photo you own or have licensed.
 
 ## Sources (checked November 8, 2026)
@@ -741,5 +948,16 @@ John Spilotros · Keller Williams Realty Boise
 - [Meridian median year built (2023 ACS)](https://city-stats.com/idaho/meridian/housing)
 - [RE-21 March 2026 edition (earnest money, inspection defaults)](https://adc-tenbox-prod.imgix.net/resi/propertyDocuments/1439359/PURCHASE_AGREEMENT/8A93ECF3CB3A484D9EE2FA184CB1ACA0.v1.pdf)
 - [Idaho REALTORS legal hotline: earnest money](https://idahorealtors.com/ir-legal-hotline/earnest-money/)
+- [Idaho Press Club pronunciation guide (Boise, Weiser, Coeur d'Alene)](https://idahopressclub.org/idaho-pronunciation-guide/)
+- [Boise State Public Radio: pronouncing Idaho place names](https://www.boisestatepublicradio.org/arts-culture/2022-10-25/how-do-you-pronounce-boise-coeur-dalene-kootenai)
+- [Kuna pronunciation](https://www.idahopress.com/boiseweekly/annual_manual/critical_knowledge/idaho-pronunciation-guide/article_73438c0e-588e-5080-a5c8-c44266ea3756.html)
+- [Ustick pronunciation](https://www.weknowboise.com/blog/boise-pronunciation-guide.html)
+- [Owyhee: named for three Hawaiian trappers, 1819](https://en.wikipedia.org/wiki/Owyhee_River)
+- [Bogus Basin: nonprofit, 16.5 miles from Boise, night skiing](https://bogusbasin.org/about-bogus/culture/bogus-basin-will-offer-night-skiing-seven-nights-a-week)
+- [Float the Boise 2026 season (June 20 start, 6 miles, 2–3 hours)](https://www.cityofboise.org/news/parks-and-recreation/2026/june/ada-county-and-city-of-boise-officials-announce-start-date-for-the-2026-float-the-boise-season/)
+- [Treasure Valley inversions](https://www.boisestatepublicradio.org/environment/2024-01-02/boise-treasure-valley-inversion-air-stagnation)
+- [Pressurized irrigation season (Nampa & Meridian Irrigation District)](https://nmid.org/about-nmid/frequently-asked-questions/)
+- [Eagle Road: Idaho's busiest non-interstate highway (ITD, Aug. 2024)](https://publicnow.com/view/1AED86118F3FE91CDEB0F988B2947D65027F97A7)
+- [Idaho homeowner's exemption](https://tax.idaho.gov/search-category/property-tax/homeowners/)
 - [Idaho Code 54-2053: advertising must show the broker's licensed business name](https://legislature.idaho.gov/statutesrules/idstat/Title54/T54CH20/SECT54-2053)
 - [NAR Code of Ethics, Article 12: advertising other brokers' listings](https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/code-comprehension-article-12-display-of-competitors-listings-on-social-media-websites)

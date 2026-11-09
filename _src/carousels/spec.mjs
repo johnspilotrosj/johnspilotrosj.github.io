@@ -11,7 +11,7 @@ new Function("window", fs.readFileSync(path.join(root, "content.js"), "utf8"))(w
 const D = w.CAROUSEL_DATA;
 
 const txt = (s) => String(s ?? "").replace(/\n/g, " / ");
-const html = (s) => String(s ?? "").replace(/<span class="big-italic">/g, " / ").replace(/<em>(.*?)<\/em>/g, "*$1*").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+const html = (s) => String(s ?? "").replace(/<span class="big-italic">/g, " / ").replace(/<span class="hy"><\/span>/g, "-").replace(/<em>(.*?)<\/em>/g, "*$1*").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const q = (label, v) => (v ? `- **${label}:** ${txt(v)}\n` : "");
 
 function copy(c, s, i) {
@@ -20,8 +20,13 @@ function copy(c, s, i) {
       return q("Callout", s.callout) + q("Kicker", s.kicker) + q("Title", html(s.titleHtml)) + q("Sub-line", s.sub) + q("Footer", D.handle);
     case "money":
       return q("Top stack", "WHAT") + q("Figure", "$700K (K in italic)") + q("Bottom stack", "ACTUALLY BUYS / AROUND BOISE") + q("Ruled line", "BOISE · MERIDIAN · EAGLE") + q("Footer", D.handle);
+    case "say": {
+      const all = c.slides.filter((x) => x.type === "say");
+      const n = String(all.indexOf(s) + 1).padStart(2, "0");
+      return q("Meta row", `SAY IT LIKE A LOCAL · ${n} OF ${String(all.length).padStart(2, "0")}  |  ${s.where}`) + q("Spelled", s.name) + q("Said (large italic serif)", s.say) + q("Not (struck through)", s.not) + q("Note", s.note) + q("Footer", `${D.handle} + swipe arrow`);
+    }
     case "stop":
-      return q("Meta row", `${s.when}  |  ${s.where}`) + q("Headline", s.headline) + q("Why go", s.lead) + q("Good to know", s.detail) + q("Aside", s.aside) + q("Footer", `${D.handle} + swipe arrow`);
+      return q("Meta row", `${s.when}  |  ${s.where}`) + q("Headline", s.headline) + q(s.leadLabel || "Why go", s.lead) + q(s.detailLabel || "Good to know", s.detail) + q("Aside", s.aside) + q("Footer", `${D.handle} + swipe arrow`);
     case "pick": {
       const picks = c.slides.filter((x) => x.type === "pick");
       const n = String(picks.indexOf(s) + 1).padStart(2, "0");
@@ -42,7 +47,7 @@ function copy(c, s, i) {
     case "step":
       return q("Meta row", `AFTER ACCEPTANCE  |  ${s.stepno.toUpperCase()} OF 06`) + q("Step label (burgundy)", s.stepno.toUpperCase()) + q("Headline", s.headline) + q("Timing chip", s.timing.toUpperCase()) + q("What happens", s.happens) + q("Watch for", s.watch) + q("Footer", `${D.handle} + swipe arrow`);
     case "close":
-      return q("Headline", s.headline) + q("Small line", s.small) + q("Callout", s.callout) + q("Signature", `${D.name} · ${D.brokerage} / ${D.handle}`);
+      return q("Headline", s.headline) + q("Small line", s.small) + q("Comment prompt", s.ask) + q("Callout", s.callout) + q("Signature", `${D.name} · ${D.brokerage} / ${D.handle}`);
     case "deckCover":
       return q("Kicker", s.kicker) + q("Title", html(s.titleHtml)) + q("Sub-line", s.sub) + q("Previews", s.previews.map((p) => D.carousels.find((x) => x.id === p).title + " cover").join(" + ")) + q("Footer", D.handle);
     case "deckIdea":

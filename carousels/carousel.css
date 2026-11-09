@@ -752,3 +752,29 @@
 /* covers: ivory arrow, and room for it */
 .cover.friday h1 { font-size: 158px; text-shadow: 0 4px 50px rgba(0, 0, 0, .45); }
 .cover.friday .overlay { background: linear-gradient(180deg, rgba(14, 9, 6, .08) 0%, rgba(14, 9, 6, .44) 30%, rgba(14, 9, 6, .5) 68%, rgba(14, 9, 6, .34) 100%); }
+
+/* ---------- pronunciation cards ---------- */
+.say .lbl { font: 700 22px/1 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2); }
+.say .name { margin-top: 18px; font-family: var(--serif); font-size: 120px; line-height: 1; letter-spacing: -0.02em; font-optical-sizing: none; font-variation-settings: "opsz" 30; white-space: nowrap; }
+.say .lbl.said { margin-top: 64px; padding-top: 40px; border-top: 2px solid var(--ink); }
+.say .phon { margin-top: 20px; font-family: var(--serif); font-style: italic; line-height: .95; letter-spacing: -0.02em; font-optical-sizing: none; font-variation-settings: "opsz" 30; white-space: nowrap; }
+.say .phon.s1 { font-size: 216px; }
+.say .phon.s2 { font-size: 168px; }
+.say .phon.s3 { font-size: 136px; }
+.say .wrong { margin-top: 44px; display: flex; align-items: baseline; gap: 26px; }
+.say .wrong s { font: 500 54px/1 var(--sans); color: var(--ink-2); text-decoration-thickness: 3px; }
+.say .note { margin: auto 0 0; padding-top: 32px; border-top: 2px solid var(--rule); font: 400 37px/1.34 var(--sans); text-wrap: pretty; }
+
+/* new cover variants */
+.cover.say h1 { font-size: 150px; }
+.cover.say h1 .big-italic { display: block; font-size: 226px; line-height: .9; margin-top: 6px; letter-spacing: -0.03em; white-space: nowrap; }
+.cover.moving h1 { font-size: 146px; line-height: .96; }
+.cover.say .overlay, .cover.moving .overlay, .cover.weekend .overlay {
+  background: linear-gradient(180deg, rgba(12, 10, 14, .34) 0%, rgba(12, 10, 14, .3) 40%, rgba(12, 10, 14, .42) 70%, rgba(12, 10, 14, .6) 100%);
+}
+.cover h1 { text-shadow: 0 4px 46px rgba(0, 0, 0, .4); }
+.cover .sub, .cover .kicker { text-shadow: 0 2px 20px rgba(0, 0, 0, .45); }
+
+.hy { display: inline-block; width: .2em; height: .048em; background: currentColor; vertical-align: .27em; margin: 0 .05em 0 .07em; }
+.say .phon.s2 { font-size: 156px; }
+.cover.moving .overlay { background: linear-gradient(180deg, rgba(10, 12, 20, .5) 0%, rgba(10, 12, 20, .52) 45%, rgba(10, 12, 20, .5) 75%, rgba(10, 12, 20, .62) 100%); }

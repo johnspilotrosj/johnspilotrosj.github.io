@@ -142,6 +142,54 @@
         <div style="position:absolute;left:${x + 6}%;top:59%;width:26%;height:38%;background:linear-gradient(180deg,rgba(255,200,140,.32),rgba(255,200,140,0));transform:skewX(-34deg);transform-origin:top;filter:blur(8px)"></div>`).join("")}`
   };
 
+
+  /* Layered Boise foothills, drawn soft like a long-lens photo. pal = colours. */
+  function hills(id, pal) {
+    const L = pal.layers;
+    return `
+      <svg viewBox="0 0 1080 1440" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true">
+        <defs>
+          <linearGradient id="${id}Sky" x1="0" y1="0" x2="0" y2="1">${pal.sky.map((c, i) => `<stop offset="${(i / (pal.sky.length - 1)).toFixed(2)}" stop-color="${c}"/>`).join("")}</linearGradient>
+          <radialGradient id="${id}Sun"><stop offset="0" stop-color="${pal.sun}" stop-opacity=".95"/><stop offset=".35" stop-color="${pal.sun}" stop-opacity=".45"/><stop offset="1" stop-color="${pal.sun}" stop-opacity="0"/></radialGradient>
+          <linearGradient id="${id}Haze" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${pal.haze}" stop-opacity="0"/><stop offset="1" stop-color="${pal.haze}" stop-opacity=".55"/></linearGradient>
+          <filter id="${id}B1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="3"/></filter>
+          <filter id="${id}B2" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="7"/></filter>
+          <filter id="${id}B3" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="16"/></filter>
+        </defs>
+        <rect width="1080" height="1000" fill="url(#${id}Sky)"/>
+        <circle cx="${pal.sunX}" cy="770" r="430" fill="url(#${id}Sun)"/>
+        <g filter="url(#${id}B2)" fill="${pal.cloud}" opacity="${pal.cloudOpacity}">
+          <ellipse cx="260" cy="250" rx="330" ry="22"/><ellipse cx="820" cy="350" rx="300" ry="18"/><ellipse cx="520" cy="470" rx="380" ry="16"/><ellipse cx="160" cy="560" rx="240" ry="12"/>
+        </g>
+        <g filter="url(#${id}B1)">
+          <path d="M-40 760 C120 700 220 742 340 716 C460 690 520 640 640 668 C760 696 820 650 930 676 C1010 694 1070 680 1120 700 V1500 H-40Z" fill="${L[0]}"/>
+          <rect x="-40" y="700" width="1160" height="150" fill="url(#${id}Haze)"/>
+          <path d="M-40 850 C80 800 180 826 300 800 C400 778 470 812 560 786 L640 760 L770 760 L800 790 C900 812 980 780 1120 806 V1500 H-40Z" fill="${L[1]}"/>
+          <rect x="-40" y="800" width="1160" height="130" fill="url(#${id}Haze)" opacity=".8"/>
+          <path d="M-40 950 C100 900 230 930 380 896 C520 866 640 910 780 880 C900 856 1000 890 1120 870 V1500 H-40Z" fill="${L[2]}"/>
+          <rect x="-40" y="880" width="1160" height="130" fill="url(#${id}Haze)" opacity=".6"/>
+          <path d="M-40 1040 C140 1000 300 1030 470 1006 C640 982 800 1024 960 1000 C1030 990 1080 1000 1120 1004 V1500 H-40Z" fill="${L[3]}"/>
+        </g>
+        <!-- valley lights -->
+        <g filter="url(#${id}B1)" fill="${pal.lights}" opacity="${pal.lightsOpacity}">
+          ${[[80,1086,4],[150,1104,3],[214,1078,5],[268,1112,3],[330,1092,4],[396,1070,3],[452,1108,5],[520,1084,3],[584,1100,4],[640,1066,3],[700,1094,5],[764,1112,3],[820,1078,4],[884,1100,3],[946,1070,5],[1010,1096,4],[120,1150,5],[240,1160,4],[360,1146,6],[480,1166,4],[610,1150,5],[730,1164,4],[860,1146,6],[980,1160,4],[50,1200,6],[190,1214,5],[320,1198,7],[450,1220,5],[560,1204,6],[690,1218,5],[800,1200,7],[930,1216,5],[1040,1202,6]].map((c) => `<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}"/>`).join("")}
+        </g>
+        <g filter="url(#${id}B3)" fill="${pal.lights}" opacity="${pal.lightsOpacity * 0.5}">
+          <circle cx="140" cy="1180" r="34"/><circle cx="420" cy="1210" r="42"/><circle cx="700" cy="1190" r="36"/><circle cx="930" cy="1220" r="44"/><circle cx="560" cy="1120" r="26"/>
+        </g>
+        <!-- cottonwoods in the foreground -->
+        <g filter="url(#${id}B2)" fill="${L[4]}">
+          <path d="M-60 1500 V1290 C-20 1230 40 1250 70 1210 C110 1160 190 1180 220 1230 C260 1200 330 1220 350 1280 C420 1260 470 1300 500 1340 C580 1310 640 1330 690 1300 C720 1240 800 1230 840 1270 C880 1210 980 1200 1020 1250 C1060 1230 1110 1250 1140 1290 V1500Z"/>
+        </g>
+      </svg>`;
+  }
+  SCENES.dusk = hills("hd", { sky: ["#18233f", "#3b3a66", "#8a5a78", "#e08a5c", "#f7c489"], sun: "#ffc98a", sunX: 660, haze: "#e9a27a", cloud: "#f2a27a", cloudOpacity: 0.34,
+    layers: ["#8f6a80", "#6a4c66", "#45334c", "#2a2032", "#120e16"], lights: "#ffd9a0", lightsOpacity: 0.9 });
+  SCENES.dawn = hills("hw", { sky: ["#2f4a78", "#6f8fb8", "#c9c2c4", "#f3cfa0", "#fbe3bd"], sun: "#fff0c8", sunX: 360, haze: "#f6d9b0", cloud: "#ffe6c4", cloudOpacity: 0.5,
+    layers: ["#9aa3b8", "#74809a", "#4f5c78", "#333c54", "#161b28"], lights: "#ffe2b0", lightsOpacity: 0.55 });
+  SCENES.night = hills("hn", { sky: ["#070b18", "#111a36", "#27315e", "#5a4a7c", "#a8627a"], sun: "#c8708a", sunX: 540, haze: "#6a4a78", cloud: "#6a5a90", cloudOpacity: 0.3,
+    layers: ["#3a3560", "#2a2a50", "#1c1e3c", "#12142a", "#06070f"], lights: "#ffd08a", lightsOpacity: 1 });
+
   function photoLayer(slide, ready) {
     const wrap = document.createElement("div");
     wrap.className = "photo";
@@ -161,6 +209,8 @@
     return [wrap, tag];
   }
 
+  // Bodoni's hyphen is a hairline; draw a sturdier one for big display type
+  const hy = (h) => h.replace(/-/g, '<span class="hy"></span>');
   const handle = (cls = "") => `<div class="handle ${cls}">${esc(D.handle)}</div>`;
   const swipe = () => `<div class="swipe">${arrow()}</div>`;
   const meta = (s) => `<div class="meta"><span class="when">${md(s.when)}</span><span class="where">${md(s.where)}</span></div>`;
@@ -186,7 +236,7 @@
     const last = i === total - 1;
     const el = document.createElement("section");
     el.className = `slide t-${s.type}`;
-    const extra = { deckCover: "deck-cover", deckIdea: "deck-idea", close: "close", city: "city", method: "method", recap: "recap", decision: "decision", list: "list", step: "step", stop: "stop", pick: "pick" }[s.type];
+    const extra = { deckCover: "deck-cover", deckIdea: "deck-idea", close: "close", city: "city", method: "method", recap: "recap", decision: "decision", list: "list", step: "step", stop: "stop", pick: "pick", say: "say" }[s.type];
     if (extra) el.classList.add(extra);
     el.dataset.carousel = c.id;
     el.dataset.index = i + 1;
@@ -234,13 +284,29 @@
           </div>${handle()}${swipe()}`;
         break;
       }
+      case "say": {
+        el.classList.add("interior", "say");
+        const all = c.slides.filter((x) => x.type === "say");
+        const n = String(all.indexOf(s) + 1).padStart(2, "0");
+        const size = s.say.length <= 8 ? "s1" : s.say.length <= 11 ? "s2" : "s3";
+        html = `<div class="meta"><span class="when">Say it like a local · ${n} of ${String(all.length).padStart(2, "0")}</span><span class="where">${md(s.where)}</span></div>
+          <div class="col">
+            <div class="lbl">Spelled</div>
+            <div class="name">${esc(s.name)}</div>
+            <div class="lbl said">Said</div>
+            <div class="phon ${size}">${hy(esc(s.say))}</div>
+            <div class="wrong"><span class="lbl">Not</span><s>${esc(s.not)}</s></div>
+            <p class="note">${md(s.note)}</p>
+          </div>${handle()}${swipe()}`;
+        break;
+      }
       case "stop": {
         el.classList.add("interior");
         html = `${meta(s)}
           <h2 class="headline ${s.headlineSize || ""}">${md(s.headline)}</h2>
           <div class="body">
-            <div class="block lead"><div class="label">Why go</div><p>${md(s.lead)}</p></div>
-            <div class="block detail"><div class="label">Good to know</div><p>${md(s.detail)}</p></div>
+            <div class="block lead"><div class="label">${esc(s.leadLabel || "Why go")}</div><p>${md(s.lead)}</p></div>
+            <div class="block detail"><div class="label">${esc(s.detailLabel || "Good to know")}</div><p>${md(s.detail)}</p></div>
             ${s.aside ? `<div class="block aside"><p>${md(s.aside)}</p></div>` : ""}
           </div>${handle()}${last ? "" : swipe()}`;
         break;
@@ -336,7 +402,7 @@
       case "close": {
         html = `<div class="inner">
             <div class="mark"></div>
-            <h2>${md(s.headline)}</h2>
+            <h2>${md(s.headline).replace(/<em>([^<]*)<\/em>/g, (m) => hy(m))}</h2>
             ${s.small ? `<div class="small">${md(s.small)}</div>` : ""}
             ${s.ask ? `<div class="ask">${md(s.ask)}</div>` : ""}
             ${s.callout ? `<div class="callout">${md(s.callout)}</div>` : ""}

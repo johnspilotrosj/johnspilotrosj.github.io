@@ -32,7 +32,7 @@ window.CAROUSEL_DATA = {
         {
           type: "cover", variant: "weekend",
           photo: "photos/weekend-cover.jpg", scene: "dusk",
-          sceneLabel: "Boise Greenbelt or 8th Street at dusk",
+          sceneLabel: "Boise foothills at dusk",
           kicker: "A weekend you can actually follow",
           titleHtml: "Weekend Guide<span class=\"big-italic\"><em>Boise</em></span>",
           sub: "Coffee, a Saturday market, a river loop, Basque dinner and a slow Sunday",
@@ -47,22 +47,18 @@ window.CAROUSEL_DATA = {
           detail: "1507 N 13th St. Parking on 13th fills fast, so park a block over and walk.",
           aside: "After: wander the shops along 13th Street.",
           photoDirection: "Interior slides are typographic on off-white, no photo.",
-          layout: "Meta row (day and time left, neighborhood right) over a hairline rule. Big serif headline with the venue name in italic. Lead line in medium sans, then a ruled \"good to know\" detail. Thin swipe arrow bottom-right, handle bottom-left.",
-          confirm: ["Hyde Perk's current Saturday opening time (none of the sources I found listed hours)."]
+          layout: "Meta row (day and time left, neighborhood right) over a hairline rule. Big serif headline with the venue name in italic. Lead line in medium sans, then a ruled \"good to know\" detail. Thin swipe arrow bottom-right, handle bottom-left."
         },
         {
           type: "stop",
-          when: "Saturday · 9:30 AM", where: "Downtown · The Grove Plaza",
+          when: "Saturday · Mid-morning", where: "Downtown · The Grove Plaza",
           headline: "Walk the *Capital City* Public Market",
           headlineSize: "md",
           lead: "Growers, bakers and makers fill the Grove Plaza and the blocks around it every Saturday.",
-          detail: "2026 season: Saturdays through Dec. 19, 9:30\u00a0a.m.–1:30\u00a0p.m. Late-season hours can shift, so check before you go.",
+          detail: "The 2026 season runs every Saturday through Dec. 19. Hours shift late in the season, so check before you go.",
           aside: "Two blocks away: Freak Alley Gallery. It's free and open 24/7, in the alley between 8th and 9th off Bannock.",
           layout: "Same interior layout. The headline runs to three lines at medium size. The Freak Alley detour sits as a muted aside so the slide stays on one stop.",
-          confirm: [
-            "Market hours for November–December 2026. In 2025 the market moved to 10 a.m.–2 p.m. in late October. I found no 2026 notice either way.",
-            "The Dec. 19, 2026 end date, which comes from CBS2 / Idaho News coverage of the season opening."
-          ]
+          confirm: ["The Dec. 19, 2026 season end date comes from CBS2 / Idaho News coverage of the season opening."]
         },
         {
           type: "stop",
@@ -77,9 +73,8 @@ window.CAROUSEL_DATA = {
           when: "Saturday · 7:00 PM", where: "Downtown · Basque Block",
           headline: "Dinner at *Bar Gernika*",
           lead: "A Basque Block institution. Order the croquetas and the solomo: pork loin marinated in sweet red pepper.",
-          detail: "202 S Capitol Blvd. Open until 10 p.m. Friday and Saturday. Closed Sunday and Monday.",
-          layout: "Same interior layout.",
-          confirm: ["Bar Gernika's current hours. The only listing I found (Casago) is undated: Tue–Thu 11:30–9, Fri–Sat 11:30–10, closed Sun–Mon."]
+          detail: "202 S Capitol Blvd, on the corner of the Basque Block. It's a small room, so expect a short wait on a Saturday.",
+          layout: "Same interior layout."
         },
         {
           type: "stop",
@@ -102,9 +97,9 @@ window.CAROUSEL_DATA = {
         {
           type: "close",
           headline: "Save this for your next *Boise* weekend.",
-          small: "In season: Winter Garden aGlow at the Idaho Botanical Garden, Nov. 27–Dec. 30.",
-          layout: "Off-white, centered typography: a short rule, serif CTA, one muted sans line, then name, brokerage and handle at the bottom. No arrow.",
-          confirm: ["Winter Garden aGlow 2026 dates. The garden's event page shows Nov. 27–Dec. 30, but it doesn't state the year. Drop the line if it isn't confirmed by posting day."]
+          small: "Hours shift with the seasons, so check before you go.",
+          ask: "What would you swap in? Tell me in the comments.",
+          layout: "Off-white, centered typography: a short rule, serif CTA, one muted sans line, then name, brokerage and handle at the bottom. No arrow."
         }
       ],
       caption: "A Boise weekend you can actually follow ☕️🌲\n\nSaturday: coffee in Hyde Park, the Capital City Public Market, a Greenbelt loop through Ann Morrison and Kathryn Albertson parks, then Basque dinner at Bar Gernika.\nSunday: Goldy's (get on the list early) and Table Rock before sunset.\n\nSave this for when friends visit, and tell me what you'd swap in. Hours shift with the seasons, so check before you go.\n\nJohn Spilotros · Keller Williams Realty Boise",
@@ -467,6 +462,122 @@ window.CAROUSEL_DATA = {
       ],
       caption: "Your offer was accepted 🎉 So what happens now?\n\n1 · Earnest money is due and the deadline clock starts\n2 · Inspections, then repairs, a credit, or walking away\n3 · Appraisal, if you're financing\n4 · Underwriting (don't open new credit!)\n5 · Final walkthrough\n6 · Closing at the title company, then the keys\n\nEvery deadline comes from your contract, so read it with your agent. Save this for when it's your turn.\n\nNot legal or lending advice. Your contract and lender set the details.\nJohn Spilotros · Keller Williams Realty Boise",
       hashtags: "#FirstTimeHomeBuyer #BoiseRealEstate #IdahoHomes #HomeBuyingTips #UnderContract #TreasureValley #MeridianIdaho #NampaIdaho"
+    },
+
+    /* ======================================================
+       6 — SAY IT LIKE A LOCAL
+       ====================================================== */
+    {
+      id: "say",
+      title: "Say it like a local",
+      question: "How do you pronounce Boise (and Kuna, and Owyhee)?",
+      audience: "Newcomers, people relocating, and locals who love correcting them.",
+      slides: [
+        {
+          type: "cover", variant: "say",
+          photo: "photos/say-cover.jpg", scene: "night",
+          sceneLabel: "Boise foothills after sunset",
+          kicker: "A local's pronunciation guide",
+          titleHtml: "It's<span class=\"big-italic\"><em>BOY<span class=\"hy\"></span>see.</em></span>",
+          sub: "And five more Idaho names worth getting right",
+          photoDirection: "The Boise foothills just after sunset, with the valley lights coming on below. The cover currently uses an illustrated version of this scene. To swap in a photo, keep the upper half calm sky for the type.",
+          layout: "Full-bleed image with a soft dark overlay. Small tracked kicker, \"It's\" in roman serif, then \"BOY-see.\" in oversized italic serif on its own line. One short sans line below. Handle bottom-left, ivory swipe arrow bottom-right."
+        },
+        { type: "say", name: "Boise", say: "BOY-see", not: "BOY-zee", where: "Ada County",
+          note: "There's no Z. Say it with an S and nobody will ask how long you've lived here.",
+          layout: "Off-white. Meta row with the count and the county. \"Spelled\" label and the name in roman serif; a rule; \"Said\" label and the pronunciation in very large italic serif; the wrong version struck through in muted sans; one line of context under a hairline. Swipe arrow." },
+        { type: "say", name: "Kuna", say: "KYOO-nuh", not: "KOO-nuh", where: "Ada County",
+          note: "It starts like the letter Q. The town sits just south of Meridian.", layout: "Same as the Boise card." },
+        { type: "say", name: "Ustick", say: "YOO-stick", not: "US-tick", where: "Boise · Meridian",
+          note: "You'll drive Ustick Road sooner or later. Say it like \"you stick.\"", layout: "Same as the Boise card." },
+        { type: "say", name: "Owyhee", say: "oh-WYE-hee", not: "OW-ee-hee", where: "Owyhee County",
+          note: "It's an old spelling of Hawaii. The county and river are named for three Hawaiian fur trappers who vanished here in 1819.", layout: "Same as the Boise card." },
+        { type: "say", name: "Weiser", say: "WEE-zer", not: "WYE-zer", where: "Washington County",
+          note: "Rhymes with geezer, not with wiser.", layout: "Same as the Boise card." },
+        { type: "say", name: "Coeur d'Alene", say: "kore-duh-LANE", not: "core-dee-uh-LEEN", where: "Kootenai County",
+          note: "North Idaho's lake city. When in doubt, do what locals do and write CdA.", layout: "Same as the Boise card, with the pronunciation set one size smaller to fit." },
+        {
+          type: "close",
+          headline: "Send this to someone who still says *Boy-zee.*",
+          ask: "Which Idaho name did I miss? Tell me in the comments.",
+          small: "Pronunciations follow the Idaho Press Club's guide and local usage.",
+          layout: "Off-white, centered typography. Serif CTA with \"Boy-zee.\" in italic, a muted source line, then a bolder line asking for a comment. Name, brokerage and handle at the bottom."
+        }
+      ],
+      caption: "It's BOY-see. Not Boy-zee. 🗣️\n\nSix Idaho names worth getting right before you move here (or before your in-laws visit):\n\nBoise → BOY-see\nKuna → KYOO-nuh\nUstick → YOO-stick\nOwyhee → oh-WYE-hee\nWeiser → WEE-zer\nCoeur d'Alene → kore-duh-LANE\n\nSend this to someone who still says Boy-zee. Which name did I miss? Tell me in the comments.\n\nJohn Spilotros · Keller Williams Realty Boise",
+      hashtags: "#Boise #BoiseIdaho #Idaho #MovingToBoise #MovingToIdaho #TreasureValley #IdahoLife #BoiseRealEstate"
+    },
+
+    /* ======================================================
+       7 — WHAT NOBODY TELLS YOU ABOUT MOVING TO BOISE
+       ====================================================== */
+    {
+      id: "moving",
+      title: "What nobody tells you about moving to Boise",
+      question: "What should I know before moving to Boise?",
+      audience: "People relocating to the Treasure Valley, and locals who'll add their own.",
+      slides: [
+        {
+          type: "cover", variant: "moving",
+          photo: "photos/moving-cover.jpg", scene: "dawn",
+          sceneLabel: "Boise foothills in morning light",
+          kicker: "Six things locals learn the hard way",
+          titleHtml: "What <em>nobody tells you</em> about moving to Boise",
+          sub: "Save this before you pack the truck",
+          photoDirection: "The Boise foothills in early morning light with the valley below. The cover currently uses an illustrated version of this scene. To swap in a photo, keep the middle of the frame soft for the title.",
+          layout: "Full-bleed image with a soft dark overlay. Small tracked kicker, ivory serif title centered with \"nobody tells you\" in italic, one short sans line below. Handle bottom-left, ivory swipe arrow bottom-right."
+        },
+        { type: "stop", when: "Nobody tells you · 01 of 06", where: "Bogus Basin",
+          headline: "You can ski *after work*",
+          leadLabel: "The reality", detailLabel: "Good to know",
+          lead: "Bogus Basin is a nonprofit ski area about 16.5 miles up the road from Boise.",
+          detail: "In season the lifts run for night skiing until 10 p.m., so a few weeknight laps are a real option.",
+          layout: "Off-white interior layout: meta row with the count and the topic, big serif headline with one italic phrase, \"The reality\" in medium sans, then a ruled \"Good to know\" line. Swipe arrow.",
+          confirm: ["Bogus Basin's night-skiing hours for the 2026–27 season (10 p.m. per Boise State Public Radio and KIVI; this season's schedule isn't confirmed)."] },
+        { type: "stop", when: "Nobody tells you · 02 of 06", where: "Boise River",
+          headline: "In summer, *everyone* floats the river",
+          leadLabel: "The reality", detailLabel: "Good to know",
+          lead: "It's a six-mile float from Barber Park to Ann Morrison Park, and it takes two to three hours.",
+          detail: "The season opens once the river is safe. In 2026 it ran June 20 through Labor Day.",
+          layout: "Same interior layout." },
+        { type: "stop", when: "Nobody tells you · 03 of 06", where: "Winter",
+          headline: "Some winter weeks, the valley goes *gray*",
+          headlineSize: "md",
+          leadLabel: "The reality", detailLabel: "Do this",
+          lead: "It's called an inversion: cold air gets trapped on the valley floor, and fog and stale air can sit for days.",
+          detail: "Drive up Bogus Basin Road. You can often climb above the clouds into blue sky.",
+          layout: "Same interior layout, with the headline at medium size." },
+        { type: "stop", when: "Nobody tells you · 04 of 06", where: "Your yard",
+          headline: "Your lawn may run on *canal water*",
+          leadLabel: "The reality", detailLabel: "Do this",
+          lead: "Many Treasure Valley neighborhoods water their yards with pressurized irrigation, separate from the drinking water.",
+          detail: "It runs roughly April to October, depending on the year's water supply. Ask how a home is irrigated before you buy it.",
+          layout: "Same interior layout." },
+        { type: "stop", when: "Nobody tells you · 05 of 06", where: "The commute",
+          headline: "*Eagle Road* runs your schedule",
+          leadLabel: "The reality", detailLabel: "Do this",
+          lead: "It's Idaho's busiest non-interstate highway, carrying more than 60,000 vehicles a day.",
+          detail: "Drive your commute at rush hour before you choose a neighborhood.",
+          layout: "Same interior layout.",
+          confirm: ["The 60,000+ vehicles a day figure is from an Idaho Transportation Department release dated August 2024."] },
+        { type: "stop", when: "Nobody tells you · 06 of 06", where: "Property taxes",
+          headline: "There's a tax break you have to *ask for*",
+          headlineSize: "md",
+          leadLabel: "The reality", detailLabel: "Do this",
+          lead: "Idaho's homeowner's exemption takes 50% of your home's value, up to $125,000, off what's taxed on a primary residence.",
+          detail: "It isn't automatic. Apply with your county assessor once you move in.",
+          layout: "Same interior layout, with the headline at medium size.",
+          confirm: ["The homeowner's exemption maximum ($125,000) and how to apply, with the Ada County Assessor. I found the amount on secondary sites quoting the Idaho State Tax Commission, and the filing deadline differed by source, so the slide gives no date."] },
+        {
+          type: "close",
+          headline: "Send this to someone *moving to Boise.*",
+          ask: "Locals: what did I leave out? Tell me in the comments.",
+          small: "Thinking about the move? DM me \u201CBOISE\u201D and ask me anything.",
+          layout: "Off-white, centered typography. Serif CTA, a muted DM line, then a bolder line asking locals to comment. Name, brokerage and handle at the bottom."
+        }
+      ],
+      caption: "What nobody tells you about moving to Boise 👀\n\n1 · You can ski after work\n2 · In summer, everyone floats the river\n3 · Some winter weeks, the valley goes gray\n4 · Your lawn may run on canal water\n5 · Eagle Road runs your schedule\n6 · There's a tax break you have to ask for\n\nSend this to someone who's moving here. Locals: what did I leave out? Tell me in the comments.\n\nThinking about the move? DM me \"BOISE\" and ask me anything.\n\nJohn Spilotros · Keller Williams Realty Boise",
+      hashtags: "#MovingToBoise #BoiseIdaho #Boise #MovingToIdaho #TreasureValley #BoiseRealEstate #IdahoLife #RelocatingToIdaho"
     }
   ],
 
@@ -538,6 +649,17 @@ window.CAROUSEL_DATA = {
     ["Meridian median year built (2023 ACS)", "https://city-stats.com/idaho/meridian/housing"],
         ["RE-21 March 2026 edition (earnest money, inspection defaults)", "https://adc-tenbox-prod.imgix.net/resi/propertyDocuments/1439359/PURCHASE_AGREEMENT/8A93ECF3CB3A484D9EE2FA184CB1ACA0.v1.pdf"],
     ["Idaho REALTORS legal hotline: earnest money", "https://idahorealtors.com/ir-legal-hotline/earnest-money/"],
+    ["Idaho Press Club pronunciation guide (Boise, Weiser, Coeur d'Alene)", "https://idahopressclub.org/idaho-pronunciation-guide/"],
+    ["Boise State Public Radio: pronouncing Idaho place names", "https://www.boisestatepublicradio.org/arts-culture/2022-10-25/how-do-you-pronounce-boise-coeur-dalene-kootenai"],
+    ["Kuna pronunciation", "https://www.idahopress.com/boiseweekly/annual_manual/critical_knowledge/idaho-pronunciation-guide/article_73438c0e-588e-5080-a5c8-c44266ea3756.html"],
+    ["Ustick pronunciation", "https://www.weknowboise.com/blog/boise-pronunciation-guide.html"],
+    ["Owyhee: named for three Hawaiian trappers, 1819", "https://en.wikipedia.org/wiki/Owyhee_River"],
+    ["Bogus Basin: nonprofit, 16.5 miles from Boise, night skiing", "https://bogusbasin.org/about-bogus/culture/bogus-basin-will-offer-night-skiing-seven-nights-a-week"],
+    ["Float the Boise 2026 season (June 20 start, 6 miles, 2–3 hours)", "https://www.cityofboise.org/news/parks-and-recreation/2026/june/ada-county-and-city-of-boise-officials-announce-start-date-for-the-2026-float-the-boise-season/"],
+    ["Treasure Valley inversions", "https://www.boisestatepublicradio.org/environment/2024-01-02/boise-treasure-valley-inversion-air-stagnation"],
+    ["Pressurized irrigation season (Nampa & Meridian Irrigation District)", "https://nmid.org/about-nmid/frequently-asked-questions/"],
+    ["Eagle Road: Idaho's busiest non-interstate highway (ITD, Aug. 2024)", "https://publicnow.com/view/1AED86118F3FE91CDEB0F988B2947D65027F97A7"],
+    ["Idaho homeowner's exemption", "https://tax.idaho.gov/search-category/property-tax/homeowners/"],
     ["Idaho Code 54-2053: advertising must show the broker's licensed business name", "https://legislature.idaho.gov/statutesrules/idstat/Title54/T54CH20/SECT54-2053"],
     ["NAR Code of Ethics, Article 12: advertising other brokers' listings", "https://www.nar.realtor/about-nar/governing-documents/code-of-ethics/code-comprehension-article-12-display-of-competitors-listings-on-social-media-websites"]
   ]
